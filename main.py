@@ -1,6 +1,7 @@
 import pygame
 from random import randint
 from sys import exit
+from math import ceil
 
 
 # Initialize pygame modules
@@ -28,14 +29,14 @@ class InputBox:
             self.rect = pygame.Rect(rect)
             self.label = baseFont.render(label, True, color)
 
-        def draw(self, color):
+        def draw(self, color, width):
             xPos = self.rect.x
             yPos = self.rect.y
             surface = baseFont.render(self.text, True, color)
             screen.blit(self.label, (xPos+(self.rect.w - self.label.get_width())/2, yPos - 32))
             pygame.draw.rect(screen, color, self.rect, 3)
             screen.blit(surface, (xPos + 10, yPos + 10))
-            self.rect.w = max(surface.get_width() + 20, self.rect.w)
+            self.rect.w = max(surface.get_width() + 20, width)
 
         def write(self, wEvent):
             if wEvent.key == pygame.K_BACKSPACE:
@@ -96,6 +97,7 @@ def randomList():
 
 def drawBars(redBar1, redBar2, blueBar1, blueBar2):
     """Draw the bars and control their colors"""
+    global barMode
     for num in range(numBars):
         if num in [redBar1, redBar2]:
             color = red
@@ -104,14 +106,14 @@ def drawBars(redBar1, redBar2, blueBar1, blueBar2):
         else:
             color = grey
         bar_width = 900/numBars
-        pygame.draw.rect(screen, color, [num*bar_width, 400 - numbers[num], bar_width, numbers[num]])
+        pygame.draw.rect(screen, color, [num * bar_width, 400 - numbers[num], ceil(bar_width), numbers[num]])
 
 
 def drawBottomMenu():
     """Draw the menu below the bars"""
-    sizeBox.draw(grey)
+    sizeBox.draw(grey, 50)
     delayBox.draw(grey)
-    algorithmBox.draw(grey)
+    algorithmBox.draw(grey, 100)
     screen.blit(button, (390, 435))
 
 
