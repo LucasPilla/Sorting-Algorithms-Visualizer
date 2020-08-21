@@ -2,7 +2,7 @@
 Program made with Pygame module for visualizing sorting algorithms
 
 ## Program preview
-![](image_ex.png)
+![](preview.gif)
 
 ## Using the application
 - Clone GitHub repository
