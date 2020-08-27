@@ -9,7 +9,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="ProjectId" id="1gTkIFUGOgqRM8O1doDKJX5S7Cx" />
   <component name="ProjectViewState">
@@ -18,21 +17,21 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/main.py" />
   </component>
   <component name="RunManager">
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Sorting-Algorithms-Visualizer" />
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Users\lucas\AppData\Local\Programs\Python\Python38-32\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -60,34 +59,38 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="223" y="87" width="1089" height="761" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598492538035">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="223" y="87" width="1089" height="761" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.864@0.0.1536.864" timestamp="1598492538035" />
     <state x="611" y="323" key="#com.jetbrains.python.refactoring.move.PyMoveModuleMembersDialog" timestamp="1598151355710">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="611" y="323" key="#com.jetbrains.python.refactoring.move.PyMoveModuleMembersDialog/0.0.1536.864@0.0.1536.864" timestamp="1598151355710" />
-    <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1598153159706">
+    <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1598492536378">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1598153159706" />
-    <state width="1515" height="223" key="GridCell.Tab.0.bottom" timestamp="1598490276648">
+    <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1598492536378" />
+    <state width="1515" height="223" key="GridCell.Tab.0.bottom" timestamp="1598495042461">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1515" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1598490276648" />
-    <state width="1515" height="223" key="GridCell.Tab.0.center" timestamp="1598490276648">
+    <state width="1515" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1598495042461" />
+    <state width="1515" height="223" key="GridCell.Tab.0.center" timestamp="1598495042461">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1515" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1598490276648" />
-    <state width="1515" height="223" key="GridCell.Tab.0.left" timestamp="1598490276648">
+    <state width="1515" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1598495042461" />
+    <state width="1515" height="223" key="GridCell.Tab.0.left" timestamp="1598495042461">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1515" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1598490276648" />
-    <state width="1515" height="223" key="GridCell.Tab.0.right" timestamp="1598490276648">
+    <state width="1515" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1598495042461" />
+    <state width="1515" height="223" key="GridCell.Tab.0.right" timestamp="1598495042461">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1515" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1598490276648" />
-    <state x="586" y="346" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1598490402695">
+    <state width="1515" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1598495042461" />
+    <state x="586" y="346" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1598495037460">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="586" y="346" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.864@0.0.1536.864" timestamp="1598490402695" />
+    <state x="586" y="346" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.864@0.0.1536.864" timestamp="1598495037460" />
     <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1598151156013">
       <screen x="0" y="0" width="1536" height="864" />
     </state>

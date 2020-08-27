@@ -43,6 +43,10 @@ def main():
                         mergeSort(numbers, 0, display.numBars - 1)
                     elif algorithm == "InsertionSort":
                         insertionSort(numbers)
+                    elif algorithm == "SelectionSort":
+                        selectionSort(numbers)
+                    elif algorithm == "CountingSort":
+                        countingSort(numbers)
                     display.button = display.playButton
                     display.toDraw = True
             # In case any key is pressed
