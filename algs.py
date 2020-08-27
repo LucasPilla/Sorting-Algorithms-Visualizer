@@ -2,7 +2,7 @@
 from display import handleDrawing
 
 
-def bubbleSort(array):
+def bubbleSort(array, *args):
     size = len(array)
     for i in range(size):
         for j in range(size - i - 1):
@@ -56,11 +56,11 @@ def quickSort(array, left, right):
             array[j], array[index] = array[index], array[j]
             index += 1
     array[index], array[right] = array[right], array[index]
-    quicksort(array, index + 1, right)
-    quicksort(array, left, index - 1)
+    quickSort(array, index + 1, right)
+    quickSort(array, left, index - 1)
 
 
-def insertionSort(array):
+def insertionSort(array, *args):
     size = len(array)
     for i in range(1, size):
         j = i-1
@@ -72,7 +72,7 @@ def insertionSort(array):
         array[j+1] = key
 
 
-def selectionSort(array):
+def selectionSort(array, *args):
     size = len(array)
     for i in range(size-1):
         smallIndex = i
@@ -83,7 +83,7 @@ def selectionSort(array):
         array[i], array[smallIndex] = array[smallIndex], array[i]
 
 
-def countingSort(array):
+def countingSort(array, *args):
     size = len(array)
     A = array.copy()
     C = [0]*size
@@ -95,3 +95,17 @@ def countingSort(array):
         handleDrawing(array, C[A[size-i-1]]-1, -1, size-i-1, -1)
         array[C[A[size-i-1]]-1] = A[size-i-1]
         C[A[size-i-1]] -= 1
+
+
+algorithmsDict = {
+    'InsertionSort': insertionSort,
+    'BubbleSort': bubbleSort,
+    'SelectionSort': selectionSort,
+    'MergeSort': mergeSort,
+    'QuickSort': quickSort,
+    'CountingSort': countingSort,
+}
+
+
+def runAlgorithm(algorithm, array):
+    return algorithmsDict[algorithm](array, 0, len(array)-1)

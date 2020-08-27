@@ -35,18 +35,7 @@ def main():
                     # Generates a random list
                     numbers = randomList()
                     # Executes the chosen algorithm
-                    if algorithm == "BubbleSort":
-                        bubbleSort(numbers)
-                    elif algorithm == "QuickSort":
-                        quickSort(numbers, 0, display.numBars - 1)
-                    elif algorithm == "MergeSort":
-                        mergeSort(numbers, 0, display.numBars - 1)
-                    elif algorithm == "InsertionSort":
-                        insertionSort(numbers)
-                    elif algorithm == "SelectionSort":
-                        selectionSort(numbers)
-                    elif algorithm == "CountingSort":
-                        countingSort(numbers)
+                    runAlgorithm(algorithm, numbers)
                     display.button = display.playButton
                     display.toDraw = True
             # In case any key is pressed
