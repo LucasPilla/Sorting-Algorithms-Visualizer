@@ -35,7 +35,7 @@ def main():
                     # Generates a random list
                     numbers = randomList()
                     # Executes the chosen algorithm
-                    runAlgorithm(algorithm, numbers)
+                    runAlgorithm(algorithm.lower(), numbers)
                     display.button = display.playButton
                     display.toDraw = True
             # In case any key is pressed
