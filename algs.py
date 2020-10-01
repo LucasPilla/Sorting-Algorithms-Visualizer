@@ -1,6 +1,28 @@
 # Handles the drawing and controls while executing the algorithm
 from display import handleDrawing
+from random import randint
 
+def bogoSort(array, *args):
+    is_sorted = False
+    array_copy = array[:]
+    while not is_sorted:
+        items = array_copy[:]
+        new_array = list()
+        while len(array) > 0:
+            item = array.pop(randint(0, len(array)-1))
+            new_array.append(item)
+
+        wrong_order = False
+        array = new_array[:]
+        previous = array[0]
+        for current in array[1:]:
+            if current < previous:
+                wrong_order = True
+                break
+
+            previous = current
+
+        is_sorted = not wrong_order
 
 def bubbleSort(array, *args):
     size = len(array)
@@ -95,8 +117,8 @@ def countingSort(array, *args):
         handleDrawing(array, C[A[size-i-1]]-1, -1, size-i-1, -1)
         array[C[A[size-i-1]]-1] = A[size-i-1]
         C[A[size-i-1]] -= 1
-        
-                
+
+
 def cocktailSort(array, *args):
     n = len(array)
     swapped = True
@@ -119,8 +141,8 @@ def cocktailSort(array, *args):
                 array[i], array[i+1] = array[i+1], array[i]
                 swapped = True
         start = start+1
-        
-        
+
+
 algorithmsDict = {
     'insertionsort': insertionSort,
     'bubblesort': bubbleSort,
@@ -129,6 +151,7 @@ algorithmsDict = {
     'quicksort': quickSort,
     'countingsort': countingSort,
     'cocktailsort': cocktailSort,
+    'bogosort': bogoSort,
 }
 
 
