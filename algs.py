@@ -122,13 +122,13 @@ def cocktailSort(array, *args):
         
         
 algorithmsDict = {
-    'InsertionSort': insertionSort,
-    'BubbleSort': bubbleSort,
-    'SelectionSort': selectionSort,
-    'MergeSort': mergeSort,
-    'QuickSort': quickSort,
-    'CountingSort': countingSort,
-    'CocktailSort': cocktailSort,
+    'insertionsort': insertionSort,
+    'bubblesort': bubbleSort,
+    'selectionsort': selectionSort,
+    'mergesort': mergeSort,
+    'quicksort': quickSort,
+    'countingsort': countingSort,
+    'cocktailsort': cocktailSort,
 }
 
 
