@@ -2,28 +2,6 @@
 from display import handleDrawing
 from random import randint
 
-def bogoSort(array, *args):
-    is_sorted = False
-    array_copy = array[:]
-    while not is_sorted:
-        items = array_copy[:]
-        new_array = list()
-        while len(array) > 0:
-            item = array.pop(randint(0, len(array)-1))
-            new_array.append(item)
-
-        wrong_order = False
-        array = new_array[:]
-        previous = array[0]
-        for current in array[1:]:
-            if current < previous:
-                wrong_order = True
-                break
-
-            previous = current
-
-        is_sorted = not wrong_order
-
 def bubbleSort(array, *args):
     size = len(array)
     for i in range(size):
@@ -142,6 +120,29 @@ def cocktailSort(array, *args):
                 swapped = True
         start = start+1
 
+def bogoSort(array, *args):
+    is_sorted = False
+    array_copy = array[:]
+    while not is_sorted:
+        items = array_copy[:]
+        new_array = list()
+        while len(items) > 0:
+            item = items.pop(randint(0, len(items)-1))
+            new_array.append(item)
+
+        wrong_order = False
+        array = new_array[:]
+        previous = array[0]
+        for current in array[1:]:
+            if current < previous:
+                wrong_order = True
+                break
+
+            previous = current
+
+        is_sorted = not wrong_order
+
+    return array
 
 algorithmsDict = {
     'insertionsort': insertionSort,
