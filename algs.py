@@ -133,7 +133,8 @@ def bogoSort(array, *args):
         wrong_order = False
         array = new_array[:]
         previous = array[0]
-        for current in array[1:]:
+        for c, current in enumerate(array[1:]):
+            handleDrawing(array, c, c-1, -1, -1)
             if current < previous:
                 wrong_order = True
                 break
