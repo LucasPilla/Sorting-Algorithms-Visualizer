@@ -1,4 +1,4 @@
-# Sorting-Algorithms-Visualizer
+# Sorting-Algorithms-Visualizer [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Amazing%20tool%20for%20visualising%20Sorting%20Algorithms%20in%20Python&url=https://github.com/LucasPilla/Sorting-Algorithms-Visualizer&via=&hashtags=educational,developers)
 Program made with Pygame module for visualizing sorting algorithms
 
 ## Program preview
