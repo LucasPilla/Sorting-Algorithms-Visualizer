@@ -122,9 +122,10 @@ def cocktailSort(array, *args):
 
 def bogoSort(array, *args):
     is_sorted = False
+    arrayLen = len(array)
     while not is_sorted:
-        for i in range(len(array)):
-            j = randint(0, len(items)-1)
+        for i in range(arrayLen):
+            j = randint(0, arrayLen-1)
             array[i], array[j] = array[j], array[i]
 
         for k in range(len(array)-1):
