@@ -122,24 +122,17 @@ def cocktailSort(array, *args):
 
 def bogoSort(array, *args):
     is_sorted = False
-    array_copy = array[:]
     while not is_sorted:
-        items = array_copy[:]
-        new_array = list()
-        while len(items) > 0:
-            item = items.pop(randint(0, len(items)-1))
-            new_array.append(item)
+        for i in range(len(array)):
+            j = randint(0, len(items)-1)
+            array[i], array[j] = array[j], array[i]
 
         wrong_order = False
-        array = new_array[:]
-        previous = array[0]
-        for c, current in enumerate(array[1:]):
-            handleDrawing(array, c, c-1, -1, -1)
-            if current < previous:
+        for k in range(len(array)-1):
+            handleDrawing(array, k, k+1, -1, -1)
+            if array[k] > array[k+1]:
                 wrong_order = True
                 break
-
-            previous = current
 
         is_sorted = not wrong_order
 
