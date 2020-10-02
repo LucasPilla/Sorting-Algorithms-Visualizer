@@ -1,6 +1,6 @@
 # Handles the drawing and controls while executing the algorithm
 from display import handleDrawing
-
+from random import randint
 
 def bubbleSort(array, *args):
     size = len(array)
@@ -95,8 +95,8 @@ def countingSort(array, *args):
         handleDrawing(array, C[A[size-i-1]]-1, -1, size-i-1, -1)
         array[C[A[size-i-1]]-1] = A[size-i-1]
         C[A[size-i-1]] -= 1
-        
-                
+
+
 def cocktailSort(array, *args):
     n = len(array)
     swapped = True
@@ -120,6 +120,21 @@ def cocktailSort(array, *args):
                 swapped = True
         start = start+1
 
+def bogoSort(array, *args):
+    is_sorted = False
+    arrayLen = len(array)
+    while not is_sorted:
+        for i in range(arrayLen):
+            j = randint(0, arrayLen-1)
+            array[i], array[j] = array[j], array[i]
+
+        for k in range(len(array)-1):
+            handleDrawing(array, k, k+1, -1, -1)
+            if array[k] > array[k+1]:
+                is_sorted = False
+                break
+            is_sorted = True
+                
 
 def heapify(array, count):
     start = (count-1) // 2
@@ -152,7 +167,6 @@ def heapSort(array, *args):
         end -= 1
         siftDown(array, 0, end)
         
-        
 algorithmsDict = {
     'insertionsort': insertionSort,
     'bubblesort': bubbleSort,
@@ -161,6 +175,7 @@ algorithmsDict = {
     'quicksort': quickSort,
     'countingsort': countingSort,
     'cocktailsort': cocktailSort,
+    'bogosort': bogoSort,
     'heapsort': heapSort,
 }
 
