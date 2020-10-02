@@ -127,16 +127,13 @@ def bogoSort(array, *args):
             j = randint(0, len(items)-1)
             array[i], array[j] = array[j], array[i]
 
-        wrong_order = False
         for k in range(len(array)-1):
             handleDrawing(array, k, k+1, -1, -1)
             if array[k] > array[k+1]:
-                wrong_order = True
+                is_sorted = False
                 break
-
-        is_sorted = not wrong_order
-
-    return array
+            is_sorted = True
+                
 
 def heapify(array, count):
     start = (count-1) // 2
