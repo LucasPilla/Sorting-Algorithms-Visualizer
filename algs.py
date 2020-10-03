@@ -11,6 +11,26 @@ def bubbleSort(array, *args):
                 array[j], array[j + 1] = array[j + 1], array[j]
 
 
+def bucketSort(array, *args):
+    n =len(array)
+    maxValue = max(array)
+    size = maxValue/n
+    bucketsList= []
+    for x in range(n):
+        bucketsList.append([]) 
+    for i in range(n):
+        j = int (array[i] / size)
+        if j != n:
+            bucketsList[j].append(array[i])
+        else:
+            bucketsList[n - 1].append(array[i])
+    for z in range(n):
+        insertionSort(bucketsList[z])
+    array.clear()
+    for x in range(n):
+        array.extend(bucketsList[x])
+
+
 def mergeSort(array, left, right):
     if left < right:
         mid = int((left+right)/2)
@@ -177,6 +197,7 @@ algorithmsDict = {
     'cocktailsort': cocktailSort,
     'bogosort': bogoSort,
     'heapsort': heapSort,
+    'bucketsort' : bucketSort
 }
 
 
