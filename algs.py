@@ -28,7 +28,7 @@ def bucketSort(array, *args):
         insertionSort(bucketsList[z])
     array.clear()
     for x in range(n):
-        array = array + bucketsList[x]
+        array.extend(bucketsList[x])
 
 
 def mergeSort(array, left, right):
