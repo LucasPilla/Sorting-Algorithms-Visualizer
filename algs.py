@@ -12,7 +12,6 @@ algorithmsDict = {
     'cocktailsort': cocktailSort,
     'bogosort': bogoSort,
     'heapsort': heapSort,
-    'bucketsort' : bucketSort
 }
 
 
