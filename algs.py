@@ -26,7 +26,7 @@ def bucketSort(array, *args):
             bucketsList[n - 1].append(array[i])
     for z in range(n):
         insertionSort(bucketsList[z])
-    array = []
+    array.clear()
     for x in range(n):
         array = array + bucketsList[x]
 
