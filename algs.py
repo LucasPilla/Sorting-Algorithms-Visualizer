@@ -1,6 +1,7 @@
 # Handles the drawing and controls while executing the algorithm
 from algorithms import *
 
+
 algorithmsDict = {
     'insertionsort': insertionSort,
     'bubblesort': bubbleSort,
@@ -11,7 +12,9 @@ algorithmsDict = {
     'cocktailsort': cocktailSort,
     'bogosort': bogoSort,
     'heapsort': heapSort,
+    'bucketsort' : bucketSort
 }
+
 
 def runAlgorithm(algorithm, array):
     return algorithmsDict[algorithm](array, 0, len(array)-1)
