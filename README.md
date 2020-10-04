@@ -2,7 +2,7 @@
 Program made with Pygame module for visualizing sorting algorithms
 
 ## Program preview
-![](preview.gif)
+![](data/preview.gif)
 
 ## How to contribute: Implement new Algorithms
 - Check the Repository Wiki to see algorithms already implemented.
@@ -11,6 +11,6 @@ Program made with Pygame module for visualizing sorting algorithms
 
 ## Using the application
 - Clone GitHub repository
-- Install Pygame: `pip install pygame`
+- Install requirements: `pip install -r requirements.txt`
 - Run: `python main.py`
 
