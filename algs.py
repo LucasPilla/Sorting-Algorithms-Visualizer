@@ -1,4 +1,3 @@
-# Handles the drawing and controls while executing the algorithm
 from algorithms import *
 
 
@@ -12,6 +11,7 @@ algorithmsDict = {
     'cocktailsort': cocktailSort,
     'bogosort': bogoSort,
     'heapsort': heapSort,
+    'radixsort': radixSort,
 }
 
 
