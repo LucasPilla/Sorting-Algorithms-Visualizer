@@ -1,4 +1,3 @@
-# Handles the drawing and controls while executing the algorithm
 from algorithms import *
 
 
