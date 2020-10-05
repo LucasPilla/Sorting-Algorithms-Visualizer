@@ -10,11 +10,15 @@ from random import randint
 def main():
     numbers = []
     running = True
+    # Add default values
+    display.sizeBox.text = '100'
+    display.algorithmBox.text = 'mergesort'
     while running:
         mouse = pygame.mouse.get_pos()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
             # In case the mouse is pressed
             if pygame.mouse.get_pressed() != (0, 0, 0):
                 if display.delayBox.rect.collidepoint(mouse):
