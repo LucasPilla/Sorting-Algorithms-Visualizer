@@ -98,10 +98,23 @@ def drawBars(array, redBar1, redBar2, blueBar1, blueBar2):
             color = red
         elif num in [blueBar1, blueBar2]:
             color = blue
+        # Draw sorted bars
+        elif check_sorted_bar(array, num):
+            color = green
         else:
             color = grey
         bar_width = 900/numBars
         pygame.draw.rect(screen, color, [num * bar_width, 400 - array[num], ceil(bar_width), array[num]])
+
+
+def check_sorted_bar(array, num):
+    bar = array[num]
+    bars_before = array[:num]
+    if bars_before == []: bars_before = [0]
+    bars_after = array[num + 1:]
+    if bars_after == []: bars_after = [max(array)]
+    if max(bars_before) <= bar and min(bars_after) >= bar: return True
+    return False
 
 
 def drawBottomMenu():
