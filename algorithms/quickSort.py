@@ -1,5 +1,13 @@
 from display import handleDrawing
-
+"""
+    Function to sort the array using quick sort algorithm
+    Args:
+        array: input array
+        left: left pivot index(Integer)
+        right: right pivot index(Integer)
+    Returns:
+        sorted array
+"""
 def quickSort(array, left, right):
     if left >= right:
         return
