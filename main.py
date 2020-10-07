@@ -31,7 +31,7 @@ def main():
                     display.algorithmBox.isActive = True
                 # In case the start button is pressed
                 elif display.button_rect.collidepoint(mouse):
-                    if error_checking(display): continue
+                    if error_checking(): continue
                     # Set the values given by the user
                     display.button = display.stopButton
                     display.numBars = int(display.sizeBox.text)
@@ -60,7 +60,7 @@ def randomList():
     return array
 
 
-def error_checking(display):
+def error_checking():
     size = display.sizeBox.text
     algorithm = display.algorithmBox.text
     if not size.isdigit():
