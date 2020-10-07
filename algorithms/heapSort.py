@@ -1,5 +1,6 @@
 from display import handleDrawing
 
+
 def heapSort(array, *args):
     heapify(array, len(array))
     end = len(array) - 1
@@ -9,11 +10,13 @@ def heapSort(array, *args):
         end -= 1
         siftDown(array, 0, end)
 
+
 def heapify(array, count):
     start = (count-1) // 2
     while start >= 0:
         siftDown(array, start, count - 1)
         start -= 1
+
 
 def siftDown(array, start, end):
     root = start
