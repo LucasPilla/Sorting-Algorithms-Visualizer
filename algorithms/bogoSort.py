@@ -1,6 +1,7 @@
 from display import handleDrawing
 from random import randint
 
+
 def bogoSort(array, *args):
     is_sorted = False
     arrayLen = len(array)

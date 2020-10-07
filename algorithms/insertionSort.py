@@ -1,5 +1,6 @@
 from display import handleDrawing
 
+
 def insertionSort(array, *args):
     size = len(array)
     for i in range(1, size):
