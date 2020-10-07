@@ -1,5 +1,6 @@
 from display import handleDrawing
 
+
 def countingSort(array, *args):
     size = len(array)
     A = array.copy()

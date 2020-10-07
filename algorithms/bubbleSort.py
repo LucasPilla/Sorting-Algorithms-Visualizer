@@ -1,5 +1,6 @@
 from display import handleDrawing
 
+
 def bubbleSort(array, *args):
     size = len(array)
     for i in range(size):

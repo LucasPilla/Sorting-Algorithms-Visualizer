@@ -1,11 +1,13 @@
 from display import handleDrawing
 
+
 def mergeSort(array, left, right):
     if left < right:
         mid = int((left+right)/2)
         mergeSort(array, left, mid)
         mergeSort(array, mid+1, right)
         merge(array, left, mid, right)
+
 
 def merge(array, left, mid, right):
     L = array[left:mid+1]

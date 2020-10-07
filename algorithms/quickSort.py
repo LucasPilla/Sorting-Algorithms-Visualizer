@@ -1,5 +1,6 @@
 from display import handleDrawing
 
+
 def quickSort(array, left, right):
     if left >= right:
         return
