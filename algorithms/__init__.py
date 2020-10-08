@@ -8,5 +8,18 @@ from algorithms.mergeSort import mergeSort
 from algorithms.quickSort import quickSort
 from algorithms.selectionSort import selectionSort
 from algorithms.radixSort import radixSort
+from algorithms.shellSort import shellSort
 
-__all__ = ['bogoSort', 'bubbleSort', 'cocktailSort', 'countingSort', 'heapSort', 'insertionSort', 'mergeSort', 'quickSort', 'selectionSort' ,'radixSort']
+__all__ = [
+    "bogoSort",
+    "bubbleSort",
+    "cocktailSort",
+    "countingSort",
+    "heapSort",
+    "insertionSort",
+    "mergeSort",
+    "quickSort",
+    "selectionSort",
+    "radixSort",
+    "shellSort",
+]
