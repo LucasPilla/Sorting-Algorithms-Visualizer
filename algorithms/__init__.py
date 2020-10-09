@@ -9,6 +9,7 @@ from algorithms.quickSort import quickSort
 from algorithms.selectionSort import selectionSort
 from algorithms.radixSort import radixSort
 from algorithms.shellSort import shellSort
+from algorithms.bitonicSort import bitonicSort
 
 __all__ = [
     "bogoSort",
@@ -22,4 +23,5 @@ __all__ = [
     "selectionSort",
     "radixSort",
     "shellSort",
+    "bitonicSort",
 ]
