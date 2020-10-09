@@ -6,7 +6,7 @@ Support this project by leaving a :star:
 Check [Wiki Page](../../wiki) for more information about each algorithm, as visualization gifs and explanations.
 
 ## Program preview
-![](https://gph.is/g/aR6xzpv)
+![](images/preview.gif)
 
 ## How to contribute: 
 - Implement new Algorithms:
