@@ -2,6 +2,7 @@ from algorithms.bogoSort import bogoSort
 from algorithms.bubbleSort import bubbleSort
 from algorithms.cocktailSort import cocktailSort
 from algorithms.countingSort import countingSort
+from algorithms.gnomeSort import gnomeSort
 from algorithms.heapSort import heapSort
 from algorithms.insertionSort import insertionSort
 from algorithms.mergeSort import mergeSort
@@ -15,6 +16,7 @@ __all__ = [
     "bubbleSort",
     "cocktailSort",
     "countingSort",
+    "gnomeSort",
     "heapSort",
     "insertionSort",
     "mergeSort",
