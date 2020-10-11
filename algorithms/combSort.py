@@ -1,23 +1,24 @@
 from display import handleDrawing
 
 
-def get_gap(prev_gap=None, a_length=None) -> int:
-    gap = int((prev_gap * a_length)/13)
+def get_gap(prev_gap) -> int:
+    gap = int(prev_gap/1.3)
     if gap < 1:
         return 1
     return gap
     
 
-def combSort(_list=None):
-    a_length = len(_list)
-    gap = a_length
+def combSort(array, *args):
+    size = len(array)
+    gap = size
     swapped = True
 
     while gap != 1 or swapped:
-        gap = get_gap(prev_gap=gap, a_length=len(_list))
+        gap = get_gap(gap)
         swapped = False
 
-        for idx in range(0, a_length - gap):
-            if _list[idx] > _list[idx + gap]:
-                _list[idx], _list[idx + gap] = _list[idx + gap], _list[idx]
+        for idx in range(0, size - gap):
+            handleDrawing(array, idx, idx+gap, -1, -1)
+            if array[idx] > array[idx + gap]:
+                array[idx], array[idx + gap] = array[idx + gap], array[idx]
                 swapped = True
