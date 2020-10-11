@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # coding: utf-8
-#from display import handleDrawing
+from display import handleDrawing
 
 
 def get_gap(prev_gap=None, a_length=None) -> int:
