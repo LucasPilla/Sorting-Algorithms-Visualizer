@@ -25,5 +25,5 @@ __all__ = [
     "selectionSort",
     "radixSort",
     "shellSort",
-    "combSort",
+    "combSort"
 ]
