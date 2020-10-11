@@ -79,8 +79,8 @@ sizeBox = InputBox.TextBox("Size", grey, (30, 440, 50, 50))
 delayBox = InputBox.SliderBox("Delay", (105, 440, 112, 50))
 algorithmBox = InputBox.TextBox("Algorithm", grey, (242, 440, 112, 50))
 # Button
-playButton = pygame.image.load('data/playButton.png')
-stopButton = pygame.image.load('data/stopButton.png')
+playButton = pygame.image.load('images/playButton.png')
+stopButton = pygame.image.load('images/stopButton.png')
 button_rect = playButton.get_rect()
 button_rect.center = (415, 460)
 
