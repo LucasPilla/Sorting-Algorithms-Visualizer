@@ -13,7 +13,8 @@ algorithmsDict = {
     'heapsort': heapSort,
     'radixsort': radixSort,
     'shellsort': shellSort,
-    'gnomesort': gnomeSort
+    'gnomesort': gnomeSort,
+    'combsort': combSort
 }
 
 
