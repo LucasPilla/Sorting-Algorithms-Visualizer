@@ -9,6 +9,7 @@ algorithmsDict = {
     'quicksort': quickSort,
     'countingsort': countingSort,
     'cocktailsort': cocktailSort,
+    'cyclesort': cycleSort,
     'bogosort': bogoSort,
     'heapsort': heapSort,
     'radixsort': radixSort,
