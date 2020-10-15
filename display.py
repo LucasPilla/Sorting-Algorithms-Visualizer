@@ -21,50 +21,61 @@ black = (0, 0, 0)
 blue = (50, 50, 255)
 
 
+# THE CODE BELOW IS A MODULE FOR TAKING USER INPUT WITH PYGAME #
 class InputBox:
-    class TextBox:
-        def __init__(self, label, color, rect):
-            self.isActive = False
-            self.text = ''
-            self.rect = pygame.Rect(rect)
-            self.label = baseFont.render(label, True, color)
+    def __init__(self, name, color, rect):
+        self.isActive = False
+        self.name = name
+        self.color = color
+        self.rect = pygame.Rect(rect)
 
-        def draw(self, color, width):
-            xPos = self.rect.x
-            yPos = self.rect.y
-            surface = baseFont.render(self.text, True, color)
-            screen.blit(self.label, (xPos+(self.rect.w - self.label.get_width())/2, yPos - 32))
-            pygame.draw.rect(screen, color, self.rect, 3)
-            screen.blit(surface, (xPos + 10, yPos + 10))
-            self.rect.w = max(surface.get_width() + 20, width)
+    def draw(self):
+        label = baseFont.render(self.name, True, self.color)
+        screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 32))
+        pygame.draw.rect(screen, self.color, self.rect, 3)
 
-        def write(self, wEvent):
+    def update(self):
+        mousePos = pygame.mouse.get_pos()
+        if pygame.mouse.get_pressed() != (0, 0, 0):
+            if self.rect.collidepoint(mousePos):
+                self.isActive = True
+            else:
+                self.isActive = False
+
+
+class TextBox(InputBox):
+    def __init__(self, name, color, rect):
+        super().__init__(name, color, rect)
+        self.text = ''
+
+    def draw(self):
+        super().draw()
+        surface = baseFont.render(self.text, True, self.color)
+        screen.blit(surface, (self.rect.x + 10, self.rect.y + 10))
+        self.rect.w = max(surface.get_width() + 20, 50)
+
+    def update(self, wEvent):
+        super().update()
+        if self.isActive and wEvent.type == pygame.KEYDOWN:
             if wEvent.key == pygame.K_BACKSPACE:
                 self.text = self.text[:-1]
             else:
                 self.text += wEvent.unicode
 
-    class SliderBox:
-        def __init__(self, name, rect):
-            self.isActive = False
-            self.rect = pygame.Rect(rect)
-            self.name = name
-            self.value = self.rect.x+6
 
-        def draw(self, color):
-            xPos = self.rect.x
-            yPos = self.rect.y
-            # Draw the label
-            label = baseFont.render(self.name + ' (%dms)' % (self.value - xPos - 6), True, color)
-            screen.blit(label, (xPos+(self.rect.w - label.get_width())/2, yPos - 32))
-            # Draw the rect button
-            pygame.draw.rect(screen, color, self.rect, 3)
-            # Draw central line
-            pygame.draw.line(screen, color, (xPos+6, yPos+25), (xPos+self.rect.w-6, yPos+25), 2)
-            # Draw bar control
-            pygame.draw.line(screen, color, (self.value, yPos+5), (self.value, yPos+45), 12)
+class SliderBox(InputBox):
+    def __init__(self, name, color, rect):
+        super().__init__(name, color, rect)
+        self.value = self.rect.x+6
 
-        def write(self):
+    def draw(self):
+        super().draw()
+        pygame.draw.line(screen, self.color, (self.rect.x+6, self.rect.y+25), (self.rect.x+self.rect.w-6, self.rect.y+25), 2)
+        pygame.draw.line(screen, self.color, (self.value, self.rect.y+5), (self.value, self.rect.y+45), 12)
+
+    def update(self):
+        super().update()
+        if self.isActive and pygame.mouse.get_pressed() != (0, 0, 0):
             x = pygame.mouse.get_pos()[0]
             if x <= self.rect.x+6:
                 self.value = self.rect.x+6
@@ -74,21 +85,39 @@ class InputBox:
                 self.value = x
 
 
+class ButtonBox:
+    def __init__(self, stateFalse, stateTrue, rect):
+        self.stateFalse = pygame.image.load(stateFalse)
+        self.stateTrue = pygame.image.load(stateTrue)
+        self.active = False
+        self.rect = pygame.Rect(rect)
+
+    def draw(self):
+        pos = (self.rect.x, self.rect.y)
+        if self.active:
+            screen.blit(self.stateTrue, pos)
+        else:
+            screen.blit(self.stateFalse, pos)
+
+    def update(self):
+        if self.active:
+            self.active = False
+        mousePos = pygame.mouse.get_pos()
+        if pygame.mouse.get_pressed() != (0, 0, 0) and self.rect.collidepoint(mousePos):
+            self.active = True
+# END OF MODULE #
+
+
 # Input Boxes
-sizeBox = InputBox.TextBox("Size", grey, (30, 440, 50, 50))
-delayBox = InputBox.SliderBox("Delay", (105, 440, 112, 50))
-algorithmBox = InputBox.TextBox("Algorithm", grey, (242, 440, 112, 50))
-# Button
-playButton = pygame.image.load('images/playButton.png')
-stopButton = pygame.image.load('images/stopButton.png')
-button_rect = playButton.get_rect()
-button_rect.center = (415, 460)
+sizeBox = TextBox("Size", grey, (30, 440, 50, 50))
+delayBox = SliderBox("Delay", grey, (105, 440, 112, 50))
+algorithmBox = TextBox("Algorithm", grey, (242, 440, 112, 50))
+startButton = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 435, 50, 50))
 
 # Global Variables
 numBars = 0
 delay = 0
 toDraw = True
-button = playButton
 
 
 def drawBars(array, redBar1, redBar2, blueBar1, blueBar2):
@@ -106,10 +135,10 @@ def drawBars(array, redBar1, redBar2, blueBar1, blueBar2):
 
 def drawBottomMenu():
     """Draw the menu below the bars"""
-    sizeBox.draw(grey, 50)
-    delayBox.draw(grey)
-    algorithmBox.draw(grey, 100)
-    screen.blit(button, (390, 435))
+    sizeBox.draw()
+    delayBox.draw()
+    algorithmBox.draw()
+    startButton.draw()
 
 
 def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2):
@@ -127,7 +156,7 @@ def handleDrawing(array, redBar1, redBar2, blueBar1, blueBar2):
             pygame.quit()
             exit(0)
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            if button_rect.collidepoint(event.pos):
+            if startButton.rect.collidepoint(event.pos):
                 toDraw = False
     if toDraw:
         drawInterface(array, redBar1, redBar2, blueBar1, blueBar2)
