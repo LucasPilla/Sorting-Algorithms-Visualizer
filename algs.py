@@ -1,5 +1,5 @@
 from algorithms import *
-
+from algorithms.bitonicSort import bitonicSort
 
 algorithmsDict = {
     'insertionsort': insertionSort,
@@ -15,7 +15,8 @@ algorithmsDict = {
     'radixsort': radixSort,
     'shellsort': shellSort,
     'gnomesort': gnomeSort,
-    'combsort': combSort
+    'combsort': combSort,
+    'bitonicsort': bitonicSort
 }
 
 
