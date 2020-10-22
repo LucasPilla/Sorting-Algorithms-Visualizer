@@ -93,6 +93,7 @@ class ButtonBox:
         self.rect = pygame.Rect(rect)
 
     def draw(self):
+        self.rect.x = algorithmBox.rect.x+algorithmBox.rect.w+20
         pos = (self.rect.x, self.rect.y)
         if self.active:
             screen.blit(self.stateTrue, pos)
