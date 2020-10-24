@@ -12,6 +12,7 @@ from algorithms.selectionSort import selectionSort
 from algorithms.radixSort import radixSort
 from algorithms.shellSort import shellSort
 from algorithms.combSort import combSort
+from algorithms.bucketSort import bucketSort
 
 __all__ = [
     "bogoSort",
@@ -27,5 +28,6 @@ __all__ = [
     "selectionSort",
     "radixSort",
     "shellSort",
-    "combSort"
+    "combSort",
+    "bucketSort"
 ]

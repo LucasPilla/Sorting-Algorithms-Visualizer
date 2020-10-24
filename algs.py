@@ -20,7 +20,8 @@ algorithmsDict = {
     'combsort': combSort,
     'bitonicsort': bitonicSort,
     'pancakesort': pancakeSort,
-    'binaryinsertionsort': binaryinsertionSort
+    'binaryinsertionsort': binaryinsertionSort,
+    'bucketsort': bucketSort,
 }
 
 
