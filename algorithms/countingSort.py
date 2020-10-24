@@ -4,7 +4,7 @@ from display import handleDrawing
 def countingSort(array, *args):
     size = len(array)
     A = array.copy()
-    C = [0]*size
+    C = [0]*(max(A)+1)
     for i in range(size):
         C[A[i]] += 1
     for i in range(1, len(C)):
