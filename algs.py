@@ -15,7 +15,8 @@ algorithmsDict = {
     'radixsort': radixSort,
     'shellsort': shellSort,
     'gnomesort': gnomeSort,
-    'combsort': combSort
+    'combsort': combSort,
+    'bucketsort': bucketSort,
 }
 
 
