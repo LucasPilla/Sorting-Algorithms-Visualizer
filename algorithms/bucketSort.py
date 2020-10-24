@@ -5,9 +5,10 @@ def bucketSort(array, *args):
     bucket = []
     for i in range(len(array)):
         bucket.append([])
+    n = len(bucket)
     
     for j in array:
-        index_b = int(10/j)
+        index_b = int(j/n)
         handleDrawing(array,j,-1,index_b,-1)
         bucket[index_b].append(j)
         
