@@ -14,7 +14,6 @@ def main():
     display.sizeBox.text = '100'
     display.algorithmBox.text = 'mergesort'
     while running:
-        mouse = pygame.mouse.get_pos()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
