@@ -26,11 +26,8 @@ def main():
             if display.startButton.active and not error_checking():
                 # Set the values given by the user
                 display.numBars = int(display.sizeBox.text)
-                display.delay = (
-                    display.delayBox.value
-                    - display.delayBox.rect.x
-                    - 6
-                )
+                display.delay =\
+                    display.delayBox.value - display.delayBox.rect.x - 6
                 algorithm = display.algorithmBox.text
                 # Generates a random list
                 numbers = randomList()
