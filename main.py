@@ -54,7 +54,8 @@ def error_checking():
     if algorithm not in list(algorithmsDict):
         display.algorithmBox.color = display.red
         error = True
-    if error: return True
+    if error:
+        return True
     display.sizeBox.color = display.grey
     display.algorithmBox.color = display.grey
     return False
