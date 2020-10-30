@@ -6,14 +6,14 @@ def cocktailSort(array, *args):
     swapped = True
     start = 0
     end = n-1
-    while (swapped == True):
+    while swapped:
         swapped = False
         for i in range(start, end):
             handleDrawing(array, i, i+1, -1, -1)
             if (array[i] > array[i+1]):
                 array[i], array[i+1] = array[i+1], array[i]
                 swapped = True
-        if (swapped == False):
+        if swapped is False:
             break
         swapped = False
         end = end-1
