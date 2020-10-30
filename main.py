@@ -1,6 +1,6 @@
 import display
 import pygame
-from algs import *
+from algs import algorithmsDict, runAlgorithm
 from random import randint
 
 # Global Variables: numBars, delay, toDraw, button
