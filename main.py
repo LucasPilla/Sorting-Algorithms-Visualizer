@@ -1,6 +1,6 @@
 import display
 import pygame
-from algs import *
+from algs import algorithmsDict, runAlgorithm
 from random import randint
 
 # Global Variables: numBars, delay, toDraw, button
@@ -14,7 +14,6 @@ def main():
     display.sizeBox.text = '100'
     display.algorithmBox.text = 'mergesort'
     while running:
-        mouse = pygame.mouse.get_pos()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -27,7 +26,8 @@ def main():
             if display.startButton.active and not error_checking():
                 # Set the values given by the user
                 display.numBars = int(display.sizeBox.text)
-                display.delay = display.delayBox.value - display.delayBox.rect.x - 6
+                display.delay =\
+                    display.delayBox.value - display.delayBox.rect.x - 6
                 algorithm = display.algorithmBox.text
                 # Generates a random list
                 numbers = randomList()
@@ -55,7 +55,8 @@ def error_checking():
     if algorithm not in list(algorithmsDict):
         display.algorithmBox.color = display.red
         error = True
-    if error: return True
+    if error:
+        return True
     display.sizeBox.color = display.grey
     display.algorithmBox.color = display.grey
     return False
