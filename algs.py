@@ -2,6 +2,7 @@ from algorithms import *
 from algorithms.binaryinsertionSort import binaryinsertionSort
 from algorithms.bitonicSort import bitonicSort
 from algorithms.pancakeSort import pancakeSort
+from algorithms.timSort import timSort
 
 algorithmsDict = {
     'insertionsort': insertionSort,
@@ -22,6 +23,7 @@ algorithmsDict = {
     'pancakesort': pancakeSort,
     'binaryinsertionsort': binaryinsertionSort,
     'bucketsort': bucketSort,
+    'timsort' :timSort,
 }
 
 
