@@ -8,15 +8,15 @@ Check [Wiki Page](../../wiki) for more information about each algorithm, as visu
 ## Program preview
 ![](images/preview.gif)
 
+## Using the application
+- Clone GitHub repository
+- Install requirements: `pip install -r requirements.txt`
+- Run: `python main.py`
+
 ## How to contribute: 
 - Implement new Algorithms:
    - Check algorithms folder to see algorithms already implemented.
    - Chose a new algorithm and Create an issue called: "Implement algorithm_name"
    - Make your Pull Request linked to the respective issue
 - Report bugs and give feedbacks
-
-## Using the application
-- Clone GitHub repository
-- Install requirements: `pip install -r requirements.txt`
-- Run: `python main.py`
 
