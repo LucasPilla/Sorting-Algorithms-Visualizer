@@ -11,6 +11,7 @@ Check [Wiki Page](../../wiki) for more information about each algorithm, as visu
 ## Using the application
 - Clone GitHub repository
 - Install requirements: `pip install -r requirements.txt`
+   - if using Ubuntu, install dependencies first: `sudo apt-get install python-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsdl1.2-dev libsmpeg-dev python-numpy subversion libportmidi-dev ffmpeg libswscale-dev libavformat-dev libavcodec-dev libfreetype6-dev`
 - Run: `python main.py`
 
 ## How to contribute: 
