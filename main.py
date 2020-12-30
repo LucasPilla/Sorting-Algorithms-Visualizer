@@ -12,7 +12,7 @@ def main():
     running = True
     # Add default values
     display.sizeBox.text = '100'
-    display.algorithmBox.text = 'mergesort'
+    # display.algorithmBox.text = 'mergesort'
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -20,7 +20,7 @@ def main():
 
             display.sizeBox.update(event)
             display.delayBox.update()
-            display.algorithmBox.update(event)
+            display.algorithmBox.update()
             display.startButton.update()
 
             if display.startButton.active and not error_checking():
