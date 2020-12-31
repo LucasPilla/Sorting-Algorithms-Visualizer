@@ -115,19 +115,23 @@ class DropdownBox():
         self.color = color
         self.rect = pygame.Rect(rect)
         self.options = options
+        self.default_option = 0
         self.font = font
 
     def draw(self):
         label = baseFont.render(self.name, True, self.color)
         screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 32))
         pygame.draw.rect(screen, self.color, self.rect, 3)
+        option_text = self.font.render(self.options[self.default_option], 1, (0, 0, 0))
+        screen.blit(option_text, option_text.get_rect(center=self.rect.center))
+
         if self.isActive:
-            for i, text in enumerate(self.options):
+            for i, text in enumerate(self.options[self.default_option+1:]):
                 rect = self.rect.copy()
-                rect.y -= (i+1) * self.rect.height
+                rect.y -= (i + 1) * self.rect.height
                 pygame.draw.rect(screen, self.color, rect, 3)
-                message = self.font.render(text, 1, (0, 0, 0))
-                screen.blit(message, message.get_rect(center=rect.center))
+                option_text = self.font.render(text, 1, (0, 0, 0))
+                screen.blit(option_text, option_text.get_rect(center=rect.center))
 
 
     def update(self):
