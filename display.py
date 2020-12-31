@@ -2,8 +2,6 @@ import pygame
 from sys import exit
 from math import ceil
 
-from pygame import mouse
-
 # Initialize pygame modules
 pygame.init()
 pygame.font.init()
@@ -111,16 +109,21 @@ class ButtonBox:
             self.active = True
 
 class DropdownBox():
-    def __init__(self, name, rect, options, font):
+    def __init__(self, name, rect, font):
         self.isActive = False
         self.name = name
         self.color = grey
         self.options_color = white
         self.rect = pygame.Rect(rect)
-        self.options = options
         self.default_option = 0
         self.active_option = -1
         self.font = font
+
+    def add_options(self, options):
+        self.options = options
+
+    def get_active_option(self):
+        return self.options[self.default_option]
 
     def draw(self):
         label = baseFont.render(self.name, True, self.color)
@@ -162,7 +165,7 @@ class DropdownBox():
 # Input Boxes
 sizeBox = TextBox("Size", grey, (30, 440, 50, 50))
 delayBox = SliderBox("Delay", grey, (105, 440, 112, 50))
-algorithmBox = DropdownBox("Algorithm", (242, 440, 112, 50), ['mergesort', 'quicksort', 'bucketssdfdsfort'], pygame.font.SysFont(None, 26))
+algorithmBox = DropdownBox("Algorithm", (242, 440, 112, 50), pygame.font.SysFont(None, 26))
 startButton = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 435, 50, 50))
 
 # Global Variables
