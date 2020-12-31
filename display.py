@@ -2,6 +2,8 @@ import pygame
 from sys import exit
 from math import ceil
 
+from pygame import mouse
+
 # Initialize pygame modules
 pygame.init()
 pygame.font.init()
@@ -109,13 +111,15 @@ class ButtonBox:
             self.active = True
 
 class DropdownBox():
-    def __init__(self, name, color, rect, options, font):
+    def __init__(self, name, rect, options, font):
         self.isActive = False
         self.name = name
-        self.color = color
+        self.color = grey
+        self.options_color = white
         self.rect = pygame.Rect(rect)
         self.options = options
         self.default_option = 0
+        self.active_option = 0
         self.font = font
 
     def draw(self):
@@ -127,17 +131,24 @@ class DropdownBox():
 
         if self.isActive:
             for i, text in enumerate(self.options[self.default_option+1:]):
+                options_color = grey if i == self.active_option else self.options_color
                 rect = self.rect.copy()
                 rect.y -= (i + 1) * self.rect.height
-                pygame.draw.rect(screen, self.color, rect, 3)
+                pygame.draw.rect(screen, options_color, rect, 0)
+                pygame.draw.rect(screen, self.color, rect, 3) # draw border
                 option_text = self.font.render(text, 1, (0, 0, 0))
                 screen.blit(option_text, option_text.get_rect(center=rect.center))
 
 
     def update(self):
-        mousePos = pygame.mouse.get_pos()
+        mouse_position = pygame.mouse.get_pos()
         if pygame.mouse.get_pressed() != (0, 0, 0):
-            self.isActive = self.rect.collidepoint(mousePos)
+            self.isActive = self.rect.collidepoint(mouse_position)
+        for i in range(len(self.options)-1):
+            rect = self.rect.copy()
+            rect.y -= (i + 1) * self.rect.height
+            if rect.collidepoint(mouse_position):
+                self.active_option = i
 
 # END OF MODULE #
 
@@ -145,7 +156,7 @@ class DropdownBox():
 # Input Boxes
 sizeBox = TextBox("Size", grey, (30, 440, 50, 50))
 delayBox = SliderBox("Delay", grey, (105, 440, 112, 50))
-algorithmBox = DropdownBox("Algorithm", grey, (242, 440, 112, 50), ['A', 'B', 'C'], pygame.font.SysFont(None, 30))
+algorithmBox = DropdownBox("Algorithm", (242, 440, 112, 50), ['mergesort', 'quicksort', 'bucketssdfdsfort'], pygame.font.SysFont(None, 26))
 startButton = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 435, 50, 50))
 
 # Global Variables
