@@ -119,7 +119,7 @@ class DropdownBox():
         self.rect = pygame.Rect(rect)
         self.options = options
         self.default_option = 0
-        self.active_option = 0
+        self.active_option = -1
         self.font = font
 
     def draw(self):
@@ -142,13 +142,19 @@ class DropdownBox():
 
     def update(self):
         mouse_position = pygame.mouse.get_pos()
-        if pygame.mouse.get_pressed() != (0, 0, 0):
-            self.isActive = self.rect.collidepoint(mouse_position)
         for i in range(len(self.options)-1):
             rect = self.rect.copy()
             rect.y -= (i + 1) * self.rect.height
             if rect.collidepoint(mouse_position):
                 self.active_option = i
+        if pygame.mouse.get_pressed() != (0, 0, 0):
+            dropdown_rect = pygame.Rect((self.rect.x, self.rect.y-(self.rect.height* (len(self.options)-1)), self.rect.width, self.rect.height * (len(self.options)-1)))
+            if self.isActive and dropdown_rect.collidepoint(mouse_position):
+                self.options[self.default_option], self.options[self.active_option+1] = self.options[self.active_option+1], self.options[self.default_option]
+                self.active_option = -1
+            self.isActive = self.rect.collidepoint(mouse_position)
+        if not self.isActive:
+            self.active_option = -1
 
 # END OF MODULE #
 
