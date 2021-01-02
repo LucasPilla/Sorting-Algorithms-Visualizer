@@ -121,6 +121,11 @@ class DropdownBox():
 
     def add_options(self, options):
         self.options = options
+        dropdown_width = self.rect.height * ceil((len(self.options)-1) / self.rect.y) * self.rect.width
+        dropdown_height = self.rect.y
+        self.dropdown_rect = pygame.Rect((self.rect.x, 
+            0, dropdown_width, dropdown_height))
+
 
     def get_active_option(self):
         return self.options[self.default_option]
@@ -133,26 +138,40 @@ class DropdownBox():
         screen.blit(option_text, option_text.get_rect(center=self.rect.center))
 
         if self.isActive:
+            column = 0
+            index = 0
             for i, text in enumerate(self.options[self.default_option+1:]):
                 options_color = grey if i == self.active_option else self.options_color
                 rect = self.rect.copy()
-                rect.y -= (i + 1) * self.rect.height
+                rect.y -= (index + 1) * self.rect.height
+                if rect.y <= self.dropdown_rect.y:
+                    index = 0
+                    rect.y = self.rect.y - (index + 1) * self.rect.height
+                    column += 1
+                rect.x = self.rect.x + column * self.rect.width
                 pygame.draw.rect(screen, options_color, rect, 0)
                 pygame.draw.rect(screen, self.color, rect, 3) # draw border
-                option_text = self.font.render(text, 1, (0, 0, 0))
+                option_text = self.font.render(text[:12], 1, (0, 0, 0))
                 screen.blit(option_text, option_text.get_rect(center=rect.center))
-
+                index += 1
 
     def update(self):
         mouse_position = pygame.mouse.get_pos()
+        column = 0
+        index = 0
         for i in range(len(self.options)-1):
             rect = self.rect.copy()
-            rect.y -= (i + 1) * self.rect.height
+            rect.y -= (index + 1) * self.rect.height
+            if rect.y <= self.dropdown_rect.y:
+                index = 0
+                rect.y = self.rect.y - (index + 1) * self.rect.height
+                column += 1
+            rect.x = self.rect.x + column * self.rect.width
             if rect.collidepoint(mouse_position):
                 self.active_option = i
+            index += 1
         if pygame.mouse.get_pressed() != (0, 0, 0):
-            dropdown_rect = pygame.Rect((self.rect.x, self.rect.y-(self.rect.height* (len(self.options)-1)), self.rect.width, self.rect.height * (len(self.options)-1)))
-            if self.isActive and dropdown_rect.collidepoint(mouse_position):
+            if self.isActive and self.dropdown_rect.collidepoint(mouse_position):
                 self.options[self.default_option], self.options[self.active_option+1] = self.options[self.active_option+1], self.options[self.default_option]
                 self.active_option = -1
             self.isActive = self.rect.collidepoint(mouse_position)
