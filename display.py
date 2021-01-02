@@ -109,70 +109,75 @@ class ButtonBox:
             self.active = True
 
 class DropdownBox():
+    DEFAUTL_OPTION = 0
+
     def __init__(self, name, rect, font):
         self.isActive = False
         self.name = name
         self.color = grey
         self.options_color = white
         self.rect = pygame.Rect(rect)
-        self.default_option = 0
         self.active_option = -1
         self.font = font
 
     def add_options(self, options):
         self.options = options
-        dropdown_width = self.rect.height * ceil((len(self.options)-1) / self.rect.y) * self.rect.width
-        dropdown_height = self.rect.y
-        self.dropdown_rect = pygame.Rect((self.rect.x, 
-            0, dropdown_width, dropdown_height))
+        dropdown_width = ceil((len(self.options)-1) * self.rect.height / self.rect.y) * self.rect.width
+        self.dropdown_rect = pygame.Rect((self.rect.x, 0, dropdown_width, self.rect.y))
 
 
     def get_active_option(self):
-        return self.options[self.default_option]
+        return self.options[self.DEFAUTL_OPTION]
 
     def draw(self):
         label = baseFont.render(self.name, True, self.color)
         screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 32))
         pygame.draw.rect(screen, self.color, self.rect, 3)
-        option_text = self.font.render(self.options[self.default_option], 1, (0, 0, 0))
+        option_text = self.font.render(self.options[self.DEFAUTL_OPTION], 1, (0, 0, 0))
         screen.blit(option_text, option_text.get_rect(center=self.rect.center))
 
         if self.isActive:
             column = 0
             index = 0
-            for i, text in enumerate(self.options[self.default_option+1:]):
-                options_color = grey if i == self.active_option else self.options_color
+            rect_start = self.rect.y - self.rect.height
+            for i in range(self.DEFAUTL_OPTION+1, len(self.options)):
                 rect = self.rect.copy()
                 rect.y -= (index + 1) * self.rect.height
                 if rect.y <= self.dropdown_rect.y:
-                    index = 0
-                    rect.y = self.rect.y - (index + 1) * self.rect.height
                     column += 1
+                    index = 0
+                    rect.y = rect_start
+                index += 1
                 rect.x = self.rect.x + column * self.rect.width
+                
+                options_color = grey if i - 1 == self.active_option else self.options_color
                 pygame.draw.rect(screen, options_color, rect, 0)
                 pygame.draw.rect(screen, self.color, rect, 3) # draw border
-                option_text = self.font.render(text[:12], 1, (0, 0, 0))
+                option_text = self.font.render(self.options[i][:12], 1, (0, 0, 0))
                 screen.blit(option_text, option_text.get_rect(center=rect.center))
-                index += 1
 
     def update(self):
         mouse_position = pygame.mouse.get_pos()
         column = 0
         index = 0
+        rect_start = self.rect.y - self.rect.height
         for i in range(len(self.options)-1):
             rect = self.rect.copy()
             rect.y -= (index + 1) * self.rect.height
             if rect.y <= self.dropdown_rect.y:
-                index = 0
-                rect.y = self.rect.y - (index + 1) * self.rect.height
                 column += 1
+                index = 0
+                rect.y = rect_start
+            index += 1
             rect.x = self.rect.x + column * self.rect.width
+
             if rect.collidepoint(mouse_position):
                 self.active_option = i
-            index += 1
+        
         if pygame.mouse.get_pressed() != (0, 0, 0):
             if self.isActive and self.dropdown_rect.collidepoint(mouse_position):
-                self.options[self.default_option], self.options[self.active_option+1] = self.options[self.active_option+1], self.options[self.default_option]
+                self.options[self.DEFAUTL_OPTION], self.options[self.active_option+1] =\
+                     self.options[self.active_option+1], self.options[self.DEFAUTL_OPTION]
                 self.active_option = -1
             self.isActive = self.rect.collidepoint(mouse_position)
         if not self.isActive:
