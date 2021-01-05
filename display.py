@@ -4,7 +4,6 @@ from math import ceil
 
 # Initialize pygame modules
 pygame.init()
-pygame.font.init()
 
 # Display settings
 windowSize = (900, 500)
@@ -133,7 +132,7 @@ class DropdownBox():
         label = baseFont.render(self.name, True, self.color)
         screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 32))
         pygame.draw.rect(screen, self.color, self.rect, 3)
-        option_text = self.font.render(self.options[self.DEFAUTL_OPTION], 1, (0, 0, 0))
+        option_text = self.font.render(self.options[self.DEFAUTL_OPTION], 1, grey)
         screen.blit(option_text, option_text.get_rect(center=self.rect.center))
 
         if self.isActive:
@@ -150,10 +149,10 @@ class DropdownBox():
                 index += 1
                 rect.x = self.rect.x + column * self.rect.width
                 
-                options_color = grey if i - 1 == self.active_option else self.options_color
-                pygame.draw.rect(screen, options_color, rect, 0)
+                options_color = black if i - 1 == self.active_option else grey
+                pygame.draw.rect(screen, self.options_color, rect, 0)
                 pygame.draw.rect(screen, self.color, rect, 3) # draw border
-                option_text = self.font.render(self.options[i][:12], 1, (0, 0, 0))
+                option_text = self.font.render(self.options[i][:12], 1, options_color)
                 screen.blit(option_text, option_text.get_rect(center=rect.center))
 
     def update(self):
@@ -189,7 +188,7 @@ class DropdownBox():
 # Input Boxes
 sizeBox = TextBox("Size", grey, (30, 440, 50, 50))
 delayBox = SliderBox("Delay", grey, (105, 440, 112, 50))
-algorithmBox = DropdownBox("Algorithm", (242, 440, 112, 50), pygame.font.SysFont(None, 26))
+algorithmBox = DropdownBox("Algorithm", (242, 440, 140, 50), baseFont)
 startButton = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 435, 50, 50))
 
 # Global Variables
