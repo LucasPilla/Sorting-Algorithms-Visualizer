@@ -12,7 +12,8 @@ def main():
     running = True
     # Add default values
     display.sizeBox.text = '100'
-    display.algorithmBox.text = 'mergesort'
+    display.algorithmBox.add_options(list(algorithmsDict.keys()))
+    # display.algorithmBox.text = 'mergesort'
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -20,7 +21,7 @@ def main():
 
             display.sizeBox.update(event)
             display.delayBox.update()
-            display.algorithmBox.update(event)
+            display.algorithmBox.update()
             display.startButton.update()
 
             if display.startButton.active and not error_checking():
@@ -28,7 +29,7 @@ def main():
                 display.numBars = int(display.sizeBox.text)
                 display.delay =\
                     display.delayBox.value - display.delayBox.rect.x - 6
-                algorithm = display.algorithmBox.text
+                algorithm = display.algorithmBox.get_active_option()
                 # Generates a random list
                 numbers = randomList()
                 # Executes the chosen algorithm
@@ -47,7 +48,7 @@ def randomList():
 
 def error_checking():
     size = display.sizeBox.text
-    algorithm = display.algorithmBox.text
+    algorithm = display.algorithmBox.get_active_option()
     error = False
     if not size.isdigit():
         display.sizeBox.color = display.red
