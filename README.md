@@ -8,6 +8,11 @@ Check [Wiki Page](../../wiki) for more information about each algorithm, as visu
 ## Program preview
 ![](images/preview.gif)
 
+### New Features
+|Selecting an algorithm ([@system1970](https://github.com/system1970)) |Pause and Play with \<SPACE\> ([@yuchenliu15](https://github.com/yuchenliu15)) |
+|---|---|
+|![](images/selectAlgo.gif)|![](images/pausePlay.gif)|
+
 ## Using the application
 - Clone GitHub repository
 - Install requirements: `pip install -r requirements.txt`
