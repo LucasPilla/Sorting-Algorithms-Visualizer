@@ -14,9 +14,6 @@ Check [Wiki Page](../../wiki) for more information about each algorithm, as visu
 - Run: `python main.py`
 
 ## How to contribute: 
-- Implement new Algorithms:
-   - Check algorithms folder to see algorithms already implemented.
-   - Chose a new algorithm and Create an issue called: "Implement algorithm_name"
-   - Make your Pull Request linked to the respective issue
+- Implement new Algorithms or ideas
 - Report bugs and give feedbacks
 

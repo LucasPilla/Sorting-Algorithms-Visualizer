@@ -1,6 +1,7 @@
 import pygame
 from sys import exit
 from math import ceil
+from time import time
 
 # Initialize pygame modules
 pygame.init()
@@ -195,7 +196,8 @@ startButton = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 
 numBars = 0
 delay = 0
 toDraw = True
-
+paused = False
+timer = 0
 
 def drawBars(array, redBar1, redBar2, blueBar1, blueBar2):
     """Draw the bars and control their colors"""
@@ -217,17 +219,36 @@ def drawBottomMenu():
     algorithmBox.draw()
     startButton.draw()
 
+def draw_rect_alpha(surface, color, rect):
+    shape_surf = pygame.Surface(pygame.Rect(rect).size, pygame.SRCALPHA)
+    pygame.draw.rect(shape_surf, color, shape_surf.get_rect())
+    surface.blit(shape_surf, rect)
+
+def draw_polygon_alpha(surface, color, points):
+    lx, ly = zip(*points)
+    min_x, min_y, max_x, max_y = min(lx), min(ly), max(lx), max(ly)
+    target_rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)
+    shape_surf = pygame.Surface(target_rect.size, pygame.SRCALPHA)
+    pygame.draw.polygon(shape_surf, color, [(x - min_x, y - min_y) for x, y in points])
+    surface.blit(shape_surf, target_rect)
 
 def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2):
     """Draw all the interface"""
+    global paused,timer
     screen.fill(white)
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2)
+    if paused and (time()-timer)<0.5:
+        draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+10, 150+10, 10, 50])
+        draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+40, 150+10, 10, 50])
+    elif not paused and (time()-timer)<0.5:
+        x,y = (850/2),150
+        draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+50+10),(x+50,y+25+10))) # ([front,back],[up,down])
     drawBottomMenu()
     pygame.display.update()
 
 
 def handleDrawing(array, redBar1, redBar2, blueBar1, blueBar2):
-    global toDraw
+    global toDraw,paused,timer
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -235,6 +256,18 @@ def handleDrawing(array, redBar1, redBar2, blueBar1, blueBar2):
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if startButton.rect.collidepoint(event.pos):
                 toDraw = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                paused = True
+                timer = time()
     if toDraw:
+        while paused:
+            drawInterface(array, redBar1, redBar2, blueBar1, blueBar2)
+            for event in pygame.event.get():
+                delayBox.update()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE or event.key == pygame.K_RETURN:
+                        paused = False
+                        timer = time()
         drawInterface(array, redBar1, redBar2, blueBar1, blueBar2)
         pygame.time.wait(delay)
