@@ -7,9 +7,7 @@ def stoogeSort(arr, l, h):
         return
 
     if arr[l]>arr[h]: 
-        print('l', l)
-        print('h', h)
-
+        
         middle = floor((h + l) / 2)
         handleDrawing(arr, l, h, middle, -1)
         t = arr[l] 
