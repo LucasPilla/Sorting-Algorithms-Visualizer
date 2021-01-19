@@ -8,10 +8,13 @@ from random import randint
 
 
 def main():
+    
     numbers = []
     running = True
     # Add default values
     display.sizeBox.text = '100'
+    numberOfRows = int(display.sizeBox.text)
+    a_list = list(range(0, numberOfRows))
     display.algorithmBox.add_options(list(algorithmsDict.keys()))
     # display.algorithmBox.text = 'mergesort'
     while running:
@@ -35,7 +38,7 @@ def main():
                 # Executes the chosen algorithm
                 runAlgorithm(algorithm.lower(), numbers)
                 display.toDraw = True
-        display.drawInterface(numbers, -1, -1, -1, -1)
+        display.drawInterface(numbers, -1, -1, -1, -1, greenRows = a_list)
 
 
 def randomList():

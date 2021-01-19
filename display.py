@@ -199,13 +199,16 @@ toDraw = True
 paused = False
 timer = 0
 
-def drawBars(array, redBar1, redBar2, blueBar1, blueBar2):
-    """Draw the bars and control their colors"""
+def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
+    """Draw the bars and control their colors"""    
     for num in range(numBars):
         if num in [redBar1, redBar2]:
             color = red
-        elif num in [blueBar1, blueBar2]:
+        elif num in [blueBar1, blueBar2]:            
             color = blue
+        
+        elif "greenRows" in kwargs and (num in (kwargs['greenRows'])):      
+            color = green        
         else:
             color = grey
         bar_width = 900/numBars
@@ -232,11 +235,11 @@ def draw_polygon_alpha(surface, color, points):
     pygame.draw.polygon(shape_surf, color, [(x - min_x, y - min_y) for x, y in points])
     surface.blit(shape_surf, target_rect)
 
-def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2):
+def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     """Draw all the interface"""
     global paused,timer
     screen.fill(white)
-    drawBars(array, redBar1, redBar2, blueBar1, blueBar2)
+    drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
     if paused and (time()-timer)<0.5:
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+10, 150+10, 10, 50])
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+40, 150+10, 10, 50])
@@ -247,7 +250,7 @@ def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2):
     pygame.display.update()
 
 
-def handleDrawing(array, redBar1, redBar2, blueBar1, blueBar2):
+def handleDrawing(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     global toDraw,paused,timer
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -262,12 +265,12 @@ def handleDrawing(array, redBar1, redBar2, blueBar1, blueBar2):
                 timer = time()
     if toDraw:
         while paused:
-            drawInterface(array, redBar1, redBar2, blueBar1, blueBar2)
+            drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
             for event in pygame.event.get():
                 delayBox.update()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE or event.key == pygame.K_RETURN:
                         paused = False
                         timer = time()
-        drawInterface(array, redBar1, redBar2, blueBar1, blueBar2)
+        drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
         pygame.time.wait(delay)
