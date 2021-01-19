@@ -8,6 +8,7 @@ from random import randint
 
 
 def main():
+    
     numbers = []
     running = True
     # Add default values
@@ -23,6 +24,7 @@ def main():
             display.delayBox.update()
             display.algorithmBox.update()
             display.startButton.update()
+            a_list = list(range(0, display.numBars))
 
             if display.startButton.active and not error_checking():
                 # Set the values given by the user
@@ -35,7 +37,7 @@ def main():
                 # Executes the chosen algorithm
                 runAlgorithm(algorithm.lower(), numbers)
                 display.toDraw = True
-        display.drawInterface(numbers, -1, -1, -1, -1)
+        display.drawInterface(numbers, -1, -1, -1, -1, greenRows = a_list)
 
 
 def randomList():
