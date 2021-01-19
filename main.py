@@ -13,8 +13,6 @@ def main():
     running = True
     # Add default values
     display.sizeBox.text = '100'
-    numberOfRows = int(display.sizeBox.text)
-    a_list = list(range(0, numberOfRows))
     display.algorithmBox.add_options(list(algorithmsDict.keys()))
     # display.algorithmBox.text = 'mergesort'
     while running:
@@ -26,6 +24,7 @@ def main():
             display.delayBox.update()
             display.algorithmBox.update()
             display.startButton.update()
+            a_list = list(range(0, display.numBars))
 
             if display.startButton.active and not error_checking():
                 # Set the values given by the user
