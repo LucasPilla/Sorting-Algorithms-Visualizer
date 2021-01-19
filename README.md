@@ -14,6 +14,7 @@ Check [Wiki Page](../../wiki) for more information about each algorithm, as visu
 |![](images/selectAlgo.gif)|![](images/pausePlay.gif)|
 
 ## Using the application
+  :exclamation: Feel free to open an issue if you have some problem :exclamation:
 - Clone GitHub repository
 - Install requirements: `pip install -r requirements.txt`
 - Run: `python main.py`
