@@ -15,11 +15,11 @@ pygame.display.set_caption('Sorting Algorithms Visualizer')
 baseFont = pygame.font.SysFont('Arial', 24)
 # Used Colors
 grey = (100, 100, 100)
-green = (125, 235, 125)
+green = (125, 240, 125)
 white = (250, 250, 250)
-red = (255, 100, 100)
+red = (255, 50, 50)
 black = (0, 0, 0)
-blue = (100, 100, 255)
+blue = (50, 50, 255)
 
 
 # THE CODE BELOW IS A MODULE FOR TAKING USER INPUT WITH PYGAME #
