@@ -9,7 +9,7 @@ Check [Wiki Page](../../wiki) for more information about each algorithm, as visu
 ![](images/preview.gif)
 
 ### New Features
-|Selecting an algorithm ([@system1970](https://github.com/system1970)) |Pause and Play with \<SPACE\> ([@yuchenliu15](https://github.com/yuchenliu15)) |
+|Selecting an algorithm ([@yuchenliu15](https://github.com/yuchenliu15)) |Pause and Play with \<SPACE\> ([@system1970](https://github.com/system1970)) |
 |---|---|
 |![](images/selectAlgo.gif)|![](images/pausePlay.gif)|
 
@@ -22,4 +22,3 @@ Check [Wiki Page](../../wiki) for more information about each algorithm, as visu
 ## How to contribute: 
 - Implement new Algorithms or ideas
 - Report bugs and give feedbacks
-
