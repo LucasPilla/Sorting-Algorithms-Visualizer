@@ -15,6 +15,7 @@ def cycleSort(array, *args):
 
         while array[pos] == item:
             pos += 1
+        handleDrawing(array, cycle_start, pos, -1, -1)
         array[pos], item = item, array[pos]
 
         while pos != cycle_start:
@@ -25,4 +26,5 @@ def cycleSort(array, *args):
 
             while array[pos] == item:
                 pos += 1
+            handleDrawing(array, cycle_start, pos, -1, -1)
             array[pos], item = item, array[pos]
