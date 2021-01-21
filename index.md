@@ -1,37 +1,4 @@
-## Welcome to GitHub Pages
+# About the project
+This project is basicaly a tool, made with python and pygame,  for visualizing sorting algorithms in a educational way. Our porpouse is to portray these algorithms so the user can understand how a computer "move some pieces" to achive his goal, having a sorted data at the end! To accomplish our purpouse we are also working in a wiki page with algorithms explanations and visualization GIFS,  where the reader can have a better understanding about this topic.
 
-You can use the [editor on GitHub](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+![Program preview](https://media.giphy.com/media/c89LMZ3q0bfURB9xRX/giphy.gif)
