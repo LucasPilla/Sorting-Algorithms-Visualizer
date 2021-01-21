@@ -7,6 +7,9 @@ To accomplish our purpouse we are also working in a wiki page with algorithms ex
 
 
 ![Program preview](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/images/preview.gif?raw=true)
+|Selecting an algorithm ([@yuchenliu15](https://github.com/yuchenliu15)) |Pause and Play with \<SPACE\> ([@system1970](https://github.com/system1970)) |
+|---|---|
+|![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/images/selectAlgo.gif?raw=true)|![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/images/pausePlay.gif?raw=true)|
 
 
 ## Contributors
