@@ -7,3 +7,9 @@ To accomplish our purpouse we are also working in a wiki page with algorithms ex
 
 
 ![Program preview](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/images/preview.gif?raw=true)
+
+
+## Contributors
+<a href="https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=LucasPilla/Sorting-Algorithms-Visualizer" />
+</a>
