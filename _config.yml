@@ -1,1 +1,3 @@
 theme: jekyll-theme-minimal
+title: Sorting Algorithms Visualizer
+description: A tool for visualizing sorting algorithms made with python and pygame
