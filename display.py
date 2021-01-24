@@ -245,7 +245,7 @@ def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+40, 150+10, 10, 50])
     elif not paused and (time()-timer)<0.5:
         x,y = (850/2),150
-        draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+50+10),(x+50,y+25+10))) # ([front,back],[up,down])
+        draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+50+10),(x+50,y+25+10))) 
     drawBottomMenu()
     pygame.display.update()
 
@@ -273,4 +273,5 @@ def handleDrawing(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
                         paused = False
                         timer = time()
         drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
+        delay = delayBox.value - delayBox.rect.x - 6
         pygame.time.wait(delay)
