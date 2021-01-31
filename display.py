@@ -61,7 +61,8 @@ class TextBox(InputBox):
             if wEvent.key == pygame.K_BACKSPACE:
                 self.text = self.text[:-1]
             else:
-                self.text += wEvent.unicode
+                if wEvent.unicode.isdigit(): 
+                    self.text += wEvent.unicode
 
 
 class SliderBox(InputBox):
