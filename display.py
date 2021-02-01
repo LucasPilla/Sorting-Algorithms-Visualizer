@@ -1,3 +1,4 @@
+from typing import Text
 import pygame
 from sys import exit
 from math import ceil
@@ -74,6 +75,24 @@ class TextBox(InputBox):
                 self.text = self.text[:-1]
             elif wEvent.key in list_events:
                 self.text += wEvent.unicode
+            elif wEvent.startswith('time'):
+                self.text 
+
+
+class TimeBox(InputBox):
+    def __init__(self, name, color, rect):
+        super().__init__(name, color, rect)
+        self.text = '--:--'
+    def draw(self):
+        super().draw()
+        surface = baseFont.render(self.text, True, self.color)
+        screen.blit(surface, (self.rect.x + 10, self.rect.y + 10))
+        self.rect.w = max(surface.get_width() + 20, 50)
+
+    def update(self, time):
+        super().update()
+        self.text = str(round(time, 2))
+
 
 
 class SliderBox(InputBox):
@@ -202,7 +221,8 @@ class DropdownBox():
 sizeBox = TextBox("Size", grey, (30, 440, 50, 50))
 delayBox = SliderBox("Delay", grey, (105, 440, 112, 50))
 algorithmBox = DropdownBox("Algorithm", (242, 440, 140, 50), baseFont)
-startButton = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 435, 50, 50))
+timeBox = TimeBox("Time", grey, (500, 440, 200, 50))
+startButton = ButtonBox('images/playButton.png', 'images/stopButton.png', (550, 435, 50, 50))
 
 # Global Variables
 numBars = 0
@@ -233,6 +253,7 @@ def drawBottomMenu():
     delayBox.draw()
     algorithmBox.draw()
     startButton.draw()
+    timeBox.draw()
 
 def draw_rect_alpha(surface, color, rect):
     shape_surf = pygame.Surface(pygame.Rect(rect).size, pygame.SRCALPHA)

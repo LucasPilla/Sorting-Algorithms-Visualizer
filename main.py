@@ -1,7 +1,9 @@
+from pygame.event import event_name
 import display
 import pygame
 from algs import algorithmsDict, runAlgorithm
 from random import randint
+import time
 
 # Global Variables: numBars, delay, toDraw, button
 # They were declared in display.py
@@ -24,6 +26,7 @@ def main():
             display.delayBox.update()
             display.algorithmBox.update()
             display.startButton.update()
+            #display.timeBox.update(None)
             a_list = list(range(0, display.numBars))
 
             if display.startButton.active and not error_checking():
@@ -35,8 +38,11 @@ def main():
                 # Generates a random list
                 numbers = randomList()
                 # Executes the chosen algorithm
+                start_time = time.time()
                 runAlgorithm(algorithm.lower(), numbers)
                 display.toDraw = True
+                fin_time = time.time() - start_time
+                display.timeBox.update(fin_time)
         display.drawInterface(numbers, -1, -1, -1, -1, greenRows = a_list)
 
 
