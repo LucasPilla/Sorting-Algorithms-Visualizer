@@ -61,9 +61,6 @@ class TextBox(InputBox):
         if self.isActive and wEvent.type == pygame.KEYDOWN:
             if wEvent.key == pygame.K_BACKSPACE:
                 self.text = self.text[:-1]
-            elif wEvent.startswith('time'):
-                self.text 
-
 
 class TimeBox(InputBox):
     def __init__(self, name, color, rect):
