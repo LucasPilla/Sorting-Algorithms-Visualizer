@@ -26,7 +26,7 @@ def main():
             display.startButton.update()
             a_list = list(range(0, display.numBars))
 
-            if display.startButton.active and not error_checking():
+            if display.startButton.active:
                 # Set the values given by the user
                 display.numBars = int(display.sizeBox.text)
                 display.delay =\
@@ -46,24 +46,6 @@ def randomList():
     for i in range(display.numBars):
         array.append(randint(10, 400))
     return array
-
-
-def error_checking():
-    size = display.sizeBox.text
-    algorithm = display.algorithmBox.get_active_option()
-    error = False
-    if not size.isdigit():
-        display.sizeBox.color = display.red
-        error = True
-    if algorithm not in list(algorithmsDict):
-        display.algorithmBox.color = display.red
-        error = True
-    if error:
-        return True
-    display.sizeBox.color = display.grey
-    display.algorithmBox.color = display.grey
-    return False
-
 
 if __name__ == '__main__':
     main()
