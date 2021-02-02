@@ -50,15 +50,4 @@ def helper(arr,n,start):
 def strandSort(arr,*args):
     size = len(arr)
     
-    orignalArr = arr[:]
-
-    helper(orignalArr,size,0)
-    
-
-    
-        
-
-    
-
-    
-            
+    helper(arr,size,0)
