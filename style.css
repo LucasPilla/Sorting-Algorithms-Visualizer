@@ -3,7 +3,43 @@ body{
     margin-left: 20%;
     margin-right: 20%;
 }
-img{
+
+.demo-grid{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.algorithm-gifs{
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.algorithm-cell{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.algorithm-cell img{
+    width: 98%;
+    object-fit: contain;
+}
+
+.showcase{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.demonstration{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.showcase img{
     width: 100%;
+    object-fit: contain;
+}
+
+.demonstration img{
+    width: 98%;
     object-fit: contain;
 }
