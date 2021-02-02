@@ -1,0 +1,9 @@
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+img{
+    width: 100%;
+    object-fit: contain;
+}
