@@ -30,6 +30,11 @@ algorithmsDict = {
     'strandsort':strandSort
 }
 
+algorithmsVarDict = {
+    'bubblesort':['bubblesort','cocktailsort','combsort'],
+    'insertionsort': ['insertionsort'],
+    
+    }
 
 def runAlgorithm(algorithm, array):
     return algorithmsDict[algorithm](array, 0, len(array)-1)

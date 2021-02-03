@@ -95,7 +95,8 @@ class ButtonBox:
         self.rect = pygame.Rect(rect)
 
     def draw(self):
-        self.rect.x = algorithmBox.rect.x+algorithmBox.rect.w+20
+        #wasn't sure why rect was changed here so only commented it out
+        #self.rect.x = algorithmBox.rect.x+algorithmBox.rect.w+20
         pos = (self.rect.x, self.rect.y)
         if self.active:
             screen.blit(self.stateTrue, pos)
@@ -191,7 +192,8 @@ class DropdownBox():
 sizeBox = TextBox("Size", grey, (30, 440, 50, 50))
 delayBox = SliderBox("Delay", grey, (105, 440, 112, 50))
 algorithmBox = DropdownBox("Algorithm", (242, 440, 140, 50), baseFont)
-startButton = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 435, 50, 50))
+variantBox = DropdownBox("Variants", (407, 440, 140, 50), baseFont)
+startButton = ButtonBox('images/playButton.png', 'images/stopButton.png', (555, 435, 50, 50))
 
 # Global Variables
 numBars = 0
@@ -221,6 +223,7 @@ def drawBottomMenu():
     sizeBox.draw()
     delayBox.draw()
     algorithmBox.draw()
+    variantBox.draw()
     startButton.draw()
 
 def draw_rect_alpha(surface, color, rect):
