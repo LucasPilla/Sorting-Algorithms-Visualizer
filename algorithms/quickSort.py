@@ -1,12 +1,15 @@
+import random
 from display import handleDrawing
-
+from random import randint
 
 def quickSort(array, left, right):
     if left >= right:
         return
     index = left
+    random_index = randint(left, right)
+    array[right], array[random_index] = array[random_index], array[right]
+    
     for j in range(left, right):
-        # The four lines below are not part of the algorithm
         handleDrawing(array, j, right, index, -1)
         if array[j] < array[right]:
             array[j], array[index] = array[index], array[j]

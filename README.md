@@ -5,6 +5,8 @@ Support this project by leaving a :star:
 
 Check [Wiki Page](../../wiki) for more information about each algorithm, as visualization gifs and explanations.
 
+Visit [repository github page](https://lucaspilla.github.io/Sorting-Algorithms-Visualizer/)
+
 ## Program preview
 ![](images/preview.gif)
 

@@ -61,6 +61,10 @@ class TextBox(InputBox):
         if self.isActive and wEvent.type == pygame.KEYDOWN:
             if wEvent.key == pygame.K_BACKSPACE:
                 self.text = self.text[:-1]
+            else:
+                if wEvent.unicode.isdigit(): 
+                    self.text += wEvent.unicode
+
 
 class TimeBox(InputBox):
     def __init__(self, name, color, rect):
@@ -75,7 +79,7 @@ class TimeBox(InputBox):
     def update(self, time):
         super().update()
         self.text = str(round(time, 2))
-
+        
 
 
 class SliderBox(InputBox):
