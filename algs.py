@@ -31,10 +31,20 @@ algorithmsDict = {
 }
 
 algorithmsVarDict = {
-    'bubblesort':['bubblesort','cocktailsort','combsort'],
-    'insertionsort': ['insertionsort'],
-    
-    }
+    'insertionsort': ['insertionsort','shellsort','binaryinsertionsort','timsort'],
+    'bubblesort':['bubblesort','cocktailsort','combsort','shellsort'],
+    'selectionsort':['selectionsort','heapsort','cocktailsort','pancakesort'],
+    'mergesort':['mergesort','timsort'],
+    'quicksort':['quicksort'],
+    'countingsort':['countingsort'],
+    'cyclesort':['cyclesort'],
+    'bogosort':['bogosort'],
+    'radixsort':['radixsort'],
+    'gnomesort':['gnomesort'],
+    'bitonicsort':['bitonicsort'],
+    'bucketsort':['bucketsort'],
+    'stoogesort':['stoogesort'],
+}
 
 def runAlgorithm(algorithm, array):
     return algorithmsDict[algorithm](array, 0, len(array)-1)
