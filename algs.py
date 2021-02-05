@@ -34,7 +34,7 @@ algorithmsVarDict = {
     'all': list(algorithmsDict.keys()),
     'exchange':['bubblesort','cocktailsort','combsort','gnomesort','quicksort','bogosort','stoogesort'],
     'selection':['selection','heapsort','cyclesort'],
-    'insertions':['insertionsort','shellsort','binaryinsertionsort'],
+    'insertion':['insertionsort','shellsort','binaryinsertionsort'],
     'merge':['mergesort'],
     'distribution':['bucketsort','countingsort','radixsort'],
     'concurrent':['bitonicsort'],
