@@ -31,20 +31,18 @@ algorithmsDict = {
 }
 
 algorithmsVarDict = {
-    'insertionsort': ['insertionsort','shellsort','binaryinsertionsort','timsort'],
-    'bubblesort':['bubblesort','cocktailsort','combsort','shellsort'],
-    'selectionsort':['selectionsort','heapsort','cocktailsort','pancakesort'],
-    'mergesort':['mergesort','timsort'],
-    'quicksort':['quicksort'],
-    'countingsort':['countingsort'],
-    'cyclesort':['cyclesort'],
-    'bogosort':['bogosort'],
-    'radixsort':['radixsort'],
-    'gnomesort':['gnomesort'],
-    'bitonicsort':['bitonicsort'],
-    'bucketsort':['bucketsort'],
-    'stoogesort':['stoogesort'],
+    'all': list(algorithmsDict.keys()),
+    'exchange':['bubblesort','cocktailsort','combsort','gnomesort','quicksort','bogosort','stoogesort'],
+    'selection':['selection','heapsort','cyclesort'],
+    'insertions':['insertionsort','shellsort','binaryinsertionsort'],
+    'merge':['mergesort'],
+    'distribution':['bucketsort','countingsort','radixsort'],
+    'concurrent':['bitonicsort'],
+    'hybrid':['timsort'],
+    'other':['pancakesort'],
 }
+
+
 
 def runAlgorithm(algorithm, array):
     return algorithmsDict[algorithm](array, 0, len(array)-1)
