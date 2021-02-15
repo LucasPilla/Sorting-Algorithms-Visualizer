@@ -8,7 +8,6 @@ from random import randint
 
 
 def main():
-    
     numbers = []
     running = True
     # Add default values
@@ -33,19 +32,11 @@ def main():
                     display.delayBox.value - display.delayBox.rect.x - 6
                 algorithm = display.algorithmBox.get_active_option()
                 # Generates a random list
-                numbers = randomList()
+                numbers = [randint(10, 400) for i in range(display.numBars)]
                 # Executes the chosen algorithm
                 runAlgorithm(algorithm.lower(), numbers)
                 display.toDraw = True
         display.drawInterface(numbers, -1, -1, -1, -1, greenRows = a_list)
-
-
-def randomList():
-    """Generate a random sequence of <numBars> numbers"""
-    array = []
-    for i in range(display.numBars):
-        array.append(randint(10, 400))
-    return array
 
 if __name__ == '__main__':
     main()
