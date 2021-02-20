@@ -23,7 +23,6 @@ def main():
             display.delayBox.update()
             display.algorithmBox.update()
             display.startButton.update()
-            a_set = set(range(display.numBars))
 
             if display.startButton.active:
                 # Set the values given by the user
@@ -36,7 +35,7 @@ def main():
                 # Executes the chosen algorithm
                 runAlgorithm(algorithm.lower(), numbers)
                 display.toDraw = True
-        display.drawInterface(numbers, -1, -1, -1, -1, greenRows = a_set)
+        display.drawInterface(numbers, -1, -1, -1, -1, greenRows = set(range(display.numBars)))
 
 if __name__ == '__main__':
     main()
