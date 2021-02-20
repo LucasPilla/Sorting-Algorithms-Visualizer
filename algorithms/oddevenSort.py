@@ -1,5 +1,4 @@
 from display import handleDrawing
-
 def swap(array,i,j):
     temp = array[i]
     array[i] = array[j]
