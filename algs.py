@@ -5,6 +5,7 @@ from algorithms.pancakeSort import pancakeSort
 from algorithms.timSort import timSort
 from algorithms.stoogeSort import stoogeSort
 from algorithms.strandSort import strandSort
+from algorithms.oddevenSort import oddevenSort
 
 algorithmsDict = {
     'insertionsort': insertionSort,
@@ -27,7 +28,8 @@ algorithmsDict = {
     'bucketsort': bucketSort,
     'timsort' :timSort,
     'stoogesort': stoogeSort,
-    'strandsort':strandSort
+    'strandsort':strandSort,
+    'oddevensort':oddevenSort
 }
 
 
