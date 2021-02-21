@@ -29,7 +29,7 @@ algorithmsDict = {
     'timsort' :timSort,
     'stoogesort': stoogeSort,
     'strandsort':strandSort,
-    'oddevensort':oddevenSort
+    'oddevensort':oddevenSort 
 }
 
 

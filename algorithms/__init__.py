@@ -14,6 +14,7 @@ from algorithms.shellSort import shellSort
 from algorithms.combSort import combSort
 from algorithms.bucketSort import bucketSort
 from algorithms.strandSort import strandSort
+from algorithms.oddevenSort import oddevenSort
 
 
 __all__ = [
@@ -32,5 +33,6 @@ __all__ = [
     "shellSort",
     "combSort",
     "bucketSort",
-    "strandSort"
+    "strandSort",
+    "oddevenSort"
 ]

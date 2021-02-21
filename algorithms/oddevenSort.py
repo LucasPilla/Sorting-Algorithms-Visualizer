@@ -13,7 +13,7 @@ def oddevenSort(array, *args):
             if array[i] > array[i+1]:
                 swap(array,i,i+1)
                 sorted = False
-        
+
         for i in range(0,len(array)-1,2):
             handleDrawing(array,i,i+1,-1,-1)
             if array[i] > array[i+1]:
