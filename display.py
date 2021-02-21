@@ -68,23 +68,20 @@ class TextBox(InputBox):
 class SliderBox(InputBox):
     def __init__(self, name, color, rect):
         super().__init__(name, color, rect)
-        self.value = self.rect.x+6
+        self.start = self.rect.x + 6
+        self.end   = self.rect.x + self.rect.w - 6
+        self.value = self.start
 
     def draw(self):
         super().draw()
-        pygame.draw.line(screen, self.color, (self.rect.x+6, self.rect.y+25), (self.rect.x+self.rect.w-6, self.rect.y+25), 2)
-        pygame.draw.line(screen, self.color, (self.value, self.rect.y+5), (self.value, self.rect.y+45), 12)
+        pygame.draw.line(screen, self.color, (self.start, self.rect.y + 25), (self.end, self.rect.y + 25), 2)
+        pygame.draw.line(screen, self.color, (self.value, self.rect.y + 5), (self.value, self.rect.y + 45), 12)
 
     def update(self):
         super().update()
         if self.isActive and pygame.mouse.get_pressed() != (0, 0, 0):
             x = pygame.mouse.get_pos()[0]
-            if x <= self.rect.x+6:
-                self.value = self.rect.x+6
-            elif x >= self.rect.w+self.rect.x-6:
-                self.value = self.rect.w+self.rect.x-6
-            else:
-                self.value = x
+            if self.start <= x <= self.end: self.value = x
 
 
 class ButtonBox:
