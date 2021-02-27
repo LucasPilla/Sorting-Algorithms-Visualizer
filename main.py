@@ -10,10 +10,8 @@ from random import randint
 def main():
     numbers = []
     running = True
-    # Add default values
-    display.sizeBox.text = '100'
     display.algorithmBox.add_options(list(algorithmsDict.keys()))
-    # display.algorithmBox.text = 'mergesort'
+    
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
