@@ -185,32 +185,30 @@ class DropdownBox():
 
 
 # Input Boxes
-sizeBox = TextBox("Size", grey, (30, 440, 50, 50))
+sizeBox  = TextBox("Size", grey, (30, 440, 50, 50))
 delayBox = SliderBox("Delay", grey, (105, 440, 112, 50))
 algorithmBox = DropdownBox("Algorithm", (242, 440, 140, 50), baseFont)
-startButton = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 435, 50, 50))
+startButton  = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 435, 50, 50))
 
 # Global Variables
 numBars = 0
-delay = 0
-toDraw = True
-paused = False
-timer = 0
+delay   = 0
+timer   = 0
+toDraw  = True
+paused  = False
 
-def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
-    """Draw the bars and control their colors"""    
+def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwargs):
+    """Draw the bars and control their colors"""
+    if numBars != 0:
+        bar_width  = 900 / numBars
+        ceil_width = ceil(bar_width)
+
     for num in range(numBars):
-        if num in [redBar1, redBar2]:
-            color = red
-        elif num in [blueBar1, blueBar2]:            
-            color = blue
-        
-        elif "greenRows" in kwargs and (num in (kwargs['greenRows'])):      
-            color = green        
-        else:
-            color = grey
-        bar_width = 900/numBars
-        pygame.draw.rect(screen, color, [num * bar_width, 400 - array[num], ceil(bar_width), array[num]])
+        if   num in (redBar1, redBar2)  : color = red
+        elif num in (blueBar1, blueBar2): color = blue
+        elif num in greenRows           : color = green        
+        else                            : color = grey
+        pygame.draw.rect(screen, color, (num * bar_width, 400 - array[num], ceil_width, array[num]))
 
 
 def drawBottomMenu():
