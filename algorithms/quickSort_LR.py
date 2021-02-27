@@ -8,8 +8,8 @@ def quickSort_LR(array, low, high):
 
 def partition(array, low, high):
     pivot = array[low]
-    i = low - 1
-    j = high + 1
+    i     = low - 1
+    j     = high + 1
     
     while True:
         i += 1
@@ -21,4 +21,3 @@ def partition(array, low, high):
         handleDrawing(array, j, high, low, -1)
         if i >= j: return j
         array[i], array[j] = array[j], array[i]
-        
