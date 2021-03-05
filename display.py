@@ -45,9 +45,9 @@ class InputBox:
 
 
 class TextBox(InputBox):
-    def __init__(self, name, color, rect):
+    def __init__(self, name, color, rect, text = '100'):
         super().__init__(name, color, rect)
-        self.text = ''
+        self.text = text
 
     def draw(self):
         super().draw()
@@ -185,7 +185,7 @@ class DropdownBox():
 
 
 # Input Boxes
-sizeBox  = TextBox("Size", grey, (30, 440, 50, 50))
+sizeBox  = TextBox("Size", grey, (30, 440, 50, 50), '100')
 delayBox = SliderBox("Delay", grey, (105, 440, 112, 50))
 algorithmBox = DropdownBox("Algorithm", (242, 440, 140, 50), baseFont)
 startButton  = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 435, 50, 50))
