@@ -2,6 +2,7 @@ import pygame
 from sys import exit
 from math import ceil
 from time import time
+import argparser
 
 # Initialize pygame modules
 pygame.init()
@@ -20,7 +21,14 @@ white = (250, 250, 250)
 red = (255, 50, 50)
 black = (0, 0, 0)
 blue = (50, 50, 255)
+# Color theme parameters
+whiteTheme = {'background': white, 'text': grey, 'borders': grey, 'optionNotSelected': grey, 'selectedOption': black}
+darkTheme = {'background': black, 'text': white, 'borders': white, 'optionNotSelected': grey, 'selectedOption': white}
 
+usedTheme = whiteTheme
+changeTheme = argparser.parse_theme_arg()
+if changeTheme:
+    usedTheme = darkTheme
 
 # THE CODE BELOW IS A MODULE FOR TAKING USER INPUT WITH PYGAME #
 class InputBox:
@@ -112,8 +120,8 @@ class DropdownBox():
     def __init__(self, name, rect, font):
         self.isActive = False
         self.name = name
-        self.color = grey
-        self.options_color = white
+        self.color = usedTheme['borders']
+        self.options_color = usedTheme['background']
         self.rect = pygame.Rect(rect)
         self.active_option = -1
         self.font = font
@@ -131,7 +139,7 @@ class DropdownBox():
         label = baseFont.render(self.name, True, self.color)
         screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 32))
         pygame.draw.rect(screen, self.color, self.rect, 3)
-        option_text = self.font.render(self.options[self.DEFAUTL_OPTION], 1, grey)
+        option_text = self.font.render(self.options[self.DEFAUTL_OPTION], 1, usedTheme['text'])
         screen.blit(option_text, option_text.get_rect(center=self.rect.center))
 
         if self.isActive:
@@ -148,7 +156,7 @@ class DropdownBox():
                 index += 1
                 rect.x = self.rect.x + column * self.rect.width
                 
-                options_color = black if i - 1 == self.active_option else grey
+                options_color = usedTheme['selectedOption'] if i - 1 == self.active_option else usedTheme['optionNotSelected']
                 pygame.draw.rect(screen, self.options_color, rect, 0)
                 pygame.draw.rect(screen, self.color, rect, 3) # draw border
                 option_text = self.font.render(self.options[i][:12], 1, options_color)
@@ -185,8 +193,8 @@ class DropdownBox():
 
 
 # Input Boxes
-sizeBox  = TextBox("Size", grey, (30, 440, 50, 50), '100')
-delayBox = SliderBox("Delay", grey, (105, 440, 112, 50))
+sizeBox  = TextBox("Size", usedTheme['borders'], (30, 440, 50, 50), '100')
+delayBox = SliderBox("Delay", usedTheme['borders'], (105, 440, 112, 50))
 algorithmBox = DropdownBox("Algorithm", (242, 440, 140, 50), baseFont)
 startButton  = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 435, 50, 50))
 
@@ -234,7 +242,7 @@ def draw_polygon_alpha(surface, color, points):
 def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     """Draw all the interface"""
     global paused,timer
-    screen.fill(white)
+    screen.fill(usedTheme['background'])
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
     if paused and (time()-timer)<0.5:
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+10, 150+10, 10, 50])
