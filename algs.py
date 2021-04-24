@@ -29,7 +29,8 @@ algorithmsDict = {'insertion'       : insertionSort,
                   'tim'             : timSort,
                   'stooge'          : stoogeSort,
                   'strand'          : strandSort,
-                  'odd-even'        : oddevenSort }
+                  'odd-even'        : oddevenSort,
+                  'pigeonhole'      : pigeonholeSort }
 
 
 def runAlgorithm(algorithm, array):
