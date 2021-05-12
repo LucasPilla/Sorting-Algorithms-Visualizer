@@ -48,6 +48,7 @@ class TextBox(InputBox):
     def __init__(self, name, color, rect, text = '100'):
         super().__init__(name, color, rect)
         self.text = text
+        self.draw() # establish the correct width for initial rendering
 
     def draw(self):
         super().draw()
@@ -79,6 +80,11 @@ class SliderBox(InputBox):
 
     def update(self):
         super().update()
+        previousStart = self.start
+        self.rect.x = sizeBox.rect.x + sizeBox.rect.w + 20
+        self.start = self.rect.x + 6
+        self.end   = self.rect.x + self.rect.w - 6
+        self.value += self.start - previousStart
         if self.isActive and pygame.mouse.get_pressed() != (0, 0, 0):
             x = pygame.mouse.get_pos()[0]
             if self.start <= x <= self.end: self.value = x
@@ -100,6 +106,7 @@ class ButtonBox:
             screen.blit(self.stateFalse, pos)
 
     def update(self):
+        self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
         if self.active:
             self.active = False
         mousePos = pygame.mouse.get_pos()
@@ -155,6 +162,7 @@ class DropdownBox():
                 screen.blit(option_text, option_text.get_rect(center=rect.center))
 
     def update(self):
+        self.rect.x = delayBox.rect.w + delayBox.rect.x + 20
         mouse_position = pygame.mouse.get_pos()
         column = 0
         index = 0
