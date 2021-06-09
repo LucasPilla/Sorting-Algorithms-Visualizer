@@ -255,7 +255,7 @@ def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
 
 
 def handleDrawing(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
-    global toDraw,paused,timer
+    global toDraw,paused,timer, delay
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -267,6 +267,16 @@ def handleDrawing(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
             if event.key == pygame.K_SPACE:
                 paused = True
                 timer = time()
+            elif event.key == pygame.K_v:
+                delay = delay + 1
+                delayBox.value = delay + delayBox.rect.x + 6
+                pygame.time.wait(delay)
+            elif event.key == pygame.K_n:
+                if delay > 0:
+                    delay = delay - 1
+                    delayBox.value = delay + delayBox.rect.x + 6
+                    pygame.time.wait(delay)
+
     if toDraw:
         while paused:
             drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
