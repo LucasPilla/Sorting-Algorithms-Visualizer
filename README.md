@@ -18,7 +18,7 @@ Visit [repository github page](https://lucaspilla.github.io/Sorting-Algorithms-V
 ## Using the application
   :exclamation: Feel free to open an issue if you have some problem :exclamation:
 - Clone GitHub repository
-- Install requirements: `python3 -m pip install -r requirements.txt`
+- Install requirements: `pip3 install -r requirements.txt`
 - Run: `python3 main.py`
 
 ## How to contribute: 
