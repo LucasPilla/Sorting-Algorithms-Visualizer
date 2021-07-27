@@ -196,7 +196,7 @@ class DropdownBox():
 sizeBox  = TextBox("Size", grey, (30, 440, 50, 50), '100')
 delayBox = SliderBox("Delay", grey, (105, 440, 112, 50))
 algorithmBox = DropdownBox("Algorithm", (242, 440, 140, 50), baseFont)
-startButton  = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 435, 50, 50))
+startButton  = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 440, 50, 50))
 
 # Global Variables
 numBars = 0
@@ -223,8 +223,8 @@ def drawBottomMenu():
     """Draw the menu below the bars"""
     sizeBox.draw()
     delayBox.draw()
-    algorithmBox.draw()
     startButton.draw()
+    algorithmBox.draw()
 
 def draw_rect_alpha(surface, color, rect):
     shape_surf = pygame.Surface(pygame.Rect(rect).size, pygame.SRCALPHA)
