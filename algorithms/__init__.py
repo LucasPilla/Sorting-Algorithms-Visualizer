@@ -8,6 +8,7 @@ from algorithms.heapSort import heapSort
 from algorithms.insertionSort import insertionSort
 from algorithms.mergeSort import mergeSort
 from algorithms.quickSort import quickSort
+from algorithms.randomizedquickSort import randomizedquickSort
 from algorithms.selectionSort import selectionSort
 from algorithms.radixSort import radixSort
 from algorithms.shellSort import shellSort
@@ -28,6 +29,7 @@ __all__ = [
     "insertionSort",
     "mergeSort",
     "quickSort",
+    "randomizedquickSort",
     "selectionSort",
     "radixSort",
     "shellSort",
