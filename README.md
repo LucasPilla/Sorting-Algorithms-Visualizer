@@ -10,7 +10,7 @@ Visit [repository github page](https://lucaspilla.github.io/Sorting-Algorithms-V
 ## Program preview
 ![](images/preview.gif)
 
-### New Features
+### Features
 |Selecting an algorithm ([@yuchenliu15](https://github.com/yuchenliu15)) |Pause and Play with \<SPACE\> ([@system1970](https://github.com/system1970)) |
 |---|---|
 |![](images/selectAlgo.gif)|![](images/pausePlay.gif)|
