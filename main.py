@@ -1,6 +1,7 @@
 import display
 import pygame
 from algs import algorithmsDict, runAlgorithm
+from themes import themesDict, getTheme
 from random import randint
 
 # Global Variables: numBars, delay, toDraw, button
@@ -11,6 +12,7 @@ def main():
     numbers = []
     running = True
     display.algorithmBox.add_options(list(algorithmsDict.keys()))
+    display.themeBox.add_options(list(themesDict.keys()))
     
     while running:
         for event in pygame.event.get():
@@ -21,6 +23,7 @@ def main():
             display.delayBox.update()
             display.algorithmBox.update()
             display.startButton.update()
+            display.themeBox.update()
             a_set = set(range(display.numBars))
 
             if display.startButton.active:
@@ -34,6 +37,10 @@ def main():
                 # Executes the chosen algorithm
                 runAlgorithm(algorithm.lower(), numbers)
                 display.toDraw = True
+            
+            themeName = display.themeBox.get_active_option()
+            display.theme = getTheme(themeName)
+
         display.drawInterface(numbers, -1, -1, -1, -1, greenRows = a_set)
 
 if __name__ == '__main__':

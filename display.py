@@ -2,7 +2,7 @@ import pygame
 from sys import exit
 from math import ceil
 from time import time
-
+from themes import getTheme
 # Initialize pygame modules
 pygame.init()
 
@@ -14,13 +14,8 @@ pygame.display.set_caption('Sorting Algorithms Visualizer')
 # Font
 baseFont = pygame.font.SysFont('Arial', 24)
 # Used Colors
-grey = (100, 100, 100)
-green = (125, 240, 125)
-white = (250, 250, 250)
-red = (255, 50, 50)
-black = (0, 0, 0)
-blue = (50, 50, 255)
 
+theme = getTheme('default')
 
 # THE CODE BELOW IS A MODULE FOR TAKING USER INPUT WITH PYGAME #
 class InputBox:
@@ -119,8 +114,8 @@ class DropdownBox():
     def __init__(self, name, rect, font):
         self.isActive = False
         self.name = name
-        self.color = grey
-        self.options_color = white
+        self.color = theme['grey']
+        self.options_color = theme['white']
         self.rect = pygame.Rect(rect)
         self.active_option = -1
         self.font = font
@@ -138,7 +133,7 @@ class DropdownBox():
         label = baseFont.render(self.name, True, self.color)
         screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 32))
         pygame.draw.rect(screen, self.color, self.rect, 3)
-        option_text = self.font.render(self.options[self.DEFAUTL_OPTION], 1, grey)
+        option_text = self.font.render(self.options[self.DEFAUTL_OPTION], 1, theme['grey'])
         screen.blit(option_text, option_text.get_rect(center=self.rect.center))
 
         if self.isActive:
@@ -155,14 +150,14 @@ class DropdownBox():
                 index += 1
                 rect.x = self.rect.x + column * self.rect.width
                 
-                options_color = black if i - 1 == self.active_option else grey
+                options_color = theme['black'] if i - 1 == self.active_option else theme['grey']
                 pygame.draw.rect(screen, self.options_color, rect, 0)
                 pygame.draw.rect(screen, self.color, rect, 3) # draw border
                 option_text = self.font.render(self.options[i][:12], 1, options_color)
                 screen.blit(option_text, option_text.get_rect(center=rect.center))
 
     def update(self):
-        self.rect.x = delayBox.rect.w + delayBox.rect.x + 20
+        # self.rect.x = delayBox.rect.w + delayBox.rect.x + 20 # this line makes all the dropdown to have the same x value and make them overlap with each other
         mouse_position = pygame.mouse.get_pos()
         column = 0
         index = 0
@@ -193,10 +188,11 @@ class DropdownBox():
 
 
 # Input Boxes
-sizeBox  = TextBox("Size", grey, (30, 440, 50, 50), '100')
-delayBox = SliderBox("Delay", grey, (105, 440, 112, 50))
+sizeBox  = TextBox("Size", theme['grey'], (30, 440, 50, 50), '100')
+delayBox = SliderBox("Delay", theme['grey'], (105, 440, 112, 50))
 algorithmBox = DropdownBox("Algorithm", (242, 440, 140, 50), baseFont)
 startButton  = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 440, 50, 50))
+themeBox = DropdownBox("Theme", (465, 440, 140, 50), baseFont)
 
 # Global Variables
 numBars = 0
@@ -212,10 +208,10 @@ def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwar
         ceil_width = ceil(bar_width)
 
     for num in range(numBars):
-        if   num in (redBar1, redBar2)  : color = red
-        elif num in (blueBar1, blueBar2): color = blue
-        elif num in greenRows           : color = green        
-        else                            : color = grey
+        if   num in (redBar1, redBar2)  : color = theme['red']
+        elif num in (blueBar1, blueBar2): color = theme['blue']
+        elif num in greenRows           : color = theme['green']
+        else                            : color = theme['grey']
         pygame.draw.rect(screen, color, (num * bar_width, 400 - array[num], ceil_width, array[num]))
 
 
@@ -225,6 +221,7 @@ def drawBottomMenu():
     delayBox.draw()
     startButton.draw()
     algorithmBox.draw()
+    themeBox.draw()
 
 def draw_rect_alpha(surface, color, rect):
     shape_surf = pygame.Surface(pygame.Rect(rect).size, pygame.SRCALPHA)
@@ -242,7 +239,7 @@ def draw_polygon_alpha(surface, color, points):
 def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     """Draw all the interface"""
     global paused,timer
-    screen.fill(white)
+    screen.fill(theme['white'])
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
     if paused and (time()-timer)<0.5:
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+10, 150+10, 10, 50])
@@ -279,3 +276,5 @@ def handleDrawing(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
         drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
         delay = delayBox.value - delayBox.rect.x - 6
         pygame.time.wait(delay)
+
+
