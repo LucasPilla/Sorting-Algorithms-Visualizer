@@ -25,9 +25,8 @@ def main():
             display.startButton.update()
             display.timeComplexityBox.update()
             a_set = set(range(display.numBars))
-            current_tc = display.timeComplexityBox.get_active_option()
-            print(current_tc)
-            if current_tc != prev:
+            current_tc = display.timeComplexityBox.get_active_option()      # get current time complexity
+            if current_tc != prev:                                          # if changed, update algo list
                 prev = current_tc
                 display.algorithmBox.add_options(returnAlgoList(current_tc))
 

@@ -190,8 +190,7 @@ class DropdownBox():
             self.active_option = -1
 
 
-# A class to choose which algorithms to show
-class DropDownTimeComplexity:
+class DropDownTimeComplexity():
     DEFAUTL_OPTION = 0
 
     def __init__(self, name, rect, font):
@@ -239,7 +238,7 @@ class DropDownTimeComplexity:
                 screen.blit(option_text, option_text.get_rect(center=rect.center))
 
     def update(self):
-        self.rect.x = delayBox.rect.w + delayBox.rect.x + 260
+        self.rect.x = delayBox.rect.w + delayBox.rect.x + 240
         mouse_position = pygame.mouse.get_pos()
         column = 0
         index = 0
@@ -253,7 +252,6 @@ class DropDownTimeComplexity:
                 rect.y = rect_start
             index += 1
             rect.x = self.rect.x + column * self.rect.width
-
             if rect.collidepoint(mouse_position):
                 self.active_option = i
 
@@ -274,7 +272,7 @@ class DropDownTimeComplexity:
 sizeBox = TextBox("Size", grey, (30, 440, 50, 50), '100')
 delayBox = SliderBox("Delay", grey, (105, 440, 112, 50))
 algorithmBox = DropdownBox("Algorithm", (242, 440, 140, 50), baseFont)
-timeComplexityBox = DropDownTimeComplexity("Time Complexity", (372, 440, 170, 50), baseFont)
+timeComplexityBox = DropDownTimeComplexity("Time Complexity", (372, 440, 160, 50), baseFont)
 startButton = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 440, 50, 50))
 
 # Global Variables
