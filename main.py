@@ -23,7 +23,7 @@ def main():
             display.startButton.update()
             a_set = set(range(display.numBars))
 
-            if display.startButton.active:
+            if display.startButton.isActive:
                 # Set the values given by the user
                 display.numBars = int(display.sizeBox.text)
                 display.delay =\
