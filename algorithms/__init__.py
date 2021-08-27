@@ -15,6 +15,7 @@ from algorithms.combSort import combSort
 from algorithms.bucketSort import bucketSort
 from algorithms.strandSort import strandSort
 from algorithms.oddevenSort import oddevenSort
+from algorithms.pigeonholeSort import pigeonholeSort
 
 
 __all__ = [
@@ -34,5 +35,6 @@ __all__ = [
     "combSort",
     "bucketSort",
     "strandSort",
-    "oddevenSort"
+    "oddevenSort",
+    "pigeonholeSort"
 ]
