@@ -1,3 +1,4 @@
+from algorithms.wiggleSort import wiggleSort
 from algorithms import *
 from algorithms.binaryinsertionSort import binaryinsertionSort
 from algorithms.bitonicSort import bitonicSort
@@ -30,7 +31,8 @@ algorithmsDict = {'insertion'       : insertionSort,
                   'stooge'          : stoogeSort,
                   'strand'          : strandSort,
                   'odd-even'        : oddevenSort,
-                  'pigeonhole'      : pigeonholeSort }
+                  'pigeonhole'      : pigeonholeSort,
+                  'wiggle'          : wiggleSort}
 
 
 def runAlgorithm(algorithm, array):
