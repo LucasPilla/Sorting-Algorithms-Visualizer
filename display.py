@@ -76,7 +76,7 @@ class SlideBox(InputBox):
         pygame.draw.line(screen, self.color, (self.start, self.rect.y + 25), (self.end, self.rect.y + 25), 2)
         pygame.draw.line(screen, self.color, (self.value, self.rect.y + 5), (self.value, self.rect.y + 45), 12)
 
-    def update(self):
+    def update(self, event):
         super().update()
         previousStart = self.start
         self.rect.x = sizeBox.rect.x + sizeBox.rect.w + 20
@@ -84,8 +84,13 @@ class SlideBox(InputBox):
         self.end    = self.rect.x + self.rect.w - 6
         self.value += self.start - previousStart
         
-        if self.isActive and self.clicked:
-            if self.start <= self.mousePos[0] <= self.end: self.value = self.mousePos[0]
+        if self.isActive:
+            if self.clicked:
+                if self.start <= self.mousePos[0] <= self.end: self.value = self.mousePos[0]
+        
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if   event.button == 4: self.value = min(self.value + 10, self.end)
+                elif event.button == 5: self.value = max(self.value - 10, self.start)
             
 
 class ButtonBox(Box):
@@ -101,7 +106,6 @@ class ButtonBox(Box):
 
     def update(self):
        super().update()
-       self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
        if self.isActive: self.isActive = True if self.clicked else False
         
 
@@ -235,38 +239,50 @@ def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     global paused,timer
     screen.fill(white)
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
+    
     if paused and (time()-timer)<0.5:
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+10, 150+10, 10, 50])
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+40, 150+10, 10, 50])
+        
     elif not paused and (time()-timer)<0.5:
         x,y = (850/2),150
-        draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+50+10),(x+50,y+25+10))) 
+        draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+50+10),(x+50,y+25+10)))
+        
     drawBottomMenu()
     pygame.display.update()
 
 
 def handleDrawing(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     global toDraw,paused,timer
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit(0)
+            
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if startButton.rect.collidepoint(event.pos):
                 toDraw = False
+                
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 paused = True
                 timer = time()
+        
+        delayBox.update(event)
+
     if toDraw:
         while paused:
             drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
+            
             for event in pygame.event.get():
-                delayBox.update()
+                delayBox.update(event)
+                
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE or event.key == pygame.K_RETURN:
                         paused = False
                         timer = time()
+                        
         drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
         delay = delayBox.value - delayBox.rect.x - 6
         pygame.time.wait(delay)
