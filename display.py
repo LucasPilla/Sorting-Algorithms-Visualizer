@@ -22,51 +22,49 @@ black = (0, 0, 0)
 blue = (50, 50, 255)
 
 
-# THE CODE BELOW IS A MODULE FOR TAKING USER INPUT WITH PYGAME #
-class InputBox:
-    def __init__(self, name, color, rect):
+class Box:
+    def __init__(self, rect):
         self.isActive = False
-        self.name = name
-        self.color = color
-        self.rect = pygame.Rect(rect)
+        self.rect     = pygame.Rect(rect)
+    
+    def update(self):
+        self.mousePos = pygame.mouse.get_pos()
+        self.clicked  = pygame.mouse.get_pressed() != (0, 0, 0)
+        self.isActive = True if self.rect.collidepoint(self.mousePos) else False
 
+
+class InputBox(Box):
+    def __init__(self, name, color, rect):
+        super().__init__(rect)
+        self.name  = name
+        self.color = color
+        
     def draw(self):
         label = baseFont.render(self.name, True, self.color)
         screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 32))
         pygame.draw.rect(screen, self.color, self.rect, 3)
-
-    def update(self):
-        mousePos = pygame.mouse.get_pos()
-        if pygame.mouse.get_pressed() != (0, 0, 0):
-            if self.rect.collidepoint(mousePos):
-                self.isActive = True
-            else:
-                self.isActive = False
 
 
 class TextBox(InputBox):
     def __init__(self, name, color, rect, text='100'):
         super().__init__(name, color, rect)
         self.text = text
-        self.draw()  # establish the correct width for initial rendering
-
+        self.draw() # establish the correct width for initial rendering
+    
     def draw(self):
         super().draw()
         surface = baseFont.render(self.text, True, self.color)
         screen.blit(surface, (self.rect.x + 10, self.rect.y + 10))
         self.rect.w = max(surface.get_width() + 20, 50)
 
-    def update(self, wEvent):
+    def update(self, event):
         super().update()
-        if self.isActive and wEvent.type == pygame.KEYDOWN:
-            if wEvent.key == pygame.K_BACKSPACE:
-                self.text = self.text[:-1]
-            else:
-                if wEvent.unicode.isdigit():
-                    self.text += wEvent.unicode
+        if self.isActive and event.type == pygame.KEYDOWN:
+            if   event.key == pygame.K_BACKSPACE: self.text = self.text[:-1]
+            elif event.unicode.isdigit()        : self.text += event.unicode
+        
 
-
-class SliderBox(InputBox):
+class SlideBox(InputBox):
     def __init__(self, name, color, rect):
         super().__init__(name, color, rect)
         self.start = self.rect.x + 6
@@ -82,36 +80,30 @@ class SliderBox(InputBox):
         super().update()
         previousStart = self.start
         self.rect.x = sizeBox.rect.x + sizeBox.rect.w + 20
-        self.start = self.rect.x + 6
-        self.end = self.rect.x + self.rect.w - 6
+        self.start  = self.rect.x + 6
+        self.end    = self.rect.x + self.rect.w - 6
         self.value += self.start - previousStart
-        if self.isActive and pygame.mouse.get_pressed() != (0, 0, 0):
-            x = pygame.mouse.get_pos()[0]
-            if self.start <= x <= self.end: self.value = x
+        
+        if self.isActive and self.clicked:
+            if self.start <= self.mousePos[0] <= self.end: self.value = self.mousePos[0]
+            
 
-
-class ButtonBox:
+class ButtonBox(Box):
     def __init__(self, stateFalse, stateTrue, rect):
+        super().__init__(rect)
         self.stateFalse = pygame.image.load(stateFalse)
-        self.stateTrue = pygame.image.load(stateTrue)
-        self.active = False
-        self.rect = pygame.Rect(rect)
-
+        self.stateTrue  = pygame.image.load(stateTrue)
+    
     def draw(self):
         self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
-        pos = (self.rect.x, self.rect.y)
-        if self.active:
-            screen.blit(self.stateTrue, pos)
-        else:
-            screen.blit(self.stateFalse, pos)
+        if self.isActive: screen.blit(self.stateTrue, (self.rect.x, self.rect.y))
+        else            : screen.blit(self.stateFalse, (self.rect.x, self.rect.y))
 
     def update(self):
-        self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
-        if self.active:
-            self.active = False
-        mousePos = pygame.mouse.get_pos()
-        if pygame.mouse.get_pressed() != (0, 0, 0) and self.rect.collidepoint(mousePos):
-            self.active = True
+       super().update()
+       self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
+       if self.isActive: self.isActive = True if self.clicked else False
+        
 
 
 class DropdownBox():
@@ -119,13 +111,13 @@ class DropdownBox():
 
     def __init__(self, name, rect, font):
         self.isActive = False
-        self.name = name
-        self.color = grey
+        self.name     = name
+        self.color    = grey
+        self.font     = font
+        self.rect     = pygame.Rect(rect)
         self.options_color = white
-        self.rect = pygame.Rect(rect)
         self.active_option = -1
-        self.font = font
-
+        
     def add_options(self, options):
         self.options = options
         dropdown_width = ceil((len(self.options) - 1) * self.rect.height / self.rect.y) * self.rect.width
@@ -269,11 +261,12 @@ class DropDownTimeComplexity():
 
 
 # Input Boxes
-sizeBox = TextBox("Size", grey, (30, 440, 50, 50), '100')
-delayBox = SliderBox("Delay", grey, (105, 440, 112, 50))
-algorithmBox = DropdownBox("Algorithm", (242, 440, 140, 50), baseFont)
+
+sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
+delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
+algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
+startButton  = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 440, 50, 50))
 timeComplexityBox = DropDownTimeComplexity("Time Complexity", (372, 440, 160, 50), baseFont)
-startButton = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 440, 50, 50))
 
 # Global Variables
 numBars = 0
@@ -283,8 +276,9 @@ toDraw = True
 paused = False
 
 
-def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows={}, **kwargs):
-    """Draw the bars and control their colors"""
+
+def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwargs):
+    '''Draw the bars and control their colors'''
     if numBars != 0:
         bar_width = 900 / numBars
         ceil_width = ceil(bar_width)
@@ -302,7 +296,7 @@ def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows={}, **kwargs
 
 
 def drawBottomMenu():
-    """Draw the menu below the bars"""
+    '''Draw the menu below the bars'''
     sizeBox.draw()
     delayBox.draw()
     startButton.draw()
@@ -326,8 +320,9 @@ def draw_polygon_alpha(surface, color, points):
 
 
 def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
-    """Draw all the interface"""
-    global paused, timer
+    '''Draw all the interface'''
+    global paused,timer
+    
     screen.fill(white)
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
     if paused and (time() - timer) < 0.5:

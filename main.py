@@ -30,7 +30,7 @@ def main():
                 prev = current_tc
                 display.algorithmBox.add_options(returnAlgoList(current_tc))
 
-            if display.startButton.active:
+            if display.startButton.isActive:
                 # Set the values given by the user
                 display.numBars = int(display.sizeBox.text)
                 display.delay = \
