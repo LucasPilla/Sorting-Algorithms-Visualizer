@@ -1,4 +1,3 @@
-from display import handleDrawing
 from math import ceil, floor
 
 
@@ -52,8 +51,8 @@ def shellSort(array, *args, gapType="ciura"):
         for i in range(gap, len(array)):
             temp, j = array[i], i
             while j >= gap and array[j - gap] > temp:
-                handleDrawing(array, j, j - gap, -1, -1)
+                yield array, j, j - gap, -1, -1
                 array[j] = array[j - gap]
                 j -= gap
-            handleDrawing(array, -1, -1, i, j)
+            yield array, -1, -1, i, j
             array[j] = temp
