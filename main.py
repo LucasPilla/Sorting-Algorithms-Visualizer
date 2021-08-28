@@ -18,7 +18,7 @@ def main():
                 running = False
 
             display.sizeBox.update(event)
-            display.delayBox.update()
+            display.delayBox.update(event)
             display.algorithmBox.update()
             display.startButton.update()
             a_set = set(range(display.numBars))
