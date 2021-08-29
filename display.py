@@ -1,5 +1,4 @@
 import pygame
-from sys import exit
 from math import ceil
 from time import time
 
@@ -250,39 +249,3 @@ def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
         
     drawBottomMenu()
     pygame.display.update()
-
-
-def handleDrawing(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
-    global toDraw,paused,timer
-    
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            exit(0)
-            
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            if startButton.rect.collidepoint(event.pos):
-                toDraw = False
-                
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                paused = True
-                timer = time()
-        
-        delayBox.update(event)
-
-    if toDraw:
-        while paused:
-            drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
-            
-            for event in pygame.event.get():
-                delayBox.update(event)
-                
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE or event.key == pygame.K_RETURN:
-                        paused = False
-                        timer = time()
-                        
-        drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
-        delay = delayBox.value - delayBox.rect.x - 6
-        pygame.time.wait(delay)
