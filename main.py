@@ -20,13 +20,13 @@ def main():
                 running = False
 
             display.sizeBox.update(event)
-            display.delayBox.update()
+            display.delayBox.update(event)
             display.algorithmBox.update()
             display.startButton.update()
             display.themeBox.update()
             a_set = set(range(display.numBars))
 
-            if display.startButton.active:
+            if display.startButton.isActive:
                 # Set the values given by the user
                 display.numBars = int(display.sizeBox.text)
                 display.delay =\
