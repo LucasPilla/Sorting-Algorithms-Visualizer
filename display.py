@@ -194,7 +194,7 @@ algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
 startButton  = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 440, 50, 50))
 
 # Global Variables
-numBars = 100
+numBars = 0
 delay   = 0
 timer_space_bar   = 0
 paused = False

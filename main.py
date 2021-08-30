@@ -9,7 +9,7 @@ import display
 
 
 def main():
-    numbers = [randint(10, 400) for i in range(display.numBars)]
+    numbers = []
     running = True
     display.algorithmBox.add_options(list(algorithmsDict.keys()))
 
