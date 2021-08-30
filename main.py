@@ -9,7 +9,7 @@ import display
 
 
 def main():
-    numbers = []
+    numbers = [randint(10, 400) for i in range(display.numBars)]
     running = True
     display.algorithmBox.add_options(list(algorithmsDict.keys()))
 
@@ -28,15 +28,16 @@ def main():
             display.algorithmBox.update()
             display.startButton.update()
 
+            display.numBars = int(display.sizeBox.text)
+            display.delay = (display.delayBox.value-display.delayBox.rect.x-6)/1000
+
         if display.startButton.isActive:
             display.startButton.isActive = False
+            display.startButton.is_playing = not display.startButton.is_playing
             if do_sorting:
                 do_sorting = False
             else:
                 do_sorting = True
-                display.numBars = int(display.sizeBox.text)
-                display.delay =\
-                    display.delayBox.value - display.delayBox.rect.x - 6
                 current_alg = display.algorithmBox.get_active_option()
                 numbers = [randint(10, 400) for i in range(display.numBars)] # random list to be sorted
                 alg_iterator = algorithmsDict[current_alg](numbers, 0, display.numBars-1) # initialize iterator
@@ -44,8 +45,8 @@ def main():
         if do_sorting:
             try:
                 if time()-timer >= display.delay:
-                    array, redBar1, redBar2, blueBar1, blueBar2 = next(alg_iterator)
-                    display.drawInterface(array, redBar1, redBar2, blueBar1, blueBar2)
+                    numbers, redBar1, redBar2, blueBar1, blueBar2 = next(alg_iterator)
+                    display.drawInterface(numbers, redBar1, redBar2, blueBar1, blueBar2)
                     timer = time()
             except StopIteration:
                 do_sorting = False

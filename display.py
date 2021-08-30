@@ -97,10 +97,11 @@ class ButtonBox(Box):
         super().__init__(rect)
         self.stateFalse = pygame.image.load(stateFalse)
         self.stateTrue  = pygame.image.load(stateTrue)
+        self.is_playing = False
     
     def draw(self):
         self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
-        if self.isActive: screen.blit(self.stateTrue, (self.rect.x, self.rect.y))
+        if self.is_playing: screen.blit(self.stateTrue, (self.rect.x, self.rect.y))
         else            : screen.blit(self.stateFalse, (self.rect.x, self.rect.y))
 
     def update(self):
@@ -193,7 +194,7 @@ algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
 startButton  = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 440, 50, 50))
 
 # Global Variables
-numBars = 0
+numBars = 100
 delay   = 0
 timer   = 0
 toDraw  = True
