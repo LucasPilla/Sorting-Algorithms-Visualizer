@@ -196,9 +196,8 @@ startButton  = ButtonBox('images/playButton.png', 'images/stopButton.png', (390,
 # Global Variables
 numBars = 100
 delay   = 0
-timer   = 0
-toDraw  = True
-paused  = False
+timer_space_bar   = 0
+paused = False
 
 def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwargs):
     '''Draw the bars and control their colors'''
@@ -236,15 +235,15 @@ def draw_polygon_alpha(surface, color, points):
 
 def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     '''Draw all the interface'''
-    global paused,timer
+    global paused, timer_space_bar
     screen.fill(white)
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
     
-    if paused and (time()-timer)<0.5:
+    if paused and (time()-timer_space_bar)<0.5:
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+10, 150+10, 10, 50])
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+40, 150+10, 10, 50])
         
-    elif not paused and (time()-timer)<0.5:
+    elif not paused and (time()-timer_space_bar)<0.5:
         x,y = (850/2),150
         draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+50+10),(x+50,y+25+10)))
         
