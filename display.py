@@ -91,24 +91,21 @@ class SlideBox(InputBox):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if   event.button == 4: self.value = min(self.value + 10, self.end)
                 elif event.button == 5: self.value = max(self.value - 10, self.start)
-            
+
 
 class ButtonBox(Box):
-    def __init__(self, stateFalse, stateTrue, rect):
+    def __init__(self, img_path, rect):
         super().__init__(rect)
-        self.stateFalse = pygame.image.load(stateFalse)
-        self.stateTrue  = pygame.image.load(stateTrue)
-        self.is_playing = False
+        self.img = pygame.image.load(img_path)
     
     def draw(self):
         self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
-        if self.is_playing: screen.blit(self.stateTrue, (self.rect.x, self.rect.y))
-        else            : screen.blit(self.stateFalse, (self.rect.x, self.rect.y))
+        screen.blit(self.img, (self.rect.x, self.rect.y))
 
     def update(self):
        super().update()
        if self.isActive: self.isActive = True if self.clicked else False
-        
+
 
 class DropdownBox():
     DEFAUTL_OPTION = 0
@@ -192,7 +189,17 @@ class DropdownBox():
 sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
 delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
 algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
-startButton  = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 440, 50, 50))
+playButton  = ButtonBox('images/playButton.png', (390, 440, 50, 50))
+stopButton = ButtonBox('images/stopButton.png', (390, 440, 50, 50))
+
+def updateWidgets(event):
+    sizeBox.update(event)
+    delayBox.update(event)
+    algorithmBox.update()
+    if variables.do_sorting:
+        stopButton.update()
+    else:
+        playButton.update()
 
 def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwargs):
     '''Draw the bars and control their colors'''
@@ -200,7 +207,7 @@ def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwar
         bar_width  = 900 / variables.numBars
         ceil_width = ceil(bar_width)
 
-    for num in range(numBars):
+    for num in range(variables.numBars):
         if   num in (redBar1, redBar2)  : color = red
         elif num in (blueBar1, blueBar2): color = blue
         elif num in greenRows           : color = green        
@@ -212,8 +219,11 @@ def drawBottomMenu():
     '''Draw the menu below the bars'''
     sizeBox.draw()
     delayBox.draw()
-    startButton.draw()
     algorithmBox.draw()
+    if variables.do_sorting:
+        stopButton.draw()
+    else:
+        playButton.draw()
 
 def draw_rect_alpha(surface, color, rect):
     shape_surf = pygame.Surface(pygame.Rect(rect).size, pygame.SRCALPHA)

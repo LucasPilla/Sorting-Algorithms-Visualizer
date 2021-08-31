@@ -6,7 +6,7 @@ import variables
 import display
 
 # declared in variables.py : numBars, delay, do_sorting, paused, timer_space_bar
-# declared in display.py : sizeBox, delayBox, algorithmBox, startButton
+# declared in display.py : sizeBox, delayBox, algorithmBox, playButton, stopButton
 
 
 def main():
@@ -18,6 +18,7 @@ def main():
     alg_iterator = None
 
     timer_delay = time()
+    
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -27,32 +28,29 @@ def main():
                 variables.paused = not variables.paused
                 variables.timer_space_bar = time()
 
-            display.sizeBox.update(event)
-            display.delayBox.update(event)
-            display.algorithmBox.update()
-            display.startButton.update()
+            display.updateWidgets(event)
 
         variables.delay = (display.delayBox.value-display.delayBox.rect.x-6)/1000 # delay is in ms
-        display.startButton.is_playing = variables.do_sorting
 
-        if display.startButton.isActive: # play-stop button clicked
-            display.startButton.isActive = False
-            if variables.do_sorting: # deplete generator to display sorted numbers
-                variables.do_sorting = False
-                variables.paused = False
-                try:
-                    while True:
-                        numbers, redBar1, redBar2, blueBar1, blueBar2 = next(alg_iterator)
-                except StopIteration:
-                    pass
-            else: # initiate generator
-                variables.do_sorting = True
-                current_alg = display.algorithmBox.get_active_option()
-                variables.numBars = int(display.sizeBox.text)
-                numbers = [randint(10, 400) for i in range(variables.numBars)] # random list to be sorted
-                alg_iterator = algorithmsDict[current_alg](numbers, 0, variables.numBars-1) # initialize iterator
+        if display.playButton.isActive: # play button clicked
+            display.playButton.isActive = False
+            variables.do_sorting = True
+            current_alg = display.algorithmBox.get_active_option()
+            variables.numBars = int(display.sizeBox.text)
+            numbers = [randint(10, 400) for i in range(variables.numBars)] # random list to be sorted
+            alg_iterator = algorithmsDict[current_alg](numbers, 0, variables.numBars-1) # initialize iterator
 
-        if variables.do_sorting and not variables.paused:
+        if display.stopButton.isActive: # stop button clicked
+            display.stopButton.isActive = False
+            variables.do_sorting = False
+            variables.paused = False
+            try: # deplete generator to display sorted numbers
+                while True:
+                    numbers, redBar1, redBar2, blueBar1, blueBar2 = next(alg_iterator)
+            except StopIteration:
+                pass
+
+        if variables.do_sorting and not variables.paused: # sorting animation
             try:
                 if time()-timer_delay >= variables.delay:
                     numbers, redBar1, redBar2, blueBar1, blueBar2 = next(alg_iterator)
@@ -60,9 +58,9 @@ def main():
                     timer_delay = time()
             except StopIteration:
                 variables.do_sorting = False
-        elif variables.do_sorting and variables.paused:
+        elif variables.do_sorting and variables.paused: # animation paused
             display.drawInterface(numbers, -1, -1, -1, -1)
-        else:
+        else: # no animation
             a_set = set(range(variables.numBars))
             display.drawInterface(numbers, -1, -1, -1, -1, greenRows=a_set)
 
