@@ -1,6 +1,7 @@
 import pygame
 from math import ceil
 from time import time
+import variables
 
 # Initialize pygame modules
 pygame.init()
@@ -193,16 +194,10 @@ delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
 algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
 startButton  = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 440, 50, 50))
 
-# Global Variables
-numBars = 0
-delay   = 0
-timer_space_bar   = 0
-paused = False
-
 def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwargs):
     '''Draw the bars and control their colors'''
-    if numBars != 0:
-        bar_width  = 900 / numBars
+    if variables.numBars != 0:
+        bar_width  = 900 / variables.numBars
         ceil_width = ceil(bar_width)
 
     for num in range(numBars):
@@ -235,15 +230,14 @@ def draw_polygon_alpha(surface, color, points):
 
 def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     '''Draw all the interface'''
-    global paused, timer_space_bar
     screen.fill(white)
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
     
-    if paused and (time()-timer_space_bar)<0.5:
+    if variables.paused and (time()-variables.timer_space_bar)<0.5:
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+10, 150+10, 10, 50])
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+40, 150+10, 10, 50])
         
-    elif not paused and (time()-timer_space_bar)<0.5:
+    elif not variables.paused and (time()-variables.timer_space_bar)<0.5:
         x,y = (850/2),150
         draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+50+10),(x+50,y+25+10)))
         
