@@ -113,7 +113,7 @@ class VerticalSliderBox(InputBox):
         if self.isActive:
             if self.clicked:
                 if self.start <= self.mousePos[1] <= self.end: self.value = self.mousePos[1]
-
+        
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if   event.button == 4: self.value = min(self.end  ,self.value + 10)
                 elif event.button == 5: self.value = max(self.start,self.value - 10)
