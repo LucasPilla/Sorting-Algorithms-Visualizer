@@ -1,7 +1,6 @@
 import pygame
 from math import ceil
 from time import time
-import variables
 
 # Initialize pygame modules
 pygame.init()
@@ -185,6 +184,14 @@ class DropdownBox():
 # END OF MODULE #
 
 
+# Global Variables
+numBars = 0
+delay   = 0
+do_sorting = False
+paused = False
+timer_space_bar   = 0
+
+
 # Input Boxes
 sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
 delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
@@ -192,22 +199,24 @@ algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
 playButton  = ButtonBox('images/playButton.png', (390, 440, 50, 50))
 stopButton = ButtonBox('images/stopButton.png', (390, 440, 50, 50))
 
+
 def updateWidgets(event):
     sizeBox.update(event)
     delayBox.update(event)
     algorithmBox.update()
-    if variables.do_sorting:
+    if do_sorting:
         stopButton.update()
     else:
         playButton.update()
 
+
 def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwargs):
     '''Draw the bars and control their colors'''
-    if variables.numBars != 0:
-        bar_width  = 900 / variables.numBars
+    if numBars != 0:
+        bar_width  = 900 / numBars
         ceil_width = ceil(bar_width)
 
-    for num in range(variables.numBars):
+    for num in range(numBars):
         if   num in (redBar1, redBar2)  : color = red
         elif num in (blueBar1, blueBar2): color = blue
         elif num in greenRows           : color = green        
@@ -220,15 +229,17 @@ def drawBottomMenu():
     sizeBox.draw()
     delayBox.draw()
     algorithmBox.draw()
-    if variables.do_sorting:
+    if do_sorting:
         stopButton.draw()
     else:
         playButton.draw()
+
 
 def draw_rect_alpha(surface, color, rect):
     shape_surf = pygame.Surface(pygame.Rect(rect).size, pygame.SRCALPHA)
     pygame.draw.rect(shape_surf, color, shape_surf.get_rect())
     surface.blit(shape_surf, rect)
+
 
 def draw_polygon_alpha(surface, color, points):
     lx, ly = zip(*points)
@@ -238,16 +249,17 @@ def draw_polygon_alpha(surface, color, points):
     pygame.draw.polygon(shape_surf, color, [(x - min_x, y - min_y) for x, y in points])
     surface.blit(shape_surf, target_rect)
 
+
 def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     '''Draw all the interface'''
     screen.fill(white)
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
     
-    if variables.paused and (time()-variables.timer_space_bar)<0.5:
+    if paused and (time()-timer_space_bar)<0.5:
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+10, 150+10, 10, 50])
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+40, 150+10, 10, 50])
         
-    elif not variables.paused and (time()-variables.timer_space_bar)<0.5:
+    elif not paused and (time()-timer_space_bar)<0.5:
         x,y = (850/2),150
         draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+50+10),(x+50,y+25+10)))
         
