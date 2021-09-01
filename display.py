@@ -92,6 +92,33 @@ class SlideBox(InputBox):
                 elif event.button == 5: self.value = max(self.value - 10, self.start)
 
 
+class VerticalSliderBox(InputBox):
+    def __init__(self, name, color, rect):
+        super().__init__(name, color, rect)
+        self.start = self.rect.y+6
+        self.end   = self.rect.y+self.rect.h
+        self.value = self.start
+        self.isActive=True
+
+    def draw(self):
+        x=self.rect.x
+        pygame.draw.line(screen, grey,  (x,  self.start-6),  (x,self.end), 25)
+        pygame.draw.line(screen, white, (x+5,  self.value),  (x+5,self.value+20), 8)
+
+    def update(self):
+        super().update()
+        previousStart = self.start
+        self.start = self.rect.y+6
+        self.end   = self.rect.y + self.rect.h
+        self.value += self.start - previousStart
+        if self.isActive:
+            if self.clicked:
+                if self.start <= self.mousePos[1] <= self.end: self.value = self.mousePos[1]
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if   event.button == 4: self.value = min(self.end  ,self.value + 10)
+                elif event.button == 5: self.value = max(self.start,self.value - 10)
+
+
 class ButtonBox(Box):
     def __init__(self, img_path, rect):
         super().__init__(rect)
