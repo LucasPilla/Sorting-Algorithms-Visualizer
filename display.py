@@ -91,7 +91,6 @@ class SlideBox(InputBox):
                 if   event.button == 4: self.value = min(self.value + 10, self.end)
                 elif event.button == 5: self.value = max(self.value - 10, self.start)
 
-
 class VerticalSliderBox(InputBox):
     def __init__(self, name, color, rect):
         super().__init__(name, color, rect)
@@ -114,6 +113,7 @@ class VerticalSliderBox(InputBox):
         if self.isActive:
             if self.clicked:
                 if self.start <= self.mousePos[1] <= self.end: self.value = self.mousePos[1]
+
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if   event.button == 4: self.value = min(self.end  ,self.value + 10)
                 elif event.button == 5: self.value = max(self.start,self.value - 10)
