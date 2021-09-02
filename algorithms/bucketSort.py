@@ -1,6 +1,3 @@
-from display import handleDrawing
-
-
 def bucketSort(array, *args):
     bucket = []
     for i in range(len(array)):
@@ -10,7 +7,7 @@ def bucketSort(array, *args):
     for j in array:
         index_b = int(j/n)
         bucket[index_b].append(j)
-        handleDrawing(array, j, -1, index_b, -1)
+        yield array, j, -1, index_b, -1
 
     for i in range(len(array)):
         bucket[i] = sorted(bucket[i])
@@ -18,6 +15,6 @@ def bucketSort(array, *args):
     k = 0
     for i in range(len(array)):
         for j in range(len(bucket[i])):
-            handleDrawing(array, k, -1, i, -1)
+            yield array, k, -1, i, -1
             array[k] = bucket[i][j]
             k += 1

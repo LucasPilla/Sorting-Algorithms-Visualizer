@@ -1,4 +1,3 @@
-from display import handleDrawing
 from random import randint
 
 
@@ -13,7 +12,7 @@ def bogoSort(array, *args):
             array[i], array[j] = array[j], array[i]
 
         for k in range(len(array)-1):
-            handleDrawing(array, k, k+1, -1, -1)
+            yield array, k, k+1, -1, -1
             if array[k] > array[k+1]:
                 is_sorted = False
                 break
