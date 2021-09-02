@@ -1,12 +1,9 @@
-from display import handleDrawing
-
-
 def mergeSort(array, left, right):
     if left < right:
         mid = int((left+right)/2)
-        mergeSort(array, left, mid)
-        mergeSort(array, mid+1, right)
-        merge(array, left, mid, right)
+        yield from mergeSort(array, left, mid)
+        yield from mergeSort(array, mid+1, right)
+        yield from merge(array, left, mid, right)
 
 
 def merge(array, left, mid, right):
@@ -17,7 +14,7 @@ def merge(array, left, mid, right):
     k = left
     while i < len(L) and j < len(R):
         # The two lines below is not part of the algorithm
-        handleDrawing(array, left+i, mid+j, left, right)
+        yield array, left+i, mid+j, left, right
         if L[i] < R[j]:
             array[k] = L[i]
             i += 1

@@ -1,6 +1,3 @@
-from display import handleDrawing
-
-
 def get_gap(prev_gap) -> int:
     gap = int(prev_gap/1.3)
     if gap < 1:
@@ -18,7 +15,7 @@ def combSort(array, *args):
         swapped = False
 
         for idx in range(0, size - gap):
-            handleDrawing(array, idx, idx+gap, -1, -1)
+            yield array, idx, idx+gap, -1, -1
             if array[idx] > array[idx + gap]:
                 array[idx], array[idx + gap] = array[idx + gap], array[idx]
                 swapped = True

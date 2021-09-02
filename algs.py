@@ -32,6 +32,3 @@ algorithmsDict = {'insertion'       : insertionSort,
                   'odd-even'        : oddevenSort,
                   'pigeonhole'      : pigeonholeSort }
 
-
-def runAlgorithm(algorithm, array):
-    return algorithmsDict[algorithm](array, 0, len(array)-1)
