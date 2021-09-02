@@ -105,7 +105,7 @@ class VerticalSliderBox(InputBox):
         pygame.draw.line(screen, grey,  (x,  self.start-6),  (x,self.end), 25)
         pygame.draw.line(screen, white, (x+5,  self.value),  (x+5,self.value+20), 8)
 
-    def update(self):
+    def update(self,event):
         super().update()
         previousStart = self.start
         self.start = self.rect.y+6
