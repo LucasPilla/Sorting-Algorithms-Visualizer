@@ -7,6 +7,9 @@ pygame.init()
 
 # Display settings
 windowSize = (900, 500)
+canvasSize = (700, 400)
+sideMargin = windowSize[0]-canvasSize[0]
+bottomMargin = windowSize[1]-canvasSize[1]
 screen = pygame.display.set_mode(windowSize)
 pygame.display.set_caption('Sorting Algorithms Visualizer')
 
@@ -238,7 +241,7 @@ def updateWidgets(event):
 def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwargs):
     '''Draw the bars and control their colors'''
     if numBars != 0:
-        bar_width  = 900 / numBars
+        bar_width  = canvasSize[0] / numBars
         ceil_width = ceil(bar_width)
 
     for num in range(numBars):
@@ -246,7 +249,7 @@ def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwar
         elif num in (blueBar1, blueBar2): color = blue
         elif num in greenRows           : color = green        
         else                            : color = grey
-        pygame.draw.rect(screen, color, (num * bar_width, 400 - array[num], ceil_width, array[num]))
+        pygame.draw.rect(screen, color, (sideMargin + num*bar_width, canvasSize[1]-array[num], ceil_width, array[num]))
 
 
 def drawBottomMenu():
