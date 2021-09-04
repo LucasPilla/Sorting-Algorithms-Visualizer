@@ -1,10 +1,8 @@
-from display import handleDrawing
-
-
 def binaryinsertionSort(array, *args):
     for i in range(1, len(array)):
         val = array[i]
         j = binary_search(array, val, 0, i - 1, i)
+        yield array, 0, i-1, j, i
         array[0:len(array)] = array[:j] + [val] + array[j:i] + array[i + 1:]
 
 
@@ -19,7 +17,6 @@ def binary_search(arr, val, start, end, current):
         return start
 
     mid = round((start + end) / 2)
-    handleDrawing(arr, start, end, mid, current)
     if arr[mid] < val:
         return binary_search(arr, val, mid + 1, end, current)
     elif arr[mid] > val:

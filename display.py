@@ -1,5 +1,4 @@
 import pygame
-from sys import exit
 from math import ceil
 from time import time
 from themes import getTheme
@@ -86,23 +85,46 @@ class SlideBox(InputBox):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if   event.button == 4: self.value = min(self.value + 10, self.end)
                 elif event.button == 5: self.value = max(self.value - 10, self.start)
-            
+
+class VerticalSliderBox(InputBox):
+    def __init__(self, name, color, rect):
+        super().__init__(name, color, rect)
+        self.start = self.rect.y+6
+        self.end   = self.rect.y+self.rect.h
+        self.value = self.start
+        self.isActive=True
+
+    def draw(self):
+        x=self.rect.x
+        pygame.draw.line(screen, grey,  (x,  self.start-6),  (x,self.end), 25)
+        pygame.draw.line(screen, white, (x+5,  self.value),  (x+5,self.value+20), 8)
+
+    def update(self,event):
+        super().update()
+        previousStart = self.start
+        self.start = self.rect.y+6
+        self.end   = self.rect.y + self.rect.h
+        self.value += self.start - previousStart
+        if self.isActive:
+            if self.clicked:
+                if self.start <= self.mousePos[1] <= self.end: self.value = self.mousePos[1]
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if   event.button == 4: self.value = min(self.end  ,self.value + 10)
+                elif event.button == 5: self.value = max(self.start,self.value - 10)
 
 class ButtonBox(Box):
-    def __init__(self, stateFalse, stateTrue, rect):
+    def __init__(self, img_path, rect):
         super().__init__(rect)
-        self.stateFalse = pygame.image.load(stateFalse)
-        self.stateTrue  = pygame.image.load(stateTrue)
+        self.img = pygame.image.load(img_path)
     
     def draw(self):
         self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
-        if self.isActive: screen.blit(self.stateTrue, (self.rect.x, self.rect.y))
-        else            : screen.blit(self.stateFalse, (self.rect.x, self.rect.y))
+        screen.blit(self.img, (self.rect.x, self.rect.y))
 
     def update(self):
        super().update()
        if self.isActive: self.isActive = True if self.clicked else False
-        
+
 
 class DropdownBox():
     DEFAUTL_OPTION = 0
@@ -182,19 +204,32 @@ class DropdownBox():
 # END OF MODULE #
 
 
-# Input Boxes
-sizeBox  = TextBox("Size", theme['grey'], (30, 440, 50, 50), '100')
-delayBox = SliderBox("Delay", theme['grey'], (105, 440, 112, 50))
-algorithmBox = DropdownBox("Algorithm", (242, 440, 140, 50), baseFont)
-startButton  = ButtonBox('images/playButton.png', 'images/stopButton.png', (390, 440, 50, 50))
-themeBox = DropdownBox("Theme", (465, 440, 140, 50), baseFont)
-
 # Global Variables
 numBars = 0
 delay   = 0
-timer   = 0
-toDraw  = True
-paused  = False
+do_sorting = False
+paused = False
+timer_space_bar   = 0
+
+
+# Input Boxes
+sizeBox  = TextBox('Size', theme['grey'], (30, 440, 50, 50), '100')
+delayBox = SliderBox("Delay", theme['grey'], (105, 440, 112, 50))
+algorithmBox = DropdownBox("Algorithm", (242, 440, 140, 50), baseFont)
+playButton  = ButtonBox('images/playButton.png', (390, 440, 50, 50))
+stopButton = ButtonBox('images/stopButton.png', (390, 440, 50, 50))
+themeBox = DropdownBox("Theme", (465, 440, 140, 50), baseFont)
+
+
+def updateWidgets(event):
+    sizeBox.update(event)
+    delayBox.update(event)
+    algorithmBox.update()
+    if do_sorting:
+        stopButton.update()
+    else:
+        playButton.update()
+
 
 def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwargs):
     '''Draw the bars and control their colors'''
@@ -214,14 +249,20 @@ def drawBottomMenu():
     '''Draw the menu below the bars'''
     sizeBox.draw()
     delayBox.draw()
-    startButton.draw()
     algorithmBox.draw()
     themeBox.draw()
+    if do_sorting:
+        stopButton.draw()
+    else:
+        playButton.draw()
+        
 
 def draw_rect_alpha(surface, color, rect):
-    shape_surf = pygame.Surface(pygame.Rect(rect).size, pygame.SRCALPHA)
+    shape_surf = pygame.Surface(pygame.Rect(rect).
+                                , pygame.SRCALPHA)
     pygame.draw.rect(shape_surf, color, shape_surf.get_rect())
     surface.blit(shape_surf, rect)
+
 
 def draw_polygon_alpha(surface, color, points):
     lx, ly = zip(*points)
@@ -231,57 +272,19 @@ def draw_polygon_alpha(surface, color, points):
     pygame.draw.polygon(shape_surf, color, [(x - min_x, y - min_y) for x, y in points])
     surface.blit(shape_surf, target_rect)
 
+
 def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     '''Draw all the interface'''
-    global paused,timer
     screen.fill(theme['white'])
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
     
-    if paused and (time()-timer)<0.5:
+    if paused and (time()-timer_space_bar)<0.5:
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+10, 150+10, 10, 50])
         draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+40, 150+10, 10, 50])
         
-    elif not paused and (time()-timer)<0.5:
+    elif not paused and (time()-timer_space_bar)<0.5:
         x,y = (850/2),150
         draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+50+10),(x+50,y+25+10)))
         
     drawBottomMenu()
     pygame.display.update()
-
-
-def handleDrawing(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
-    global toDraw,paused,timer
-    
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            exit(0)
-            
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            if startButton.rect.collidepoint(event.pos):
-                toDraw = False
-                
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                paused = True
-                timer = time()
-        
-        delayBox.update(event)
-
-    if toDraw:
-        while paused:
-            drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
-            
-            for event in pygame.event.get():
-                delayBox.update(event)
-                
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE or event.key == pygame.K_RETURN:
-                        paused = False
-                        timer = time()
-                        
-        drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
-        delay = delayBox.value - delayBox.rect.x - 6
-        pygame.time.wait(delay)
-
-

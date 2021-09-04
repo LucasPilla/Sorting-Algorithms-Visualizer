@@ -1,5 +1,3 @@
-from display import handleDrawing
-
 def merge(array, left, mid, right):
     L = array[left:mid+1]
     R = array[mid+1:right+1]
@@ -8,7 +6,7 @@ def merge(array, left, mid, right):
     k = left
     while i < len(L) and j < len(R):
         # The two lines below is not part of the algorithm
-        handleDrawing(array, left+i, mid+j, left, right)
+        yield array, left+i, mid+j, left, right
         if L[i] < R[j]:
             array[k] = L[i]
             i += 1
@@ -37,17 +35,17 @@ def helper(arr,n,start):
 
     while i<n:
         #next line not a part of algo
-        handleDrawing(arr,i,count-1,start,n-1)
+        yield arr,i,count-1,start,n-1
         if arr[i]>arr[count-1]:
             
             arr.insert(count,arr.pop(i))
             count+=1
         i+=1
     if start!=0:
-        op = merge(arr,0,start-1,count-1)
-    helper(arr,n,count)
+        yield from merge(arr,0,start-1,count-1)
+    yield from helper(arr,n,count)
 
 def strandSort(arr,*args):
     size = len(arr)
     
-    helper(arr,size,0)
+    yield from helper(arr,size,0)

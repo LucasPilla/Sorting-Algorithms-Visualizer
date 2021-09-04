@@ -6,6 +6,7 @@ from algorithms.timSort     import timSort
 from algorithms.stoogeSort  import stoogeSort
 from algorithms.strandSort  import strandSort
 from algorithms.oddevenSort import oddevenSort
+from algorithms.exchangeSort import exchangeSort
 
 
 algorithmsDict = {'insertion'       : insertionSort,
@@ -30,8 +31,6 @@ algorithmsDict = {'insertion'       : insertionSort,
                   'stooge'          : stoogeSort,
                   'strand'          : strandSort,
                   'odd-even'        : oddevenSort,
-                  'pigeonhole'      : pigeonholeSort }
+                  'pigeonhole'      : pigeonholeSort,
+                  'exchange'        : exchangeSort}
 
-
-def runAlgorithm(algorithm, array):
-    return algorithmsDict[algorithm](array, 0, len(array)-1)
