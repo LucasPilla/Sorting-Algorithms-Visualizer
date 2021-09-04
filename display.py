@@ -81,7 +81,7 @@ class SlideBox(InputBox):
     def update(self, event):
         super().update()
         previousStart = self.start
-        self.rect.x = sizeBox.rect.x + sizeBox.rect.w + 20
+        #self.rect.x = sizeBox.rect.x + sizeBox.rect.w + 20
         self.start  = self.rect.x + 6
         self.end    = self.rect.x + self.rect.w - 6
         self.value += self.start - previousStart
@@ -126,7 +126,7 @@ class ButtonBox(Box):
         self.img = pygame.image.load(img_path)
     
     def draw(self):
-        self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
+        #self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
         screen.blit(self.img, (self.rect.x, self.rect.y))
 
     def update(self):
@@ -182,7 +182,7 @@ class DropdownBox():
                 screen.blit(option_text, option_text.get_rect(center=rect.center))
 
     def update(self):
-        self.rect.x = delayBox.rect.w + delayBox.rect.x + 20
+        #self.rect.x = delayBox.rect.w + delayBox.rect.x + 20
         mouse_position = pygame.mouse.get_pos()
         column = 0
         index = 0
@@ -221,11 +221,11 @@ timer_space_bar   = 0
 
 
 # Input Boxes
-sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
-delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
-algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
-playButton  = ButtonBox('images/playButton.png', (390, 440, 50, 50))
-stopButton = ButtonBox('images/stopButton.png', (390, 440, 50, 50))
+algorithmBox = DropdownBox('Algorithm', (20, 100, 140, 50), baseFont)
+sizeBox      = TextBox('Size', grey, (60, 200, 50, 50), '100')
+delayBox     = SlideBox('Delay', grey, (30, 300, 112, 50))
+playButton  = ButtonBox('images/playButton.png', (70, 400, 50, 50))
+stopButton = ButtonBox('images/stopButton.png', (70, 400, 50, 50))
 
 
 def updateWidgets(event):
@@ -254,9 +254,9 @@ def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwar
 
 def drawBottomMenu():
     '''Draw the menu below the bars'''
+    algorithmBox.draw()
     sizeBox.draw()
     delayBox.draw()
-    algorithmBox.draw()
     if do_sorting:
         stopButton.draw()
     else:
