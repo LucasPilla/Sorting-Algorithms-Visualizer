@@ -132,15 +132,13 @@ class ButtonBox(Box):
        if self.isActive: self.isActive = True if self.clicked else False
 
 
-class DropdownBox():
+class DropdownBox(InputBox):
     DEFAUTL_OPTION = 0
 
-    def __init__(self, name, rect, font):
-        self.isActive = False
-        self.name     = name
-        self.color    = grey
-        self.font     = font
-        self.rect     = pygame.Rect(rect)
+    def __init__(self, name, rect, font, color=grey):
+        super().__init__(name, color, rect)
+        self.isActive      = False
+        self.font          = font
         self.options_color = white
         self.active_option = -1
         self.n_box_per_row = 1
@@ -161,9 +159,7 @@ class DropdownBox():
         return pygame.Rect(self.rect.x+self.rect.width*(col+1), self.rect.y+self.rect.height*row, self.rect.width, self.rect.height)
 
     def draw(self):
-        label = baseFont.render(self.name, True, self.color)
-        screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 32))
-        pygame.draw.rect(screen, self.color, self.rect, 3)
+        super().draw()
         option_text = self.font.render(self.options[self.DEFAUTL_OPTION], 1, grey)
         screen.blit(option_text, option_text.get_rect(center=self.rect.center))
 
