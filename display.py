@@ -81,7 +81,6 @@ class SlideBox(InputBox):
     def update(self, event):
         super().update()
         previousStart = self.start
-        #self.rect.x = sizeBox.rect.x + sizeBox.rect.w + 20
         self.start  = self.rect.x + 6
         self.end    = self.rect.x + self.rect.w - 6
         self.value += self.start - previousStart
@@ -126,7 +125,6 @@ class ButtonBox(Box):
         self.img = pygame.image.load(img_path)
     
     def draw(self):
-        #self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
         screen.blit(self.img, (self.rect.x, self.rect.y))
 
     def update(self):
@@ -145,14 +143,22 @@ class DropdownBox():
         self.rect     = pygame.Rect(rect)
         self.options_color = white
         self.active_option = -1
+        self.n_box_per_row = 1
         
     def add_options(self, options):
         self.options = options
-        dropdown_width = ceil((len(self.options)-1) * self.rect.height / self.rect.y) * self.rect.width
-        self.dropdown_rect = pygame.Rect((self.rect.x, 0, dropdown_width, self.rect.y))
+        dropdown_x = self.rect.x+self.rect.width
+        dropdown_width = windowSize[0]-dropdown_x
+        self.n_box_per_row = ((len(self.options)-1)*self.rect.width)//dropdown_width
+        self.dropdown_rect = pygame.Rect(dropdown_x, self.rect.y, self.n_box_per_row*self.rect.width, 400)
 
     def get_active_option(self):
         return self.options[self.DEFAUTL_OPTION]
+
+    def get_option_rect(self, idx):
+        row = idx // self.n_box_per_row
+        col = idx % self.n_box_per_row
+        return pygame.Rect(self.rect.x+self.rect.width*(col+1), self.rect.y+self.rect.height*row, self.rect.width, self.rect.height)
 
     def draw(self):
         label = baseFont.render(self.name, True, self.color)
@@ -162,18 +168,10 @@ class DropdownBox():
         screen.blit(option_text, option_text.get_rect(center=self.rect.center))
 
         if self.isActive:
-            column = 0
             index = 0
-            rect_start = self.rect.y - self.rect.height
             for i in range(self.DEFAUTL_OPTION+1, len(self.options)):
-                rect = self.rect.copy()
-                rect.y -= (index + 1) * self.rect.height
-                if rect.y <= self.dropdown_rect.y:
-                    column += 1
-                    index = 0
-                    rect.y = rect_start
+                rect = self.get_option_rect(index)
                 index += 1
-                rect.x = self.rect.x + column * self.rect.width
                 
                 options_color = black if i - 1 == self.active_option else grey
                 pygame.draw.rect(screen, self.options_color, rect, 0)
@@ -182,21 +180,9 @@ class DropdownBox():
                 screen.blit(option_text, option_text.get_rect(center=rect.center))
 
     def update(self):
-        #self.rect.x = delayBox.rect.w + delayBox.rect.x + 20
         mouse_position = pygame.mouse.get_pos()
-        column = 0
-        index = 0
-        rect_start = self.rect.y - self.rect.height
         for i in range(len(self.options)-1):
-            rect = self.rect.copy()
-            rect.y -= (index + 1) * self.rect.height
-            if rect.y <= self.dropdown_rect.y:
-                column += 1
-                index = 0
-                rect.y = rect_start
-            index += 1
-            rect.x = self.rect.x + column * self.rect.width
-
+            rect = self.get_option_rect(i)
             if rect.collidepoint(mouse_position):
                 self.active_option = i
         
