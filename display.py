@@ -6,15 +6,15 @@ from time import time
 pygame.init()
 
 # Display settings
-windowSize = (900, 500)
-canvasSize = (650, 400)
+windowSize = (1000, 500)
+canvasSize = (700, 400)
 sideMargin = windowSize[0]-canvasSize[0]
 bottomMargin = windowSize[1]-canvasSize[1]
 screen = pygame.display.set_mode(windowSize)
 pygame.display.set_caption('Sorting Algorithms Visualizer')
 
 # Font
-baseFont = pygame.font.SysFont('Arial', 18)
+baseFont = pygame.font.SysFont('Arial', 24)
 # Used Colors
 grey = (100, 100, 100)
 green = (125, 240, 125)
@@ -56,7 +56,7 @@ class TextBox(InputBox):
     def draw(self):
         super().draw()
         surface = baseFont.render(self.text, True, self.color)
-        screen.blit(surface, (self.rect.x + 10, self.rect.y + 10))
+        screen.blit(surface, (self.rect.x + (self.rect.width-surface.get_width())/2, self.rect.y + (self.rect.height-surface.get_height())/2))
         self.rect.w = max(surface.get_width() + 20, 50)
 
     def update(self, event):
@@ -203,11 +203,11 @@ timer_space_bar   = 0
 
 
 # Input Boxes
-algorithmBox = DropdownBox('Algorithm', (100, 100, 140, 50), baseFont)
-sizeBox      = TextBox('Size', grey, (100, 200, 50, 50), '100')
-delayBox     = SlideBox('Delay', grey, (100, 300, 112, 50))
-playButton  = ButtonBox('images/playButton.png', (100, 400, 50, 50))
-stopButton = ButtonBox('images/stopButton.png', (100, 400, 50, 50))
+algorithmBox = DropdownBox('Algorithm', (120, 100, 140, 50), baseFont)
+sizeBox      = TextBox('Size', grey, (120, 200, 50, 50), '100')
+delayBox     = SlideBox('Delay', grey, (120, 300, 112, 50))
+playButton  = ButtonBox('images/playButton.png', (120, 400, 50, 50))
+stopButton = ButtonBox('images/stopButton.png', (120, 400, 50, 50))
 
 
 def updateWidgets(event):
