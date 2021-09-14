@@ -1,5 +1,5 @@
 import pygame
-from random import randint
+from random import randint, shuffle
 from time import time
 from algs import algorithmsDict
 import display
@@ -37,7 +37,9 @@ def main():
             display.do_sorting = True
             current_alg = display.algorithmBox.get_active_option()
             display.numBars = int(display.sizeBox.text)
-            numbers = [randint(10, 400) for i in range(display.numBars)] # random list to be sorted
+            #numbers = [randint(10, 400) for i in range(display.numBars)] # random list to be sorted
+            numbers = [int(10+390*(i/display.numBars)) for i in range(display.numBars)]
+            shuffle(numbers)
             alg_iterator = algorithmsDict[current_alg](numbers, 0, display.numBars-1) # initialize iterator
 
         if display.stopButton.isActive: # stop button clicked
