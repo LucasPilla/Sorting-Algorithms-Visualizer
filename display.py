@@ -147,7 +147,7 @@ class DropdownBox(InputBox):
         self.options = options
         dropdown_x = self.rect.x+self.rect.width
         dropdown_width = windowSize[0]-dropdown_x
-        self.n_box_per_row = ((len(self.options)-1)*self.rect.width)//dropdown_width
+        self.n_box_per_row = dropdown_width // self.rect.width
         self.dropdown_rect = pygame.Rect(dropdown_x, self.rect.y, self.n_box_per_row*self.rect.width, 400)
 
     def get_active_option(self):
@@ -203,17 +203,19 @@ timer_space_bar   = 0
 
 
 # Input Boxes
-algorithmBox = DropdownBox('Algorithm', (120, 100, 140, 50), baseFont)
-sizeBox      = TextBox('Size', grey, (120, 200, 50, 50), '100')
-delayBox     = SlideBox('Delay', grey, (120, 300, 112, 50))
-playButton  = ButtonBox('images/playButton.png', (120, 400, 50, 50))
-stopButton = ButtonBox('images/stopButton.png', (120, 400, 50, 50))
+shuffleBox = DropdownBox('Shuffle', (120, 50, 140, 50), baseFont)
+algorithmBox = DropdownBox('Algorithm', (120, 130, 140, 50), baseFont)
+sizeBox      = TextBox('Size', grey, (120, 210, 50, 50), '100')
+delayBox     = SlideBox('Delay', grey, (120, 290, 112, 50))
+playButton  = ButtonBox('images/playButton.png', (120, 380, 50, 50))
+stopButton = ButtonBox('images/stopButton.png', (120, 380, 50, 50))
 
 
 def updateWidgets(event):
     sizeBox.update(event)
     delayBox.update(event)
     algorithmBox.update()
+    shuffleBox.update()
     if do_sorting:
         stopButton.update()
     else:
@@ -234,8 +236,9 @@ def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwar
         pygame.draw.rect(screen, color, (sideMargin + num*bar_width, canvasSize[1]-array[num], ceil_width, array[num]))
 
 
-def drawBottomMenu():
+def drawMenu():
     '''Draw the menu below the bars'''
+    shuffleBox.draw()
     algorithmBox.draw()
     sizeBox.draw()
     delayBox.draw()
@@ -273,5 +276,5 @@ def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
         x,y = (850/2),150
         draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+50+10),(x+50,y+25+10)))
         
-    drawBottomMenu()
+    drawMenu()
     pygame.display.update()
