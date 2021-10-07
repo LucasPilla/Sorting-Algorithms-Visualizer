@@ -6,6 +6,6 @@ def bubbleSort(array, *args):
             yield array, j, j+1, -1, -1
             if array[j] > array[j + 1]:
                 array[j], array[j + 1] = array[j + 1], array[j]
-                num_swaps = True
+                swapped = True
         if !swapped:
             break
