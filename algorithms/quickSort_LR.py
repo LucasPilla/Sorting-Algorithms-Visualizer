@@ -1,4 +1,4 @@
-def quickSort_LR(array, low, high):
+def quickSort_LR(array, low, high, variant=''):
     if low < high:
         p = partition(array, low, high)
         yield array, p, high, low, -1

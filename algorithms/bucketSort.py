@@ -1,4 +1,4 @@
-def bucketSort(array, *args):
+def bucketSort(array, *args,variant=''):
     bucket = []
     for i in range(len(array)):
         bucket.append([])

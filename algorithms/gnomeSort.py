@@ -1,4 +1,4 @@
-def gnomeSort(a, *args):
+def gnomeSort(a, *args, variant=''):
     i,size = 0,len(a)
     while i < size:
         if a[i-1] <= a[i] or i == 0:

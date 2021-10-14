@@ -3,7 +3,7 @@ def swap(array,i,j):
     array[i] = array[j]
     array[j] = temp
 
-def oddevenSort(array, *args):
+def oddevenSort(array, *args, variant=''):
     sorted = False
     while not sorted:
         sorted = True

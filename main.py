@@ -1,7 +1,7 @@
 import pygame
 from random import randint
 from time import time
-from algs import algorithmsDict
+from algs import algorithmsDict,variants
 import display
 
 # Declared in display.py
@@ -13,7 +13,8 @@ def main():
     numbers = []
     running = True
     display.algorithmBox.add_options(list(algorithmsDict.keys()))
-
+    current_alg = display.algorithmBox.get_active_option()
+    display.complexityVariantsBox.add_options(variants[current_alg])
     current_alg = None
     alg_iterator = None
 
@@ -36,9 +37,10 @@ def main():
             display.playButton.isActive = False
             display.do_sorting = True
             current_alg = display.algorithmBox.get_active_option()
+            current_var = display.complexityVariantsBox.get_active_option()
             display.numBars = int(display.sizeBox.text)
             numbers = [randint(10, 400) for i in range(display.numBars)] # random list to be sorted
-            alg_iterator = algorithmsDict[current_alg](numbers, 0, display.numBars-1) # initialize iterator
+            alg_iterator = algorithmsDict[current_alg](numbers, 0, display.numBars-1,current_var) # initialize iterator
 
         if display.stopButton.isActive: # stop button clicked
             display.stopButton.isActive = False

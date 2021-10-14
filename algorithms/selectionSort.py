@@ -1,4 +1,4 @@
-def selectionSort(array, *args):
+def selectionSort(array, *args, variant=''):
     size = len(array)
     for i in range(size-1):
         smallIndex = i

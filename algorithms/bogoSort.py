@@ -1,7 +1,7 @@
 from random import randint
 
 
-def bogoSort(array, *args):
+def bogoSort(array, *args,variant=''):
     is_sorted = False
     arrayLen = len(array)
     count = 0

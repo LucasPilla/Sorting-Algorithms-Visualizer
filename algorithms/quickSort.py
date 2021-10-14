@@ -1,7 +1,7 @@
 import random
 from random import randint
 
-def quickSort(array, left, right):
+def quickSort(array, left, right, variant=''):
     if left >= right:
         return
     index = left

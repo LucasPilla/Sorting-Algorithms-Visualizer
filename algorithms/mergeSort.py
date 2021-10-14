@@ -1,4 +1,4 @@
-def mergeSort(array, left, right):
+def mergeSort(array, left, right, variant=''):
     if left < right:
         mid = int((left+right)/2)
         yield from mergeSort(array, left, mid)

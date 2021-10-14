@@ -1,4 +1,4 @@
-def countingSort(array, *args):
+def countingSort(array, *args, variant=''):
     size = len(array)
     A = array.copy()
     C = [0]*(max(A)+1)

@@ -1,4 +1,4 @@
-def insertionSort(array, *args):
+def insertionSort(array, *args, variant=''):
     mySortedRows = []
     size = len(array)
     for i in range(0, size):

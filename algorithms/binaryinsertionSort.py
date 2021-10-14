@@ -1,4 +1,4 @@
-def binaryinsertionSort(array, *args):
+def binaryinsertionSort(array, *args,variant=''):
     for i in range(1, len(array)):
         val = array[i]
         j = binary_search(array, val, 0, i - 1, i)

@@ -1,4 +1,4 @@
-def cocktailSort(array, *args):
+def cocktailSort(array, *args,variant=''):
     n = len(array)
     swapped = True
     start = 0

@@ -1,4 +1,4 @@
-def bubbleSort(array, *args):
+def bubbleSort(array, *args,variant=''):
     size = len(array)
     for i in range(size):
         swapped = False
@@ -7,5 +7,5 @@ def bubbleSort(array, *args):
             if array[j] > array[j + 1]:
                 array[j], array[j + 1] = array[j + 1], array[j]
                 swapped = True
-        if !swapped:
+        if not swapped:
             break

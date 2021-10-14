@@ -1,6 +1,6 @@
 # bitonic sort for length not a power of two https://www.inf.hs-flensburg.de/lang/algorithmen/sortieren/bitonic/oddn.htm
 
-def bitonicSort(array, *args):
+def bitonicSort(array, *args,variant=''):
     yield from bitonic(array, 0, len(array), True)
 
 

@@ -34,3 +34,8 @@ algorithmsDict = {'insertion'       : insertionSort,
                   'pigeonhole'      : pigeonholeSort,
                   'exchange'        : exchangeSort}
 
+variants={}
+for key in algorithmsDict.keys():
+    variants[key]=["Generic"]
+print(variants)
+variants['shell'] = ['ShellGaps - θ(N^2)',"CiuraGaps - Unknown","TokudaGaps - Unknown", "KnuthGaps - θ(N^3/2)" ]

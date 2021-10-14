@@ -1,4 +1,4 @@
-def cycleSort(array, *args):
+def cycleSort(array, *args, variant=''):
     for cycle_start in range(0, len(array) - 1):
         item = array[cycle_start]
         pos = cycle_start

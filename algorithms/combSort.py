@@ -5,7 +5,7 @@ def get_gap(prev_gap) -> int:
     return gap
     
 
-def combSort(array, *args):
+def combSort(array, *args, variant=''):
     size = len(array)
     gap = size
     swapped = True

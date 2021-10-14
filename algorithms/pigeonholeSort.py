@@ -1,4 +1,4 @@
-def pigeonholeSort(array, *args):
+def pigeonholeSort(array, *args, variant=''):
   minV = min(array)
   maxV = max(array)
   A = array.copy()

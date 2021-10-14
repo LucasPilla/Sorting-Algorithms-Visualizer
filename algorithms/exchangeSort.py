@@ -1,4 +1,4 @@
-def exchangeSort(array, *args):
+def exchangeSort(array, *args,variant=''):
     size = len(array)
     for i in range(size - 1):
         for j in range(i + 1, size):

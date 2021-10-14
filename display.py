@@ -1,7 +1,7 @@
 import pygame
 from math import ceil
 from time import time
-
+from algs import algorithmsDict,variants
 # Initialize pygame modules
 pygame.init()
 
@@ -123,7 +123,7 @@ class ButtonBox(Box):
         self.img = pygame.image.load(img_path)
     
     def draw(self):
-        self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
+        self.rect.x = complexityVariantsBox.rect.x + complexityVariantsBox.rect.w + 20
         screen.blit(self.img, (self.rect.x, self.rect.y))
 
     def update(self):
@@ -136,6 +136,7 @@ class DropdownBox(InputBox):
 
     def __init__(self, name, rect, font, color=grey):
         super().__init__(name, color, rect)
+        self.name          = name
         self.isActive      = False
         self.font          = font
         self.options_color = white
@@ -175,7 +176,12 @@ class DropdownBox(InputBox):
                 screen.blit(option_text, option_text.get_rect(center=rect.center))
 
     def update(self):
-        self.rect.x = delayBox.rect.w + delayBox.rect.x + 20
+        if self.name=='Algorithm':
+            self.rect.x = delayBox.rect.w + delayBox.rect.x + 20
+        elif self.name=='Variant':
+            current_alg = algorithmBox.get_active_option()
+            self.add_options(variants[current_alg])
+            self.rect.x = algorithmBox.rect.w + algorithmBox.rect.x + 20
         mouse_position = pygame.mouse.get_pos()
         column = 0
         index = 0
@@ -217,14 +223,16 @@ timer_space_bar   = 0
 sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
 delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
 algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
-playButton  = ButtonBox('images/playButton.png', (390, 440, 50, 50))
-stopButton = ButtonBox('images/stopButton.png', (390, 440, 50, 50))
+complexityVariantsBox = DropdownBox('Variant',(390,440,350,50),baseFont)
+playButton  = ButtonBox('images/playButton.png', (540, 440, 50, 50))
+stopButton = ButtonBox('images/stopButton.png', (540, 440, 50, 50))
 
 
 def updateWidgets(event):
     sizeBox.update(event)
     delayBox.update(event)
     algorithmBox.update()
+    complexityVariantsBox.update()
     if do_sorting:
         stopButton.update()
     else:
@@ -250,6 +258,7 @@ def drawBottomMenu():
     sizeBox.draw()
     delayBox.draw()
     algorithmBox.draw()
+    complexityVariantsBox.draw()
     if do_sorting:
         stopButton.draw()
     else:

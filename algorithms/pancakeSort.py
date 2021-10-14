@@ -1,4 +1,4 @@
-def pancakeSort(array, *args):
+def pancakeSort(array, *args, variant=''):
     for i in range(len(array)):
         max_index = array.index(max(array[:len(array) - i]))
         yield array, max_index, -1, -1, -1

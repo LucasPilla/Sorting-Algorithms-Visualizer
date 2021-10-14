@@ -1,4 +1,4 @@
-def heapSort(array, *args):
+def heapSort(array, *args, variant=''):
     yield from heapify(array, len(array))
     end = len(array) - 1
     while end > 0:

@@ -38,15 +38,15 @@ def getKnuthGaps(N):
 
 # different gap sequences
 GAPS = {
-    "ciura": getCiuraGaps,
-    "shell": getShellGaps,
-    "tokuda": getTokudaGaps,
-    "knuth": getKnuthGaps
+    "CiuraGaps - Unknown": getCiuraGaps,
+    "ShellGaps - θ(N^2)": getShellGaps,
+    "TokudaGaps - Unknown": getTokudaGaps,
+    "KnuthGaps - θ(N^3/2)": getKnuthGaps
 }
 
 
-def shellSort(array, *args, gapType="ciura"):
-    gaps = GAPS.get(gapType, "ciura")(len(array))
+def shellSort(array, *args, variant="CiuraGaps - Unknown"):
+    gaps = GAPS.get(variant, "ciura")(len(array))
     for gap in gaps:
         for i in range(gap, len(array)):
             temp, j = array[i], i
