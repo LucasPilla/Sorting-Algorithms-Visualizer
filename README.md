@@ -18,8 +18,11 @@ Visit [repository github page](https://lucaspilla.github.io/Sorting-Algorithms-V
 ## Using the application
   :exclamation: Feel free to open an issue if you have some problem :exclamation:
 - Clone GitHub repository
+- Create a virtual environment: `python3 -m venv env`
+- Activate virtual environment: `source env/bin/activate`
 - Install requirements: `pip3 install -r requirements.txt`
-- Run: `python3 main.py`
+- Build: `pyb`
+- Run: `pyb run`
 
 ## How to contribute: 
 - Implement new Algorithms or ideas
