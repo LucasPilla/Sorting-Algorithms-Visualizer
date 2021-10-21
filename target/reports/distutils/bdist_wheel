@@ -1,0 +1,122 @@
+running clean
+'build/lib' does not exist -- can't clean it
+'build/bdist.macosx-11-arm64' does not exist -- can't clean it
+'build/scripts-3.9' does not exist -- can't clean it
+running bdist_wheel
+running build
+running build_py
+creating build
+creating build/lib
+copying algs.py -> build/lib
+copying display.py -> build/lib
+copying main.py -> build/lib
+creating build/lib/algorithms
+copying algorithms/countingSort.py -> build/lib/algorithms
+copying algorithms/radixSort.py -> build/lib/algorithms
+copying algorithms/strandSort.py -> build/lib/algorithms
+copying algorithms/combSort.py -> build/lib/algorithms
+copying algorithms/insertionSort.py -> build/lib/algorithms
+copying algorithms/selectionSort.py -> build/lib/algorithms
+copying algorithms/oddevenSort.py -> build/lib/algorithms
+copying algorithms/cycleSort.py -> build/lib/algorithms
+copying algorithms/pigeonholeSort.py -> build/lib/algorithms
+copying algorithms/quickSort.py -> build/lib/algorithms
+copying algorithms/__init__.py -> build/lib/algorithms
+copying algorithms/bitonicSort.py -> build/lib/algorithms
+copying algorithms/gnomeSort.py -> build/lib/algorithms
+copying algorithms/binaryinsertionSort.py -> build/lib/algorithms
+copying algorithms/bogoSort.py -> build/lib/algorithms
+copying algorithms/heapSort.py -> build/lib/algorithms
+copying algorithms/pancakeSort.py -> build/lib/algorithms
+copying algorithms/stoogeSort.py -> build/lib/algorithms
+copying algorithms/quickSort_LR.py -> build/lib/algorithms
+copying algorithms/cocktailSort.py -> build/lib/algorithms
+copying algorithms/exchangeSort.py -> build/lib/algorithms
+copying algorithms/shellSort.py -> build/lib/algorithms
+copying algorithms/bucketSort.py -> build/lib/algorithms
+copying algorithms/mergeSort.py -> build/lib/algorithms
+copying algorithms/timSort.py -> build/lib/algorithms
+copying algorithms/bubbleSort.py -> build/lib/algorithms
+installing to build/bdist.macosx-11-arm64/wheel
+running install
+running install_lib
+creating build/bdist.macosx-11-arm64
+creating build/bdist.macosx-11-arm64/wheel
+creating build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/countingSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/radixSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/strandSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/combSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/insertionSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/selectionSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/oddevenSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/cycleSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/pigeonholeSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/quickSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/__init__.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/bitonicSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/gnomeSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/binaryinsertionSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/bogoSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/heapSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/pancakeSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/stoogeSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/quickSort_LR.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/cocktailSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/exchangeSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/shellSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/bucketSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/mergeSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/timSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/algorithms/bubbleSort.py -> build/bdist.macosx-11-arm64/wheel/algorithms
+copying build/lib/display.py -> build/bdist.macosx-11-arm64/wheel
+copying build/lib/algs.py -> build/bdist.macosx-11-arm64/wheel
+copying build/lib/main.py -> build/bdist.macosx-11-arm64/wheel
+running install_egg_info
+running egg_info
+writing Algorithms_Visualizer.egg-info/PKG-INFO
+writing dependency_links to Algorithms_Visualizer.egg-info/dependency_links.txt
+writing namespace_packages to Algorithms_Visualizer.egg-info/namespace_packages.txt
+writing top-level names to Algorithms_Visualizer.egg-info/top_level.txt
+reading manifest file 'Algorithms_Visualizer.egg-info/SOURCES.txt'
+writing manifest file 'Algorithms_Visualizer.egg-info/SOURCES.txt'
+Copying Algorithms_Visualizer.egg-info to build/bdist.macosx-11-arm64/wheel/Algorithms_Visualizer-1.0.dev0-py3.9.egg-info
+running install_scripts
+creating build/bdist.macosx-11-arm64/wheel/Algorithms_Visualizer-1.0.dev0.dist-info/WHEEL
+creating 'dist/Algorithms_Visualizer-1.0.dev0-py3-none-any.whl' and adding 'build/bdist.macosx-11-arm64/wheel' to it
+adding 'algs.py'
+adding 'display.py'
+adding 'main.py'
+adding 'algorithms/__init__.py'
+adding 'algorithms/binaryinsertionSort.py'
+adding 'algorithms/bitonicSort.py'
+adding 'algorithms/bogoSort.py'
+adding 'algorithms/bubbleSort.py'
+adding 'algorithms/bucketSort.py'
+adding 'algorithms/cocktailSort.py'
+adding 'algorithms/combSort.py'
+adding 'algorithms/countingSort.py'
+adding 'algorithms/cycleSort.py'
+adding 'algorithms/exchangeSort.py'
+adding 'algorithms/gnomeSort.py'
+adding 'algorithms/heapSort.py'
+adding 'algorithms/insertionSort.py'
+adding 'algorithms/mergeSort.py'
+adding 'algorithms/oddevenSort.py'
+adding 'algorithms/pancakeSort.py'
+adding 'algorithms/pigeonholeSort.py'
+adding 'algorithms/quickSort.py'
+adding 'algorithms/quickSort_LR.py'
+adding 'algorithms/radixSort.py'
+adding 'algorithms/selectionSort.py'
+adding 'algorithms/shellSort.py'
+adding 'algorithms/stoogeSort.py'
+adding 'algorithms/strandSort.py'
+adding 'algorithms/timSort.py'
+adding 'Algorithms_Visualizer-1.0.dev0.dist-info/METADATA'
+adding 'Algorithms_Visualizer-1.0.dev0.dist-info/WHEEL'
+adding 'Algorithms_Visualizer-1.0.dev0.dist-info/namespace_packages.txt'
+adding 'Algorithms_Visualizer-1.0.dev0.dist-info/top_level.txt'
+adding 'Algorithms_Visualizer-1.0.dev0.dist-info/zip-safe'
+adding 'Algorithms_Visualizer-1.0.dev0.dist-info/RECORD'
+removing build/bdist.macosx-11-arm64/wheel

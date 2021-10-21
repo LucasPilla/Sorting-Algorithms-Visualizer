@@ -1,0 +1,65 @@
+running clean
+'build/lib' does not exist -- can't clean it
+'build/bdist.macosx-11-arm64' does not exist -- can't clean it
+'build/scripts-3.9' does not exist -- can't clean it
+running sdist
+running egg_info
+creating Algorithms_Visualizer.egg-info
+writing Algorithms_Visualizer.egg-info/PKG-INFO
+writing dependency_links to Algorithms_Visualizer.egg-info/dependency_links.txt
+writing namespace_packages to Algorithms_Visualizer.egg-info/namespace_packages.txt
+writing top-level names to Algorithms_Visualizer.egg-info/top_level.txt
+writing manifest file 'Algorithms_Visualizer.egg-info/SOURCES.txt'
+reading manifest file 'Algorithms_Visualizer.egg-info/SOURCES.txt'
+writing manifest file 'Algorithms_Visualizer.egg-info/SOURCES.txt'
+warning: sdist: standard file not found: should have one of README, README.rst, README.txt, README.md
+
+running check
+warning: Check: missing required meta-data: url
+
+warning: Check: missing meta-data: either (author and author_email) or (maintainer and maintainer_email) should be supplied
+
+creating Algorithms-Visualizer-1.0.dev0
+creating Algorithms-Visualizer-1.0.dev0/Algorithms_Visualizer.egg-info
+creating Algorithms-Visualizer-1.0.dev0/algorithms
+copying files to Algorithms-Visualizer-1.0.dev0...
+copying algs.py -> Algorithms-Visualizer-1.0.dev0
+copying display.py -> Algorithms-Visualizer-1.0.dev0
+copying main.py -> Algorithms-Visualizer-1.0.dev0
+copying setup.py -> Algorithms-Visualizer-1.0.dev0
+copying Algorithms_Visualizer.egg-info/PKG-INFO -> Algorithms-Visualizer-1.0.dev0/Algorithms_Visualizer.egg-info
+copying Algorithms_Visualizer.egg-info/SOURCES.txt -> Algorithms-Visualizer-1.0.dev0/Algorithms_Visualizer.egg-info
+copying Algorithms_Visualizer.egg-info/dependency_links.txt -> Algorithms-Visualizer-1.0.dev0/Algorithms_Visualizer.egg-info
+copying Algorithms_Visualizer.egg-info/namespace_packages.txt -> Algorithms-Visualizer-1.0.dev0/Algorithms_Visualizer.egg-info
+copying Algorithms_Visualizer.egg-info/top_level.txt -> Algorithms-Visualizer-1.0.dev0/Algorithms_Visualizer.egg-info
+copying Algorithms_Visualizer.egg-info/zip-safe -> Algorithms-Visualizer-1.0.dev0/Algorithms_Visualizer.egg-info
+copying algorithms/__init__.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/binaryinsertionSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/bitonicSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/bogoSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/bubbleSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/bucketSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/cocktailSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/combSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/countingSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/cycleSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/exchangeSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/gnomeSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/heapSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/insertionSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/mergeSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/oddevenSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/pancakeSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/pigeonholeSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/quickSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/quickSort_LR.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/radixSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/selectionSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/shellSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/stoogeSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/strandSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+copying algorithms/timSort.py -> Algorithms-Visualizer-1.0.dev0/algorithms
+Writing Algorithms-Visualizer-1.0.dev0/setup.cfg
+creating dist
+Creating tar archive
+removing 'Algorithms-Visualizer-1.0.dev0' (and everything under it)
