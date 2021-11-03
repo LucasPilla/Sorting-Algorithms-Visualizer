@@ -10,10 +10,13 @@ Visit [repository github page](https://lucaspilla.github.io/Sorting-Algorithms-V
 ## Program preview
 ![](images/preview.gif)
 
-### Features
-|Selecting an algorithm ([@yuchenliu15](https://github.com/yuchenliu15)) |Pause and Play with \<SPACE\> ([@system1970](https://github.com/system1970)) |
-|---|---|
-|![](images/selectAlgo.gif)|![](images/pausePlay.gif)|
+## Some Algorithms
+
+| | | |
+|:-------------------------:|:-------------------------:|:-------------------------:|
+|<img width="1604" alt="" src="https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/bubble_sort.gif?raw=true">  Bubble sort |  <img width="1604" alt="" src="https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/bucket_sort.gif?raw=true"> Bucket sort |<img width="1604" alt="" src="https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/cocktail_sort.gif?raw=true"> Cocktail sort |
+|<img width="1604" alt="" src="https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/counting_sort.gif?raw=true"> Counting sort |  <img width="1604" alt="" src="https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/heap_sort.gif?raw=true"> Heap sort |<img width="1604" alt="" src="https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/insertion_sort.gif?raw=true"> Insertion sort |
+|<img width="1604" alt="" src="https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/merge_sort.gif?raw=true"> Merge sort |  <img width="1604" alt="" src="https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/quick_sort.gif?raw=true"> Quick sort |<img width="1604" alt="" src="https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/selection_sort.gif?raw=true"> Selection sort |
 
 ## Using the application
   :exclamation: Feel free to open an issue if you have some problem :exclamation:
