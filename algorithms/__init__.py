@@ -21,6 +21,7 @@ from algorithms.oddevenSort import oddevenSort
 from algorithms.mergeSort import mergeSort
 from algorithms.insertionSort import insertionSort
 from algorithms.radixSort import radixSort
+from algorithms.patienceSort import patienceSort
 
 
 __all__ = [ 
@@ -46,5 +47,6 @@ __all__ = [
     "oddevenSort", 
     "mergeSort", 
     "insertionSort", 
-    "radixSort"
+    "radixSort",
+    "patienceSort"
 ]
