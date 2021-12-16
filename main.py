@@ -3,7 +3,7 @@ import display
 
 from time   import time
 from algs   import algorithmsDict
-from array_ import create_array
+from array_ import shufflesDict, create_array
 
 # Declared in display.py
 # 1. global variables : numBars, delay, do_sorting, paused, timer_space_bar
@@ -13,8 +13,8 @@ from array_ import create_array
 def main():
     numbers = []
     running = True
-    display.shuffleBox.add_options(['random', 'sorted', 'reverse'])
-    display.algorithmBox.add_options(list(algorithmsDict.keys()))
+    display.shuffleBox.add_options(list(shufflesDict))
+    display.algorithmBox.add_options(list(algorithmsDict))
 
     current_alg = None
     alg_iterator = None
