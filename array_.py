@@ -9,9 +9,22 @@ from random import randint, shuffle
 # 2. widgets : sizeBox, delayBox, shuffleBox, algorithmBox, playButton, stopButton
 
 
+def sorted_(array):
+    pass
+
+def reverse(array):
+    array.reverse()
+    
+def random(array):
+    shuffle(array)
+
+
+shufflesDict = {'random' : random,
+                'sorted' : sorted_,
+                'reverse': reverse}
+
+
 def create_array(array):
     array[:] = (int(10 + 390*(i/display.numBars)) for i in range(display.numBars))
+    shufflesDict[display.shuffleBox.get_active_option()](array)
     
-    if display.shuffleBox.get_active_option() == 'sorted' : pass
-    if display.shuffleBox.get_active_option() == 'reverse': array.reverse()
-    if display.shuffleBox.get_active_option() == 'random' : shuffle(array)
