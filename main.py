@@ -1,8 +1,9 @@
 import pygame
-from random import randint, shuffle
-from time import time
-from algs import algorithmsDict
 import display
+
+from time   import time
+from algs   import algorithmsDict
+from array_ import create_array
 
 # Declared in display.py
 # 1. global variables : numBars, delay, do_sorting, paused, timer_space_bar
@@ -12,7 +13,7 @@ import display
 def main():
     numbers = []
     running = True
-    display.shuffleBox.add_options(['sorted', 'reverse', 'random'])
+    display.shuffleBox.add_options(['random', 'sorted', 'reverse'])
     display.algorithmBox.add_options(list(algorithmsDict.keys()))
 
     current_alg = None
@@ -38,12 +39,7 @@ def main():
             display.do_sorting = True
             current_alg = display.algorithmBox.get_active_option()
             display.numBars = int(display.sizeBox.text)
-            #numbers = [randint(10, 400) for i in range(display.numBars)] # random list to be sorted
-            numbers = [int(10+390*(i/display.numBars)) for i in range(display.numBars)]
-            if display.shuffleBox.get_active_option() == 'reverse':
-                numbers.reverse()
-            elif display.shuffleBox.get_active_option() == 'random':
-                shuffle(numbers)
+            create_array(numbers)
             alg_iterator = algorithmsDict[current_alg](numbers, 0, display.numBars-1) # initialize iterator
 
         if display.stopButton.isActive: # stop button clicked
@@ -64,11 +60,14 @@ def main():
                     timer_delay = time()
             except StopIteration:
                 display.do_sorting = False
+                
         elif display.do_sorting and display.paused: # animation paused
             display.drawInterface(numbers, -1, -1, -1, -1)
+            
         else: # no animation
             a_set = set(range(display.numBars))
             display.drawInterface(numbers, -1, -1, -1, -1, greenRows=a_set)
 
 if __name__ == '__main__':
     main()
+
