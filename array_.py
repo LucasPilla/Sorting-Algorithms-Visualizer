@@ -9,7 +9,7 @@ from itertools import chain
 # 2. widgets : sizeBox, delayBox, shuffleBox, algorithmBox, playButton, stopButton
 
     
-def make_asc_saw(array):
+def asc_saw(array):
     n_saw = 8
     value = 0
     temp  = tuple([] for i in range(n_saw))
@@ -20,9 +20,17 @@ def make_asc_saw(array):
         
     array[:] = chain.from_iterable(temp)
 
-def make_dsc_saw(array):
+def dsc_saw(array):
     reverse(array)
-    make_asc_saw(array)
+    asc_saw(array)
+    
+def noisy(array):
+    k = 10
+    
+    for i in range(0, len(array), k):
+        temp = array[i: i + k]
+        shuffle(temp)
+        array[i: i + k] = temp
     
 def sorted_(array):
     pass
@@ -34,15 +42,15 @@ def random(array):
     shuffle(array)
 
 
-
 shufflesDict = {'random'     : random,
                 'sorted'     : sorted_,
                 'reverse'    : reverse,
-                'saw (asc.)' : make_asc_saw,
-                'saw (desc.)': make_dsc_saw}
+                'saw (asc.)' : asc_saw,
+                'saw (desc.)': dsc_saw,
+                'noisy'      : noisy}
 
 
 def create_array(array):
-    array[:] = (int(10 + 390*(i/display.numBars)) for i in range(display.numBars))
+    array[:] = (int(10 + 390 * (i / display.numBars)) for i in range(display.numBars))
     shufflesDict[display.shuffleBox.get_active_option()](array)
     
