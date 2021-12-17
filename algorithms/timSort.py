@@ -1,4 +1,4 @@
-from algorithms.binaryinsertionSort import binary_search
+from binaryinsertionSort import binary_search
 
 def calculate_min_run(n): 
 	last_bit = 0
