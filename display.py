@@ -29,10 +29,9 @@ class Box:
         self.isActive = False
         self.rect     = pygame.Rect(rect)
     
-    def update(self):
-        self.mousePos = pygame.mouse.get_pos()
-        self.clicked  = pygame.mouse.get_pressed() != (0, 0, 0)
-        self.isActive = True if self.rect.collidepoint(self.mousePos) else False
+    def update(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos): self.isActive = True
 
 
 class InputBox(Box):
@@ -60,10 +59,14 @@ class TextBox(InputBox):
         self.rect.w = max(surface.get_width() + 20, 50)
 
     def update(self, event):
-        super().update()
-        if self.isActive and event.type == pygame.KEYDOWN:
-            if   event.key == pygame.K_BACKSPACE: self.text = self.text[:-1]
-            elif event.unicode.isdigit()        : self.text += event.unicode
+        super().update(event)
+        if self.isActive:
+            if event.type == pygame.KEYDOWN:
+                if   event.key == pygame.K_BACKSPACE: self.text = self.text[:-1]
+                elif event.unicode.isdigit()        : self.text += event.unicode
+            
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if not self.rect.collidepoint(event.pos): self.isActive = False 
         
 
 class SlideBox(InputBox):
@@ -79,19 +82,18 @@ class SlideBox(InputBox):
         pygame.draw.line(screen, self.color, (self.value, self.rect.y + 5), (self.value, self.rect.y + 45), 12)
 
     def update(self, event):
-        super().update()
-        previousStart = self.start
-        self.start  = self.rect.x + 6
-        self.end    = self.rect.x + self.rect.w - 6
-        self.value += self.start - previousStart
-        
+        super().update(event)
         if self.isActive:
-            if self.clicked:
-                if self.start <= self.mousePos[0] <= self.end: self.value = self.mousePos[0]
-        
+            if event.type == pygame.MOUSEMOTION:
+                if self.start <= event.pos[0] <= self.end: self.value = event.pos[0]
+            
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if   event.button == 4: self.value = min(self.value + 10, self.end)
+                if   event.button == 4: self.value = min(self.value + 10, self.end  )
                 elif event.button == 5: self.value = max(self.value - 10, self.start)
+            
+            elif event.type == pygame.MOUSEBUTTONUP:
+                self.isActive = False
+
 
 class VerticalSliderBox(InputBox):
     def __init__(self, name, color, rect):
@@ -106,8 +108,8 @@ class VerticalSliderBox(InputBox):
         pygame.draw.line(screen, grey,  (x,  self.start-6),  (x,self.end), 25)
         pygame.draw.line(screen, white, (x+5,  self.value),  (x+5,self.value+20), 8)
 
-    def update(self,event):
-        super().update()
+    def update(self, event):
+        super().update(event)
         previousStart = self.start
         self.start = self.rect.y+6
         self.end   = self.rect.y + self.rect.h
@@ -127,9 +129,8 @@ class ButtonBox(Box):
     def draw(self):
         screen.blit(self.img, (self.rect.x, self.rect.y))
 
-    def update(self):
-       super().update()
-       if self.isActive: self.isActive = True if self.clicked else False
+    def update(self,event):
+       super().update(event)
 
 
 class DropdownBox(InputBox):
@@ -217,9 +218,9 @@ def updateWidgets(event):
     algorithmBox.update()
     shuffleBox.update()
     if do_sorting:
-        stopButton.update()
+        stopButton.update(event)
     else:
-        playButton.update()
+        playButton.update(event)
 
 
 def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwargs):
@@ -278,3 +279,4 @@ def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
         
     drawMenu()
     pygame.display.update()
+
