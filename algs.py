@@ -1,36 +1,18 @@
-from algorithms import *
-from algorithms.binaryinsertionSort import binaryinsertionSort
-from algorithms.bitonicSort import bitonicSort
-from algorithms.pancakeSort import pancakeSort
-from algorithms.timSort     import timSort
-from algorithms.stoogeSort  import stoogeSort
-from algorithms.strandSort  import strandSort
-from algorithms.oddevenSort import oddevenSort
-from algorithms.exchangeSort import exchangeSort
+from pathlib   import Path
+from importlib import import_module as import_
 
 
-algorithmsDict = {'insertion'       : insertionSort,
-                  'bubble'          : bubbleSort,
-                  'selection'       : selectionSort,
-                  'merge'           : mergeSort,
-                  'quick'           : quickSort,
-                  'counting'        : countingSort,
-                  'cocktail'        : cocktailSort,
-                  'cycle'           : cycleSort,
-                  'bogo'            : bogoSort,
-                  'heap'            : heapSort,
-                  'radix'           : radixSort,
-                  'shell'           : shellSort,
-                  'gnome'           : gnomeSort,
-                  'comb'            : combSort,
-                  'bitonic'         : bitonicSort,
-                  'pancake'         : pancakeSort,
-                  'binary insertion': binaryinsertionSort,
-                  'bucket'          : bucketSort,
-                  'tim'             : timSort,
-                  'stooge'          : stoogeSort,
-                  'strand'          : strandSort,
-                  'odd-even'        : oddevenSort,
-                  'pigeonhole'      : pigeonholeSort,
-                  'exchange'        : exchangeSort}
+def clean(string):
+    if   'binary' in string: string = string.replace('binary', 'binary ')
+    elif 'odd'    in string: string = string.replace('odd'   , 'odd-'   )
+    
+    return string.replace('Sort', '')
 
+
+folder = 'algorithms'
+
+files  = (i.stem for i in Path(folder).iterdir())
+files  = ((i, import_(f'{folder}.{i}')) for i in files if 'Sort' in i)
+
+algorithmsDict = {clean(i): vars(j)[i] for i, j in files}
+    
