@@ -18,5 +18,3 @@ def quickSort(array, left, right):
     
     yield from quickSort(array, index + 1, right)
     yield from quickSort(array, left, index - 1)
-
-    
