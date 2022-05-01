@@ -211,6 +211,8 @@ delay   = 0
 do_sorting = False
 paused = False
 timer_space_bar   = 0
+maxNumBars = 10000
+minNumBars = 0
 
 
 # Input Boxes
@@ -220,6 +222,17 @@ algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
 playButton  = ButtonBox('images/playButton.png', (390, 440, 50, 50))
 stopButton = ButtonBox('images/stopButton.png', (390, 440, 50, 50))
 
+def getNumBars(strNumBars):
+    """
+    add a range for numBars so program doesn't hang
+    forever with large values
+    """
+    numBars = int(strNumBars)
+    if numBars > maxNumBars:
+        return maxNumBars
+    elif numBars < minNumBars:
+        return minNumBars
+    return numBars
 
 def updateWidgets(event):
     sizeBox.update(event)

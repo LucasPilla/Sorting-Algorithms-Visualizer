@@ -36,7 +36,7 @@ def main():
             display.playButton.isActive = False
             display.do_sorting = True
             current_alg = display.algorithmBox.get_active_option()
-            display.numBars = int(display.sizeBox.text)
+            display.numBars = display.getNumBars(display.sizeBox.text)
             numbers = [randint(10, 400) for i in range(display.numBars)] # random list to be sorted
             alg_iterator = algorithmsDict[current_alg](numbers, 0, display.numBars-1) # initialize iterator
 
