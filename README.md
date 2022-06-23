@@ -22,6 +22,4 @@ Check [Wiki Page](../../wiki) for more information about each algorithm, as visu
 - Install requirements: `pip3 install -r requirements.txt`
 - Run: `python3 main.py`
 
-## How to contribute: 
-- Implement new Algorithms or ideas
-- Report bugs and give feedbacks
+## Feel free to contribute
