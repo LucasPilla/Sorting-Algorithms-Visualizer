@@ -175,7 +175,7 @@ class DropdownBox(InputBox):
                 screen.blit(option_text, option_text.get_rect(center=rect.center))
 
     def update(self):
-        self.rect.x = delayBox.rect.w + delayBox.rect.x + 20
+        #self.rect.x = delayBox.rect.w + delayBox.rect.x + 20
         mouse_position = pygame.mouse.get_pos()
         column = 0
         index = 0
@@ -216,14 +216,16 @@ timer_space_bar   = 0
 # Input Boxes
 sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
 delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
-algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
-playButton  = ButtonBox('images/playButton.png', (390, 440, 50, 50))
-stopButton = ButtonBox('images/stopButton.png', (390, 440, 50, 50))
+complexityBox = DropdownBox('Complexity', (242, 440, 140, 50), baseFont)
+algorithmBox = DropdownBox('Algorithm', (402, 440, 140, 50), baseFont)
+playButton  = ButtonBox('images/playButton.png', (550, 440, 50, 50))
+stopButton = ButtonBox('images/stopButton.png', (550, 440, 50, 50))
 
 
 def updateWidgets(event):
     sizeBox.update(event)
     delayBox.update(event)
+    complexityBox.update()
     algorithmBox.update()
     if do_sorting:
         stopButton.update()
@@ -249,6 +251,7 @@ def drawBottomMenu():
     '''Draw the menu below the bars'''
     sizeBox.draw()
     delayBox.draw()
+    complexityBox.draw()
     algorithmBox.draw()
     if do_sorting:
         stopButton.draw()

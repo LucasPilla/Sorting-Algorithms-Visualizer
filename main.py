@@ -2,6 +2,7 @@ import pygame
 from random import randint
 from time import time
 from algs import algorithmsDict
+from algs import algorithmsDiff
 import display
 
 # Declared in display.py
@@ -12,6 +13,7 @@ import display
 def main():
     numbers = []
     running = True
+    display.complexityBox.add_options(list(algorithmsDiff.keys()))
     display.algorithmBox.add_options(list(algorithmsDict.keys()))
 
     current_alg = None
@@ -29,6 +31,11 @@ def main():
                 display.timer_space_bar = time()
 
             display.updateWidgets(event)
+
+            current_diff = display.complexityBox.get_active_option()
+            current_alg = display.algorithmBox.get_active_option()
+            if not current_alg in algorithmsDiff[current_diff]:
+                display.algorithmBox.add_options(algorithmsDiff[current_diff])
 
         display.delay = (display.delayBox.value-display.delayBox.rect.x-6)/1000 # delay is in ms
 

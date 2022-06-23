@@ -34,3 +34,10 @@ algorithmsDict = {'insertion'       : insertionSort,
                   'pigeonhole'      : pigeonholeSort,
                   'exchange'        : exchangeSort}
 
+algorithmsDiff = {'Others'       : ['cycle','bogo','radix','shell','gnome',
+                                    'comb','bitonic','pancake','binary insertion',
+                                    'tim','stooge','strand','odd-even',
+                                    'pigeonhole','exchange'],
+                  'O(n2)'        : ['insertion','bubble','selection','cocktail'],
+                  'O(nlogn)'     : ['quick','merge','heap'],
+                  'O(n+k)'       : ['counting','bucket']}
