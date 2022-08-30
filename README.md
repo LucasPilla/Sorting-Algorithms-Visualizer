@@ -21,5 +21,3 @@ Check [Wiki Page](../../wiki) for more information about each algorithm, as visu
 - Clone GitHub repository
 - Install requirements: `pip3 install -r requirements.txt`
 - Run: `python3 main.py`
-
-## Feel free to contribute
