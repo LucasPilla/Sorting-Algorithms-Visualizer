@@ -1,4 +1,6 @@
+from operator import length_hint
 import pygame
+from pygame.locals import * #added
 from math import ceil
 from time import time
 
@@ -132,14 +134,15 @@ class ButtonBox(Box):
 
 
 class DropdownBox(InputBox):
-    DEFAUTL_OPTION = 0
+    DEFAUTL_OPTION = 0  # 
 
     def __init__(self, name, rect, font, color=grey):
         super().__init__(name, color, rect)
-        self.isActive      = False
+        self.isActive      = False  # True if menu is open
         self.font          = font
         self.options_color = white
         self.active_option = -1
+        self.scrollShift = 0
         
     def add_options(self, options):
         self.options = options
@@ -158,17 +161,21 @@ class DropdownBox(InputBox):
             column = 0
             index = 0
             rect_start = self.rect.y - self.rect.height
-            for i in range(self.DEFAUTL_OPTION+1, len(self.options)):
+
+            for i in range(self.DEFAUTL_OPTION+1+self.scrollShift, len(self.options)):
                 rect = self.rect.copy()
                 rect.y -= (index + 1) * self.rect.height
-                if rect.y <= self.dropdown_rect.y:
-                    column += 1
-                    index = 0
-                    rect.y = rect_start
+
+                # No need to create multiple columns anymore
+                # if rect.y <= self.dropdown_rect.y:
+                #     column += 1
+                #     index = 0
+                #     rect.y = rect_start
                 index += 1
                 rect.x = self.rect.x + column * self.rect.width
                 
-                options_color = black if i - 1 == self.active_option else grey
+
+                options_color = black if i - 1 == self.active_option else grey  # highlights hovering option
                 pygame.draw.rect(screen, self.options_color, rect, 0)
                 pygame.draw.rect(screen, self.color, rect, 3) # draw border
                 option_text = self.font.render(self.options[i][:12], 1, options_color)
@@ -180,25 +187,33 @@ class DropdownBox(InputBox):
         column = 0
         index = 0
         rect_start = self.rect.y - self.rect.height
-        for i in range(len(self.options)-1):
+
+
+        # Iterates through all options
+        for i in range(self.DEFAUTL_OPTION+self.scrollShift, len(self.options)-1):
             rect = self.rect.copy()
             rect.y -= (index + 1) * self.rect.height
-            if rect.y <= self.dropdown_rect.y:
-                column += 1
-                index = 0
-                rect.y = rect_start
+
+            # if rect.y <= self.dropdown_rect.y:
+            #     column += 1
+            #     index = 0
+            #     rect.y = rect_start
             index += 1
             rect.x = self.rect.x + column * self.rect.width
 
             if rect.collidepoint(mouse_position):
                 self.active_option = i
-        
+
+
+        # When clicked
         if pygame.mouse.get_pressed() != (0, 0, 0):
             if self.isActive and self.dropdown_rect.collidepoint(mouse_position):
                 self.options[self.DEFAUTL_OPTION], self.options[self.active_option+1] =\
                      self.options[self.active_option+1], self.options[self.DEFAUTL_OPTION]
                 self.active_option = -1
             self.isActive = self.rect.collidepoint(mouse_position)
+        
+        
         if not self.isActive:
             self.active_option = -1
 

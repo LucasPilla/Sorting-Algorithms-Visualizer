@@ -1,3 +1,4 @@
+from dis import dis
 import pygame
 from random import randint
 from time import time
@@ -27,6 +28,13 @@ def main():
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and display.do_sorting:
                 display.paused = not display.paused
                 display.timer_space_bar = time()
+
+            # Check for scroll
+            elif display.algorithmBox.isActive and event.type == pygame.MOUSEWHEEL:
+                if event.y > 0 and display.algorithmBox.scrollShift < len(display.algorithmBox.options):
+                    display.algorithmBox.scrollShift += 1
+                elif event.y < 0 and display.algorithmBox.scrollShift > 0 - len(display.algorithmBox.options):
+                    display.algorithmBox.scrollShift -= 1
 
             display.updateWidgets(event)
 
