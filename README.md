@@ -7,15 +7,15 @@ Check [Wiki Page](../../wiki) for more information about each algorithm, as visu
 
 ## Program preview
 
-!["Program Preview"](images/preview.gif)
+!["Program Preview"](res/images/preview.gif)
 
 ## Some Algorithms
 
 | | | |
 |:-------------------------:|:-------------------------:|:-------------------------:|
-|![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/bubble_sort.gif?raw=true)  Bubble sort |  ![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/bucket_sort.gif?raw=true) Bucket sort |![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/cocktail_sort.gif?raw=true) Cocktail sort |
-|![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/counting_sort.gif?raw=true) Counting sort | ![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/heap_sort.gif?raw=true) Heap sort |![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/insertion_sort.gif?raw=true) Insertion sort |
-|![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/merge_sort.gif?raw=true) Merge sort | ![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/quick_sort.gif?raw=true) Quick sort |![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/selection_sort.gif?raw=true) Selection sort |
+|![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/res/gifs/bubble_sort.gif?raw=true)  Bubble sort |  ![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/res/gifs/bucket_sort.gif?raw=true) Bucket sort |![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/res/gifs/cocktail_sort.gif?raw=true) Cocktail sort |
+|![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/res/gifs/counting_sort.gif?raw=true) Counting sort | ![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/res/gifs/heap_sort.gif?raw=true) Heap sort |![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/res/gifs/insertion_sort.gif?raw=true) Insertion sort |
+|![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/res/gifs/merge_sort.gif?raw=true) Merge sort | ![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/res/gifs/quick_sort.gif?raw=true) Quick sort |![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/res/gifs/selection_sort.gif?raw=true) Selection sort |
 
 ## Using the application
 
