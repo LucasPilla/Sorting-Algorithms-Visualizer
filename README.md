@@ -3,8 +3,6 @@
 Program made with Python and Pygame module for visualizing sorting algorithms \
 Support this project by leaving a :star:
 
-Check [Wiki Page](../../wiki) for more information about each algorithm, as visualization gifs and explanations.
-
 ## Program preview
 
 !["Program Preview"](images/preview.gif)
