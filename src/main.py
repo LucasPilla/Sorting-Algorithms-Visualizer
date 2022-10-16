@@ -1,8 +1,8 @@
 import pygame
 from random import randint
 from time import time
-from src.algs import algorithmsDict
-import src.display as display
+from algs import algorithmsDict
+import display as display
 
 # Declared in display.py
 # 1. global variables : numBars, delay, do_sorting, paused, timer_space_bar
