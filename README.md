@@ -21,4 +21,4 @@ Support this project by leaving a :star:
 
 - Clone GitHub repository `git clone https://github.com/LucasPilla/Sorting-Algorithms-Visualizer.git`
 - Install requirements: `pip3 install -r requirements.txt`
-- Run: `python3 main.py`
+- Run: `python3 src/main.py`
