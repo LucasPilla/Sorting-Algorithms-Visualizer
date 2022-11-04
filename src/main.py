@@ -11,8 +11,41 @@ import imageio.v3
 # 2. widgets : sizeBox, delayBox, algorithmBox, playButton, stopButton
 
 
-SCREENSHOT_FILENAME = "screenshot" #+ a counter number
-GIF_WINDOW_SIZE = (900, 420)
+#Generating gifs requires placing files in subfolder and then loading them.
+#This deletes everything except gif
+def deleteTempFiles():
+    try:
+        myFiles = []
+        myDir = []
+        for pathnames,dirnames,filenames in os.walk("pictures"):
+            myFiles.extend(filenames)
+            myDir.extend(dirnames)
+        for files in myFiles:
+            os.remove("pictures/" + files)
+        for directories in myDir:
+            os.rmdir("pictures/" + directories)
+    except:
+        raise EIO("Could not delete files in subfolder!")
+
+def CreateGIF(counter,SCREENSHOT_FILENAME):
+    #Idea is that pictures are generated with numbers 0 to some MAX
+    print("Trying to generate GIF, this may freeze the program and take a while")
+    #Find max
+    fileNames = [] #Okay, let's start preparing for GIF
+    for i in range(0,counter):
+        fileNames.append(SCREENSHOT_FILENAME + str(i) + ".jpg")
+    images = []
+    #This will start to load in individual pictures into gif engine
+    try:
+        for filename in fileNames:
+            images.append(imageio.v2.imread(filename))
+    except:
+        raise EIO("Tried to create GIF, did not find sample pictures")
+    #Output gif
+    imageio.mimsave('sorting.gif', images, format = 'GIF-PIL', fps = 100)
+    print("GIF generated as sorting.gif folder")
+    #Delete all files in folder
+    deleteTempFiles()
 
 def getMaxNumber(files):
     currentMax  = -1
@@ -23,6 +56,9 @@ def getMaxNumber(files):
     return currentMax
 
 def main():
+    SCREENSHOT_FILENAME = "pictures/screenshot" #+ a counter number + JPG
+    GIF_WINDOW_SIZE = (900, 400)
+    
     numbers = []
     running = True
     display.algorithmBox.add_options(list(algorithmsDict.keys()))
@@ -32,6 +68,10 @@ def main():
 
     timer_delay = time()
     counter = 0
+    
+    #Just to make sure nothing from prev runs is left
+    deleteTempFiles()
+    
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -44,7 +84,12 @@ def main():
             display.updateWidgets(event)
 
         display.delay = (display.delayBox.value-display.delayBox.rect.x-6)/1000 # delay is in ms
-
+        
+        #Check if user pressed button, if so then active GIF output
+        if display.gifCheckBox.isActive and not display.do_sorting:
+            display.gifCheckBox.switch()
+            display.gifCheckBox.isActive = False
+        
         if display.playButton.isActive: # play button clicked
             display.playButton.isActive = False
             display.do_sorting = True
@@ -62,44 +107,37 @@ def main():
                     numbers, redBar1, redBar2, blueBar1, blueBar2 = next(alg_iterator)
             except StopIteration:
                 pass
-            #Check if pictures are there, and if so then output gif
             #Check if user wants GIF
-            print("No gif check, that's not good!")
-            if True: #ADD SOME KIND OF GIF CHECK
-                #Idea is that pictures are generated with numbers 0 to some MAX
-                maxNumber = counter#So find MAX
-                print(str(maxNumber))
-                fileNames = [] #Okay, let's start preparing for GIF
-                for i in range(0,maxNumber):
-                    fileNames.append(SCREENSHOT_FILENAME + str(i) + ".jpg")
-                images = []
-                #This will start to load in individual pictures into gif engine
-                for filename in fileNames:
-                    images.append(imageio.v2.imread(filename))
-                #Output gif!
-                #imageio.mimsave("test", images)
-                imageio.mimsave('sorting.gif', images, format = 'GIF-PIL', fps = 100)
-                #Delete all files in folder
-                print("Attempting to delete temporary files!")
-                for i in range(0,maxNumber):
-                    try:
-                        os.remove(SCREENSHOT_FILENAME + str(i) + ".jpg")
-                    except:
-                        print("IO error, will attempt to continue!")
-            counter = 0
-        #Initialize screenshot area        
-        screenshot = pygame.Surface(GIF_WINDOW_SIZE)
-        screenshot.blit(display.screen, (0,0))
+            if display.gifCheckBox.checked: #Check if GIF was requested
+                #Call function for GIF
+                CreateGIF(counter,SCREENSHOT_FILENAME)
+                #Reset counter
+                counter = 0
+                
+        #GIF needs it's own thing
+        if display.gifCheckBox.checked:
+            screenshot = pygame.Surface(GIF_WINDOW_SIZE)
+            screenshot.blit(display.screen, (0,0))
+        
         if display.do_sorting and not display.paused: # sorting animation
             try:
                 if time()-timer_delay >= display.delay:
                     numbers, redBar1, redBar2, blueBar1, blueBar2 = next(alg_iterator)
                     display.drawInterface(numbers, redBar1, redBar2, blueBar1, blueBar2)
-                    pygame.image.save(screenshot, "screenshot" + str(counter) + ".jpg")
+                    #If GIF is to be output, a picture needs to be generated and saved temporarily
+                    if display.gifCheckBox.checked:
+                        pygame.image.save(screenshot, "pictures/screenshot" + str(counter) + ".jpg")
+                        counter += 1
                     timer_delay = time()
-                    counter += 1
             except StopIteration:
                 display.do_sorting = False
+                #If program stops because end of sorting, gif needs to be created if selected
+                if display.gifCheckBox.checked: #Check if GIF was requested
+                    #Call function for GIF
+                    CreateGIF(counter,SCREENSHOT_FILENAME)
+                    #Reset counter
+                    counter = 0
+                
         elif display.do_sorting and display.paused: # animation paused
             display.drawInterface(numbers, -1, -1, -1, -1)
         else: # no animation

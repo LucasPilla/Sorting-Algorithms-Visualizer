@@ -130,6 +130,43 @@ class ButtonBox(Box):
        super().update()
        if self.isActive: self.isActive = True if self.clicked else False
 
+            
+class CheckBox(Box):
+    checked = False
+    image1 = None
+    image2 = None
+    myText = None
+    def __init__(self, img_path, img_path2, option_text, rect):
+        super().__init__(rect)
+        self.img = pygame.image.load(img_path)
+        self.myText = option_text
+        self.image1 = img_path#Save the different pictures for switching later
+        self.image2 = img_path2
+        
+    def draw(self):
+        self.rect.x = playButton.rect.x + playButton.rect.w + 30
+        mySurface = baseFont.render(self.myText, True, grey)
+        screen.blit(mySurface, (self.rect.x - 20, self.rect.y - 30))
+        if self.checked:
+            #Draw checked box
+            self.img = pygame.image.load(self.image2)
+        else:
+            #Draw unchecked box
+            self.img = pygame.image.load(self.image1)
+        screen.blit(self.img, (self.rect.x, self.rect.y))
+
+    def update(self):
+        super().update()
+        if self.isActive: self.isActive = True if self.clicked else False
+        if self.isActive:
+             self.checked = not self.checked
+    #Switch between checked & unchecked image            
+    def switch(self):
+        self.checked = not self.checked
+        self.draw()
+        
+        
+            
 
 class DropdownBox(InputBox):
     DEFAUTL_OPTION = 0
@@ -219,12 +256,14 @@ delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
 algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
 playButton  = ButtonBox('res/playButton.png', (390, 440, 50, 50))
 stopButton = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
+gifCheckBox = CheckBox('res/gifButton.png','res/gifButton2.png',"Output GIF", (500,440,50,50))
 
 
 def updateWidgets(event):
     sizeBox.update(event)
     delayBox.update(event)
     algorithmBox.update()
+    gifCheckBox.update()
     if do_sorting:
         stopButton.update()
     else:
@@ -250,6 +289,7 @@ def drawBottomMenu():
     sizeBox.draw()
     delayBox.draw()
     algorithmBox.draw()
+    gifCheckBox.draw()
     if do_sorting:
         stopButton.draw()
     else:
