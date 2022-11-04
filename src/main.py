@@ -5,6 +5,7 @@ from algs import algorithmsDict
 import display as display
 import os
 import imageio.v3
+import gc
 
 # Declared in display.py
 # 1. global variables : numBars, delay, do_sorting, paused, timer_space_bar
@@ -36,6 +37,7 @@ def CreateGIF(counter,SCREENSHOT_FILENAME):
         fileNames.append(SCREENSHOT_FILENAME + str(i) + ".jpg")
     images = []
     #This will start to load in individual pictures into gif engine
+    #The engine does not require loading in all pictures at once, but it is more complicted to stream the data
     try:
         for filename in fileNames:
             images.append(imageio.v2.imread(filename))
@@ -43,6 +45,12 @@ def CreateGIF(counter,SCREENSHOT_FILENAME):
         raise EIO("Tried to create GIF, did not find sample pictures")
     #Output gif
     imageio.mimsave('sorting.gif', images, format = 'GIF-PIL', fps = 100)
+    #Del latest list, this is to save ram and make reruns possible
+    del(fileNames)
+    for item in images:
+        del(item)
+    del(images)
+    gc.collect()
     print("GIF generated as sorting.gif folder")
     #Delete all files in folder
     deleteTempFiles()
@@ -87,8 +95,16 @@ def main():
         
         #Check if user pressed button, if so then active GIF output
         if display.gifCheckBox.isActive and not display.do_sorting:
-            display.gifCheckBox.switch()
+            try:
+                if int(display.sizeBox.text) > 120:
+                    #This is limitation because of RAM. size = 100 needs 2GB of RAM, so 120 is for some reason significantly higher
+                    print("GIF cannot be created for size > 200")
+                else:
+                    display.gifCheckBox.switch()
+            except:
+                raise ValueError("Text in size field is not a number")
             display.gifCheckBox.isActive = False
+            
         
         if display.playButton.isActive: # play button clicked
             display.playButton.isActive = False
