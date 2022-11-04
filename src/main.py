@@ -12,6 +12,11 @@ import gc
 # 2. widgets : sizeBox, delayBox, algorithmBox, playButton, stopButton
 
 
+#Okay,so current problem with streamwriting is that a small section gets repeated
+#This is because every time it writes, it will overwrite last file
+#So current suggestion is write multiple files
+#And then join them together
+
 #Generating gifs requires placing files in subfolder and then loading them.
 #This deletes everything except gif
 def deleteTempFiles():
@@ -28,7 +33,7 @@ def deleteTempFiles():
     except:
         raise EIO("Could not delete files in subfolder!")
 
-def CreateGIF(counter,SCREENSHOT_FILENAME):
+def CreateGIF2(counter,SCREENSHOT_FILENAME):
     #Idea is that pictures are generated with numbers 0 to some MAX
     print("Trying to generate GIF, this may freeze the program and take a while")
     #Find max
@@ -54,7 +59,97 @@ def CreateGIF(counter,SCREENSHOT_FILENAME):
     print("GIF generated as sorting.gif folder")
     #Delete all files in folder
     deleteTempFiles()
-
+    
+def CreateGIF(counter,SCREENSHOT_FILENAME):
+    #Idea is that pictures are generated with numbers 0 to some MAX
+    print("Trying to generate GIF, this may freeze the program and take a while")
+    list2 = []
+    for i in range(0,counter):
+        list2.append(SCREENSHOT_FILENAME + str(i) + ".jpg")
+    myCounter = 0;
+    print(len(list2))
+    while len(list2) > 10:
+        images = []
+        for j in range(0,10):
+            if myCounter == counter -1:
+                break
+            print("pictures/screenshot" + str(myCounter) + ".jpg")
+            #This will start to load in individual pictures into gif engine
+            try:
+                    images.append(imageio.v2.imread(list2[0]))
+            except:
+                raise Exception("Tried to create GIF, did not find sample pictures")
+            #Output gif
+            list2.pop(0)
+            
+        imageio.mimwrite('sorting.gif', images, format = 'GIF-PIL', fps = 100)
+    #Del latest list, this is to save ram and make reruns possible
+    #del(fileNames)
+    #for item in images:
+    #    del(item)
+    #del(images)
+    #gc.collect()
+    print("GIF generated as sorting.gif folder")
+    #Delete all files in folder
+    deleteTempFiles()
+ 
+def CreateGIF2(counter,SCREENSHOT_FILENAME):
+    #Idea is that pictures are generated with numbers 0 to some MAX
+    print("Trying to generate GIF, this may freeze the program and take a while")
+    #Find max
+    fileNames = [] #Okay, let's start preparing for GIF
+    for i in range(0,counter):
+        fileNames.append(SCREENSHOT_FILENAME + str(i) + ".jpg")
+    images = []
+    #This will start to load in individual pictures into gif engine
+    #The engine does not require loading in all pictures at once, but it is more complicted to stream the data
+    try:
+        for filename in fileNames:
+            images.append(imageio.v2.imread(filename))
+    except:
+        raise EIO("Tried to create GIF, did not find sample pictures")
+    #Output gif
+    imageio.mimsave('sorting.gif', images, format = 'GIF-PIL', fps = 100)
+    #Del latest list, this is to save ram and make reruns possible
+    del(fileNames)
+    for item in images:
+        del(item)
+    del(images)
+    gc.collect()
+    print("GIF generated as sorting.gif folder")
+    #Delete all files in folder
+    deleteTempFiles()    
+    
+    
+    
+def CreateGIF3(counter,SCREENSHOT_FILENAME):
+    #Idea is that pictures are generated with numbers 0 to some MAX
+    print("Trying to generate GIF, this may freeze the program and take a while")
+    #Find max
+    fileNames = [] #Okay, let's start preparing for GIF
+    for i in range(0,counter):
+        fileNames.append(SCREENSHOT_FILENAME + str(i) + ".jpg")
+    images = []
+    #This will start to load in individual pictures into gif engine
+    #The engine does not require loading in all pictures at once, but it is more complicted to stream the data
+    source = "imageio:pictures"
+    dest = "sorting.gif"
+    with imageio.imopen(dest, "w", plugin="pyav") as out_file:
+        out_file.init_video_stream(codec="gif", fps = 100)
+        for frame in fileNames:
+            out_file.write_frame(imageio.v2.imread(frame))
+    #Output gif
+    imageio.mimsave('sorting.gif', images, format = 'GIF-PIL', fps = 100)
+    #Del latest list, this is to save ram and make reruns possible
+    del(fileNames)
+    for item in images:
+        del(item)
+    del(images)
+    gc.collect()
+    print("GIF generated as sorting.gif folder")
+    #Delete all files in folder
+    deleteTempFiles()
+    
 def getMaxNumber(files):
     currentMax  = -1
     for item in files:
