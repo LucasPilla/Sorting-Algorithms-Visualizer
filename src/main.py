@@ -68,12 +68,13 @@ def CreateGIF(counter,SCREENSHOT_FILENAME):
         list2.append(SCREENSHOT_FILENAME + str(i) + ".jpg")
     myCounter = 0;
     print(len(list2))
-    while len(list2) > 10:
+    while len(list2) >= 100:
+        print("pictures/screenshot" + str(myCounter) + ".jpg")
         images = []
-        for j in range(0,10):
-            if myCounter == counter -1:
-                break
-            print("pictures/screenshot" + str(myCounter) + ".jpg")
+        maxLenght = 100
+        if len(list2) < 100:
+            maxLenght = len(list2)
+        for j in range(0,maxLenght):
             #This will start to load in individual pictures into gif engine
             try:
                     images.append(imageio.v2.imread(list2[0]))
@@ -82,7 +83,9 @@ def CreateGIF(counter,SCREENSHOT_FILENAME):
             #Output gif
             list2.pop(0)
             
-        imageio.mimwrite('sorting.gif', images, format = 'GIF-PIL', fps = 100)
+            
+        imageio.mimwrite('pictures2/sorting' + str(myCounter) + '.gif', images, format = 'GIF-PIL', fps = 100)
+        myCounter +=1
     #Del latest list, this is to save ram and make reruns possible
     #del(fileNames)
     #for item in images:
@@ -257,3 +260,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
