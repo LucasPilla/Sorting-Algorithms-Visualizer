@@ -70,6 +70,18 @@ def getMaxNumber(files):
 def takePicture(SCREENSHOT_FILENAME,GIF_picture_counter,screenshot):
     pygame.image.save(screenshot, "pictures/screenshot" + str(GIF_picture_counter) + ".jpg")
 
+def createPicturesFolder():
+    myDir = []
+    for pathnames,dirnames,filenames in os.walk(os.getcwd()):
+            myDir.extend(dirnames)
+    for directory in myDir:
+        if directory == "pictures":
+            return -1
+    try:
+        os.mkdir("pictures")
+    except:
+        raise Exception("Could not create pictures folder")
+    
 def main():
     SCREENSHOT_FILENAME = "pictures/screenshot" #+ a counter number + JPG
     GIF_WINDOW_SIZE = (900, 400)
@@ -89,6 +101,9 @@ def main():
     
     #Just to make sure nothing from prev runs is left
     deleteTempFiles()
+    
+    #Create pictures if it does not exists
+    createPicturesFolder()
     
     while running:
         for event in pygame.event.get():
@@ -156,7 +171,10 @@ def main():
                         #If less then 300, take every size/100 picture
                         #ergo size = 100 => every picture, size = 300 => every third picture
                         if int(display.sizeBox.text) <= 300:
-                            if GIF_skip_image_counter % int(int(display.sizeBox.text)/100) == 0 or int(display.sizeBox.text) < 100:
+                            ratio = 1
+                            if int(display.sizeBox.text) >= 100:
+                                ratio = int(int(display.sizeBox.text)/100)
+                            if GIF_skip_image_counter % ratio == 0 or int(display.sizeBox.text) < 100:
                                 takePicture(SCREENSHOT_FILENAME,GIF_picture_counter,screenshot)
                                 GIF_picture_counter +=1
                             GIF_skip_image_counter +=1
