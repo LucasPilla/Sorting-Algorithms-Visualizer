@@ -21,30 +21,33 @@ from algorithms.oddevenSort import oddevenSort
 from algorithms.mergeSort import mergeSort
 from algorithms.insertionSort import insertionSort
 from algorithms.radixSort import radixSort
+from algorithms.treeSort import treeSort
 
 
-__all__ = [ 
-    "bogoSort", 
-    "bitonicSort", 
-    "binaryinsertionSort", 
-    "bubbleSort", 
-    "heapSort", 
-    "gnomeSort", 
-    "cycleSort", 
-    "countingSort", 
-    "combSort", 
-    "cocktailSort", 
-    "bucketSort", 
-    "timSort", 
-    "strandSort", 
-    "stoogeSort", 
-    "shellSort", 
-    "selectionSort", 
-    "quickSort", 
-    "pigeonholeSort", 
-    "pancakeSort", 
-    "oddevenSort", 
-    "mergeSort", 
-    "insertionSort", 
-    "radixSort"
+__all__ = [
+    "bogoSort",
+    "bitonicSort",
+    "binaryinsertionSort",
+    "bubbleSort",
+    "heapSort",
+    "gnomeSort",
+    "cycleSort",
+    "countingSort",
+    "combSort",
+    "cocktailSort",
+    "bucketSort",
+    "timSort",
+    "strandSort",
+    "stoogeSort",
+    "shellSort",
+    "selectionSort",
+    "quickSort",
+    "pigeonholeSort",
+    "pancakeSort",
+    "oddevenSort",
+    "mergeSort",
+    "insertionSort",
+    "radixSort",
+    "treeSort",
+    "exchangeSort",
 ]
