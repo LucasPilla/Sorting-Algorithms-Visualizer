@@ -1,12 +1,4 @@
 from algorithms import *
-from algorithms.binaryinsertionSort import binaryinsertionSort
-from algorithms.bitonicSort import bitonicSort
-from algorithms.pancakeSort import pancakeSort
-from algorithms.timSort     import timSort
-from algorithms.stoogeSort  import stoogeSort
-from algorithms.strandSort  import strandSort
-from algorithms.oddevenSort import oddevenSort
-from algorithms.exchangeSort import exchangeSort
 
 
 algorithmsDict = {'insertion'       : insertionSort,
@@ -32,5 +24,6 @@ algorithmsDict = {'insertion'       : insertionSort,
                   'strand'          : strandSort,
                   'odd-even'        : oddevenSort,
                   'pigeonhole'      : pigeonholeSort,
-                  'exchange'        : exchangeSort}
+                  'exchange'        : exchangeSort,
+                  'tree'            : treeSort}
 
