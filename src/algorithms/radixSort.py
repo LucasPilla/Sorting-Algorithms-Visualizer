@@ -1,5 +1,17 @@
 def counting_Sort(array, exp1):
+    """
+    Perform counting sort on the given array based on a given exponent value.
 
+    Args:
+        array (list): The list of integers to be sorted.
+        exp1 (int): The exponent value.
+
+    Yields:
+        tuple: A tuple containing the sorted output, index, -1, digit, -1.
+
+    Returns:
+        int: Returns 0 if the input array and the sorted array are the same, otherwise None.
+    """
     n = len(array)
     output = []
     for i in range(0,n):
@@ -28,7 +40,21 @@ def counting_Sort(array, exp1):
 
 
 def radixSort(array, *args):
+    """
+    Sort the input list of integers using Radix Sort Algorithm.
 
+    Radix Sort Algorithm sorts a list of integers by grouping them 
+    by individual digits that share the same place value and position. 
+    It starts by sorting the list based on the least significant digit, 
+    then gradually moves to the most significant digit until the entire 
+    list is sorted.
+
+    Args:
+        array (list): The list of integers to be sorted.
+
+    Yields:
+        tuple: A tuple containing the sorted output, index, -1, digit, -1.
+    """
     max1 = max(array)
     g = 1
     exp = 1
