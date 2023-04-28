@@ -17,13 +17,13 @@ def calculate_min_run(n):
     Returns:
     	int: The minimum run length.
     """
-	last_bit = 0
-	RUN_LEN  = 32
-
-	while n >= RUN_LEN:
-		last_bit |= n & 1
-		n >>= 1
-	return n + last_bit
+    last_bit = 0
+    RUN_LEN  = 32
+    
+    while n >= RUN_LEN:
+        last_bit |= n & 1
+        n >>= 1
+        return n + last_bit
 
 def binaryinsertionSort(array, start, end):
     """
