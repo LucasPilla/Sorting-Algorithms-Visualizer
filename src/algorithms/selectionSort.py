@@ -6,14 +6,7 @@ def selectionSort(array, *args):
     part of the array and moving it to the beginning of the unsorted part. This is
     repeated until the entire array is sorted.
 
-    Args:
-        array (list): The list to be sorted.
-        *args: Optional arguments.
-
-    Yields:
-        tuple: A tuple containing the array, the current index being considered, -1,
-        the index of the smallest value, and -1.
-    
+    Time complexity: O(n^2), where n is the number of elements in the list. 
     """
     size = len(array)
     for i in range(size-1):

@@ -2,13 +2,6 @@ def counting_Sort(array, exp1):
     """
     Perform counting sort on the given array based on a given exponent value.
 
-    Args:
-        array (list): The list of integers to be sorted.
-        exp1 (int): The exponent value.
-
-    Yields:
-        tuple: A tuple containing the sorted output, index, -1, digit, -1.
-
     Returns:
         int: Returns 0 if the input array and the sorted array are the same, otherwise None.
     """
@@ -48,12 +41,10 @@ def radixSort(array, *args):
     It starts by sorting the list based on the least significant digit, 
     then gradually moves to the most significant digit until the entire 
     list is sorted.
-
-    Args:
-        array (list): The list of integers to be sorted.
-
-    Yields:
-        tuple: A tuple containing the sorted output, index, -1, digit, -1.
+    
+    Time complexity: O(d * (n + k)), where d is the number of digits in the 
+    maximum element, n is the number of elements in the list, 
+    and k is the range of values that the digits can take.
     """
     max1 = max(array)
     g = 1

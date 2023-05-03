@@ -9,15 +9,9 @@ def heapSort(array, *args):
     the maximum element involves swapping it with the last element in the heap, 
     then fixing the heap to maintain the heap property. This process is repeated 
     until all elements have been extracted and placed in their correct position 
-    in the sorted array. Heap Sort has a time complexity of O(n log n).
-
-    Args:
-        array (list): The array to be sorted.
-
-    Yields:
-        tuple: A tuple containing the current state of the array, as well as the indices of any two 
-        elements that have been swapped in the current iteration.
-
+    in the sorted array. 
+    
+    Time complexity: O(nlog²n).
     """
     yield from heapify(array, len(array))
     end = len(array) - 1
@@ -31,15 +25,6 @@ def heapSort(array, *args):
 def heapify(array, count):
     """
     Creates a max heap from an array.
-
-    Args:
-        array (list): The array to be heapified.
-        count (int): The number of elements to be heapified.
-
-    Yields:
-        tuple: A tuple containing the current state of the array, as well as the indices of any two 
-        elements that have been swapped in the current iteration.
-
     """
     start = (count-1) // 2
     while start >= 0:
@@ -49,17 +34,8 @@ def heapify(array, count):
 
 def siftDown(array, start, end):
     """
-    Moves the element at the specified index down the tree until it is in the correct position in the heap.
-
-    Args:
-        array (list): The array containing the heap.
-        start (int): The index of the element to be sifted down.
-        end (int): The index of the last element in the heap.
-
-    Yields:
-        tuple: A tuple containing the current state of the array, as well as the indices of any two 
-        elements that have been swapped in the current iteration.
-
+    Moves the element at the specified index down the tree 
+    until it is in the correct position in the heap.
     """
     root = start
     while 2 * root + 1 <= end:

@@ -6,14 +6,7 @@ def pancakeSort(array, *args):
     element to the front of the unsorted portion of the list, and then flipping the entire unsorted portion 
     of the list to move the largest element to its correct position. This process is repeated until the entire list is sorted.
 
-    Args:
-        array (list): The list to be sorted.
-
-    Yields:
-        tuple: A tuple containing the current state of the array after each flip. The tuple has the format
-        (array, max_index, -1, -1, -1), where array is the current state of the array, max_index is the index of the
-        maximum value in the unsorted portion of the array, and the other values are set to -1.
-
+    Time complexity: O(n^2), where n is the number of elements in the list.
     """
     for i in range(len(array)):
         max_index = array.index(max(array[:len(array) - i]))
@@ -27,11 +20,6 @@ def pancakeSort(array, *args):
 def flip(array, n):
     """
     Flips the first n elements of an array.
-
-    Args:
-        array (list): The list to be flipped.
-        n (int): The number of elements to be flipped.
-
     """
     for i in range(n):
         if i >= n - i:

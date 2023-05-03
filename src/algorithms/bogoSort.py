@@ -3,23 +3,10 @@ from random import randint
 
 def bogoSort(array, *args):
     """
-    Sorts an array of numbers in ascending order using the Bogo Sort algorithm.
-
     Bogo Sort sorts an array by randomly shuffling it and checking if the elements 
     are in sorted order. It repeatedly shuffles the array until it is sorted.
 
-    Parameters:
-        array (list): The array to be sorted.
-        *args: Additional arguments, not used in this function.
-
-    Yields:
-        Tuple (list, int, int, int, int): A tuple containing:
-        - The current state of the array being sorted.
-        - The index of the first number being compared.
-        - The index of the second number being compared.
-        - The index of the number that is currently being sorted.
-        - The index of the number that is currently being compared with.
-
+    Time complexity: O(n*n!), where n is the number of elements in the list.
     """
     is_sorted = False
     arrayLen = len(array)

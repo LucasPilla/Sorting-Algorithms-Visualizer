@@ -1,7 +1,5 @@
 def pigeonholeSort(array, *args):
   """
-  Sorts an array in ascending order using Pigeonhole Sort Algorithm.
-
   Pigeonhole Sort is a sorting algorithm that is used to sort items 
   when they are limited to a range of values. The algorithm works by 
   placing each item in its corresponding pigeonhole. Then, the items 
@@ -9,14 +7,8 @@ def pigeonholeSort(array, *args):
   order. It is useful when the range of values in the array is small 
   compared to the size of the array, as it is a linear time sorting algorithm.
 
-  Args:
-    array: An array of integers to be sorted.
-    *args: Optional arguments.
-
-  Yields:
-    Tuple containing the current state of the array, indices of the two elements being compared, and indices of the
-    elements being modified.
-
+  Time complexity: O(n + range), where n is the number of elements in the list 
+  and range is the range of values that the elements can take
   """
 
   minV = min(array)

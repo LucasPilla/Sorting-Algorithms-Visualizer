@@ -3,14 +3,9 @@ from math import ceil, floor
 
 def getShellGaps(N):
     """
-    Compute gap sequence for Shell sort.
-
     The gap sequence is computed as follows: starting with the largest gap
     possible, divide it by 2 at each iteration until reaching 1. The resulting
     gaps are returned in decreasing order.
-
-    Args:
-        N (int): The length of the array to be sorted.
 
     Returns:
         list: A list of integers representing the gap sequence for Shell sort.
@@ -27,9 +22,6 @@ def getCiuraGaps(*args):
     """
     Return the gap sequence proposed by Ciura.
 
-    The sequence was proposed in the paper "Best Increments for the Average
-    Case of Shellsort" by Marcin Ciura.
-
     Returns:
         list: A list of integers representing the gap sequence proposed by
             Ciura.
@@ -40,12 +32,6 @@ def getCiuraGaps(*args):
 def getTokudaGaps(N):
     """
     Compute gap sequence proposed by Tokuda.
-
-    The sequence was proposed in the paper "An Improved Shellsort" by N. Tokuda.
-    ( N. Tokuda, An Improved Shellsort, IFIP Transactions, A-12 (1992) 449-457)
-
-    Args:
-        N (int): The length of the array to be sorted.
 
     Returns:
         list: A list of integers representing the gap sequence proposed by
@@ -62,13 +48,6 @@ def getTokudaGaps(N):
 def getKnuthGaps(N):
     """
     Compute gap sequence proposed by Knuth.
-
-    The sequence was proposed in the book "The Art of Computer Programming" by
-    Donald E. Knuth.
-    (Knuth, Donald E. (1997). The Art of Computer Programming.)
-
-    Args:
-        N (int): The length of the array to be sorted.
 
     Returns:
         list: A list of integers representing the gap sequence proposed by
@@ -101,17 +80,8 @@ def shellSort(array, *args, gapType="ciura"):
     gap size is reduced at each pass until it reaches 1, at which point the
     algorithm degenerates to a simple insertion sort.
 
-    Args:
-        array (list): the list to be sorted.
-        gapType (str): specifies which gap sequence to use for the algorithm. Defaults to 'ciura'.
+    Time complexity: O(n^2). It depends on the increment sequence used.
 
-    Yields:
-        tuple: a tuple containing the state of the array after each iteration of the algorithm. The tuple contains the following elements:
-            - array (list): the current state of the array.
-            - x (int): the index of the element being compared with the temporary value.
-            - y (int): the index of the element being compared with the element at index x.
-            - a (int): the index of the element being moved to a new location.
-            - b (int): the index of the element's new location.
     """
 
     gaps = GAPS.get(gapType, "ciura")(len(array))
