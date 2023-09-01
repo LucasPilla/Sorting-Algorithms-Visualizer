@@ -9,20 +9,13 @@ def swap(array, i, j):
 
 def oddevenSort(array, *args):
     """
-    Sorts the given array using the Odd-Even Sort Algorithm.
-
     Odd-Even Sort Algorithm is a variation of Bubble Sort that sorts
     pairs of adjacent elements with odd or even indices in alternating
     passes. On each pass, it compares the elements in the pair and swaps
     them if they are not in the correct order. The process repeats until
     no more swaps are needed, indicating that the array is sorted.
 
-    Args:
-        array: The array to be sorted.
-
-    Yields:
-        The current state of the array, along with the indices of the
-        elements being compared and swapped (-1 if not applicable).
+    Time complexity: O(n^2), where n is the number of elements in the list.
     """
     sorted = False
     while not sorted:

@@ -1,20 +1,11 @@
 def cocktailSort(array, *args):
-    """
-    Sorts an array using the Cocktail Sort Algorithm.
+    """    
+    Cocktail sort is a variation of Bubble sort that sorts a list in both directions, 
+    first from left to right like in Bubble sort, then from right to left, and so on 
+    until the list is sorted. It has a slightly better average-case performance than 
+    Bubble sort because it can move large elements to the right more quickly.
     
-    Cocktail Sort Algorithm, a.k.a. Bidirectional Bubble Sort or Shaker Sort, 
-    is a variation of the Bubble Sort Algorithm. It sorts the array in both directions, 
-    first from left to right, then from right to left, alternating the direction 
-    until the array is sorted. It improves the performance of the Bubble Sort, 
-    especially when the array has a large number of elements that are already in order 
-    because it can avoid unnecessary iterations through the array.
-    
-    Args:
-        array: A list of comparable elements to be sorted.
-    
-    Yields:
-        A tuple containing the current state of the array and the indices of the two elements 
-        that are being compared or swapped. If only one index is relevant, the other value is -1.
+    Time complexity: O(n^2) where n is the number of elements in the list. 
     """
     n = len(array)
     swapped = True
