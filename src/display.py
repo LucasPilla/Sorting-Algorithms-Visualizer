@@ -63,6 +63,23 @@ class TextBox(InputBox):
             elif event.unicode.isdigit()        : self.text += event.unicode
         
 
+class DisplayBox(InputBox):
+    def __init__(self, name, color, rect, text='0 seconds'):
+        super().__init__(name, color, rect)
+        self.text = text
+        self.draw() # establish the correct width for initial rendering
+    
+    def draw(self):
+        super().draw()
+        surface = baseFont.render(self.text, True, self.color)
+        screen.blit(surface, (self.rect.x + 10, self.rect.y + 10))
+        self.rect.w = max(surface.get_width() + 20, 50)
+
+    def update(self):
+        super().update()
+        self.text = str(time_taken)[:6] + ' seconds'#5 sig figs seems enough, thoughit is arbitrary
+
+
 class SlideBox(InputBox):
     def __init__(self, name, color, rect):
         super().__init__(name, color, rect)
@@ -211,20 +228,22 @@ delay   = 0
 do_sorting = False
 paused = False
 timer_space_bar   = 0
-
-
+start_time = 0
+time_taken = 0
 # Input Boxes
 sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
 delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
 algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
 playButton  = ButtonBox('res/playButton.png', (390, 440, 50, 50))
 stopButton = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
+timeBox     = DisplayBox('Time', grey,(700, 440, 50, 50))
 
 
 def updateWidgets(event):
     sizeBox.update(event)
     delayBox.update(event)
     algorithmBox.update()
+    timeBox.update()
     if do_sorting:
         stopButton.update()
     else:
@@ -250,6 +269,7 @@ def drawBottomMenu():
     sizeBox.draw()
     delayBox.draw()
     algorithmBox.draw()
+    timeBox.draw()
     if do_sorting:
         stopButton.draw()
     else:
