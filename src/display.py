@@ -64,7 +64,7 @@ class TextBox(InputBox):
         
 
 class DisplayBox(InputBox):
-    def __init__(self, name, color, rect, text='0 seconds'):
+    def __init__(self, name, color, rect, text= '0.0000 seconds'):
         super().__init__(name, color, rect)
         self.text = text
         self.draw() # establish the correct width for initial rendering
@@ -77,7 +77,7 @@ class DisplayBox(InputBox):
 
     def update(self):
         super().update()
-        self.text = str(time_taken)[:6] + ' seconds'#5 sig figs seems enough, thoughit is arbitrary
+        self.text = str(time_taken)[:6] + ' seconds' #5 sig figs seems enough, though it is arbitrary
 
 
 class SlideBox(InputBox):
