@@ -1,5 +1,4 @@
 import random
-from random import randint
 
 def quickSort(array, left, right):
     """
@@ -10,18 +9,29 @@ def quickSort(array, left, right):
     sorted array. 
 
     Time complexity: O(nlog²n).
+    
+    :param array: The list to be sorted.
+    :param left: The index of the left boundary of the subarray.
+    :param right: The index of the right boundary of the subarray.
+    :return: The sorted list.
     """
     if left >= right:
         return
+
     index = left
-    random_index = randint(left, right)
-    array[right], array[random_index] = array[random_index], array[right]
+    random_index = random.randint(left, right)
+    array[right], array[random_index] = array[random_index], array[right
     
+    pivot = array[right]
+
     for j in range(left, right):
         yield array, j, right, index, -1
-        if array[j] < array[right]:
+        if array[j] < pivot:
             array[j], array[index] = array[index], array[j]
             index += 1
+
     array[index], array[right] = array[right], array[index]
-    yield from quickSort(array, index + 1, right)
+
     yield from quickSort(array, left, index - 1)
+    yield from quickSort(array, index + 1, right)
+
