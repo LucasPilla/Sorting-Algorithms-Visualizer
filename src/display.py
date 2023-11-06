@@ -6,7 +6,7 @@ from time import time
 pygame.init()
 
 # Display settings
-windowSize = (900, 500)
+windowSize = (925, 500)
 screen = pygame.display.set_mode(windowSize)
 pygame.display.set_caption('Sorting Algorithms Visualizer')
 
@@ -78,7 +78,7 @@ class SlideBox(InputBox):
     def update(self, event):
         super().update()
         previousStart = self.start
-        self.rect.x = sizeBox.rect.x + sizeBox.rect.w + 20
+        self.rect.x = spaceBox.rect.x + spaceBox.rect.w + 20
         self.start  = self.rect.x + 6
         self.end    = self.rect.x + self.rect.w - 6
         self.value += self.start - previousStart
@@ -123,7 +123,7 @@ class ButtonBox(Box):
         self.img = pygame.image.load(img_path)
     
     def draw(self):
-        self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
+        self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 313
         screen.blit(self.img, (self.rect.x, self.rect.y))
 
     def update(self):
@@ -215,14 +215,17 @@ timer_space_bar   = 0
 
 # Input Boxes
 sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
-delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
-algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
-playButton  = ButtonBox('res/playButton.png', (390, 440, 50, 50))
-stopButton = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
+spaceBox     = TextBox('Space', grey, (120, 440, 50, 50), '20')
+delayBox     = SlideBox('Delay', grey, (195, 440, 112, 50))
+algorithmBox = DropdownBox('Algorithm', (287, 440, 200, 50), baseFont)
+playButton  = ButtonBox('res/playButton.png', (800, 440, 50, 50))
+stopButton = ButtonBox('res/stopButton.png', (800, 440, 50, 50))
 
 
 def updateWidgets(event):
+    '''Update the widgets'''
     sizeBox.update(event)
+    spaceBox.update(event)
     delayBox.update(event)
     algorithmBox.update()
     if do_sorting:
@@ -248,6 +251,7 @@ def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwar
 def drawBottomMenu():
     '''Draw the menu below the bars'''
     sizeBox.draw()
+    spaceBox.draw()
     delayBox.draw()
     algorithmBox.draw()
     if do_sorting:
@@ -270,10 +274,22 @@ def draw_polygon_alpha(surface, color, points):
     pygame.draw.polygon(shape_surf, color, [(x - min_x, y - min_y) for x, y in points])
     surface.blit(shape_surf, target_rect)
 
+def drawGridLines(array, spacing):
+    '''Draw grid lines on the screen'''
+    pygame.draw.line(screen, grey, (900, 0), (900, 400), 1)
+    try:
+        for num in range(0, 400+int(spacing), int(spacing)):
+            pygame.draw.line(screen, grey, (0, num), (900, num), 1)
+            font = pygame.font.SysFont('Arial', 8)
+            text_surface = font.render(str(400-num), True, grey)
+            screen.blit(text_surface, (900 + 5, num - int(spacing)/4))
+    except ValueError:
+        pass
 
 def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     '''Draw all the interface'''
     screen.fill(white)
+    drawGridLines(array, spaceBox.text)
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
     
     if paused and (time()-timer_space_bar)<0.5:
