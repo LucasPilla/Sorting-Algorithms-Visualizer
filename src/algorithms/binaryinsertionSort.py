@@ -34,19 +34,18 @@ def binary_search(arr, val, start, end, current):
         >>> binary_search(arr, 3, 0, 4, 4)
         2
     """
-    if start == end:
-        if arr[start] > val:
-            return start
+    if start <= end:
+        mid = (start + end) // 2
+
+        if arr[mid] < val:
+            return binary_search(arr, val, mid + 1, end, current)
+        elif arr[mid] > val:
+            return binary_search(arr, val, start, mid - 1, current)
         else:
-            return start + 1
+            return mid
 
-    if start > end:
+    # If the value is not found, return the index where it should be inserted.
+    if arr[start] > val:
         return start
-
-    mid = round((start + end) / 2)
-    if arr[mid] < val:
-        return binary_search(arr, val, mid + 1, end, current)
-    elif arr[mid] > val:
-        return binary_search(arr, val, start, mid - 1, current)
     else:
-        return mid
+        return start + 1
