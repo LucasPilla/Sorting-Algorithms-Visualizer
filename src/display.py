@@ -79,10 +79,10 @@ class SlideBox(InputBox):
     def update(self, event):
         super().update()
         previousStart = self.start
-        self.rect.x = sizeBox.rect.x + sizeBox.rect.w + 20
-        self.start  = self.rect.x + 6
-        self.end    = self.rect.x + self.rect.w - 6
-        self.value += self.start - previousStart
+        self.rect.x   = sizeBox.rect.x + sizeBox.rect.w + 20
+        self.start    = self.rect.x + 6
+        self.end      = self.rect.x + self.rect.w - 6
+        self.value   += self.start - previousStart
         
         if self.isActive:
             if self.clicked:
@@ -95,10 +95,10 @@ class SlideBox(InputBox):
 class VerticalSliderBox(InputBox):
     def __init__(self, name, color, rect):
         super().__init__(name, color, rect)
-        self.start = self.rect.y+6
-        self.end   = self.rect.y+self.rect.h
-        self.value = self.start
-        self.isActive=True
+        self.start    = self.rect.y+6
+        self.end      = self.rect.y+self.rect.h
+        self.value    = self.start
+        self.isActive = True
 
     def draw(self):
         x=self.rect.x
@@ -108,9 +108,9 @@ class VerticalSliderBox(InputBox):
     def update(self,event):
         super().update()
         previousStart = self.start
-        self.start = self.rect.y+6
-        self.end   = self.rect.y + self.rect.h
-        self.value += self.start - previousStart
+        self.start    = self.rect.y+6
+        self.end      = self.rect.y + self.rect.h
+        self.value   += self.start - previousStart
         if self.isActive:
             if self.clicked:
                 if self.start <= self.mousePos[1] <= self.end: self.value = self.mousePos[1]
@@ -207,11 +207,11 @@ class DropdownBox(InputBox):
 
 
 # Global Variables
-numBars = 0
-delay   = 0
-do_sorting = False
-paused = False
-timer_space_bar   = 0
+numBars         = 0
+delay           = 0
+timer_space_bar = 0
+do_sorting      = False
+paused          = False
 
 
 # Input Boxes
