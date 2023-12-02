@@ -29,7 +29,7 @@ class Box:
     def update(self):
         self.mousePos = pygame.mouse.get_pos()
         self.clicked  = pygame.mouse.get_pressed() != (0, 0, 0)
-        self.isActive = True if self.rect.collidepoint(self.mousePos) else False
+        self.isActive = self.rect.collidepoint(self.mousePos)
 
 
 class InputBox(Box):
@@ -128,7 +128,7 @@ class ButtonBox(Box):
 
     def update(self):
        super().update()
-       if self.isActive: self.isActive = True if self.clicked else False
+       self.isActive = self.clicked and self.isActive
 
 
 class DropdownBox(InputBox):
