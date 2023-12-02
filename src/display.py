@@ -240,7 +240,7 @@ def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwar
     for num in range(numBars):
         if   num in (redBar1, redBar2)  : color = red
         elif num in (blueBar1, blueBar2): color = blue
-        elif num in greenRows           : color = green        
+        elif num in greenRows           : color = green
         else                            : color = grey
         pygame.draw.rect(screen, color, (num * bar_width, 400 - array[num], ceil_width, array[num]))
 
