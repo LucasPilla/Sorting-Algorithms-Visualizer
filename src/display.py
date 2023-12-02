@@ -12,13 +12,14 @@ pygame.display.set_caption('Sorting Algorithms Visualizer')
 
 # Font
 baseFont = pygame.font.SysFont('Arial', 24)
+
 # Used Colors
-grey = (100, 100, 100)
-green = (125, 240, 125)
-white = (250, 250, 250)
-red = (255, 50, 50)
-black = (0, 0, 0)
-blue = (50, 50, 255)
+grey  = ( 100, 100, 100 )
+green = ( 125, 240, 125 )
+white = ( 250, 250, 250 )
+red   = ( 255,  50,  50 )
+black = (   0,   0,   0 )
+blue  = (  50,  50, 255 )
 
 
 class Box:
@@ -29,7 +30,7 @@ class Box:
     def update(self):
         self.mousePos = pygame.mouse.get_pos()
         self.clicked  = pygame.mouse.get_pressed() != (0, 0, 0)
-        self.isActive = True if self.rect.collidepoint(self.mousePos) else False
+        self.isActive = self.rect.collidepoint(self.mousePos)
 
 
 class InputBox(Box):
@@ -78,10 +79,10 @@ class SlideBox(InputBox):
     def update(self, event):
         super().update()
         previousStart = self.start
-        self.rect.x = sizeBox.rect.x + sizeBox.rect.w + 20
-        self.start  = self.rect.x + 6
-        self.end    = self.rect.x + self.rect.w - 6
-        self.value += self.start - previousStart
+        self.rect.x   = sizeBox.rect.x + sizeBox.rect.w + 20
+        self.start    = self.rect.x + 6
+        self.end      = self.rect.x + self.rect.w - 6
+        self.value   += self.start - previousStart
         
         if self.isActive:
             if self.clicked:
@@ -94,10 +95,10 @@ class SlideBox(InputBox):
 class VerticalSliderBox(InputBox):
     def __init__(self, name, color, rect):
         super().__init__(name, color, rect)
-        self.start = self.rect.y+6
-        self.end   = self.rect.y+self.rect.h
-        self.value = self.start
-        self.isActive=True
+        self.start    = self.rect.y+6
+        self.end      = self.rect.y+self.rect.h
+        self.value    = self.start
+        self.isActive = True
 
     def draw(self):
         x=self.rect.x
@@ -107,9 +108,9 @@ class VerticalSliderBox(InputBox):
     def update(self,event):
         super().update()
         previousStart = self.start
-        self.start = self.rect.y+6
-        self.end   = self.rect.y + self.rect.h
-        self.value += self.start - previousStart
+        self.start    = self.rect.y+6
+        self.end      = self.rect.y + self.rect.h
+        self.value   += self.start - previousStart
         if self.isActive:
             if self.clicked:
                 if self.start <= self.mousePos[1] <= self.end: self.value = self.mousePos[1]
@@ -128,11 +129,11 @@ class ButtonBox(Box):
 
     def update(self):
        super().update()
-       if self.isActive: self.isActive = True if self.clicked else False
+       self.isActive = self.clicked and self.isActive
 
 
 class DropdownBox(InputBox):
-    DEFAUTL_OPTION = 0
+    DEFAULT_OPTION = 0
 
     def __init__(self, name, rect, font, color=grey):
         super().__init__(name, color, rect)
@@ -147,18 +148,18 @@ class DropdownBox(InputBox):
         self.dropdown_rect = pygame.Rect((self.rect.x, 0, dropdown_width, self.rect.y))
 
     def get_active_option(self):
-        return self.options[self.DEFAUTL_OPTION]
+        return self.options[self.DEFAULT_OPTION]
 
     def draw(self):
         super().draw()
-        option_text = self.font.render(self.options[self.DEFAUTL_OPTION], 1, grey)
+        option_text = self.font.render(self.options[self.DEFAULT_OPTION], 1, grey)
         screen.blit(option_text, option_text.get_rect(center=self.rect.center))
 
         if self.isActive:
             column = 0
             index = 0
             rect_start = self.rect.y - self.rect.height
-            for i in range(self.DEFAUTL_OPTION+1, len(self.options)):
+            for i in range(self.DEFAULT_OPTION+1, len(self.options)):
                 rect = self.rect.copy()
                 rect.y -= (index + 1) * self.rect.height
                 if rect.y <= self.dropdown_rect.y:
@@ -195,8 +196,8 @@ class DropdownBox(InputBox):
         
         if pygame.mouse.get_pressed() != (0, 0, 0):
             if self.isActive and self.dropdown_rect.collidepoint(mouse_position):
-                self.options[self.DEFAUTL_OPTION], self.options[self.active_option+1] =\
-                     self.options[self.active_option+1], self.options[self.DEFAUTL_OPTION]
+                self.options[self.DEFAULT_OPTION], self.options[self.active_option+1] =\
+                     self.options[self.active_option+1], self.options[self.DEFAULT_OPTION]
                 self.active_option = -1
             self.isActive = self.rect.collidepoint(mouse_position)
         if not self.isActive:
@@ -206,33 +207,31 @@ class DropdownBox(InputBox):
 
 
 # Global Variables
-numBars = 0
-delay   = 0
-do_sorting = False
-paused = False
-timer_space_bar   = 0
+numBars         = 0
+delay           = 0
+timer_space_bar = 0
+do_sorting      = False
+paused          = False
 
 
 # Input Boxes
 sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
 delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
 algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
-playButton  = ButtonBox('res/playButton.png', (390, 440, 50, 50))
-stopButton = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
+playButton   = ButtonBox('res/playButton.png', (390, 440, 50, 50))
+stopButton   = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
 
 
 def updateWidgets(event):
     sizeBox.update(event)
     delayBox.update(event)
     algorithmBox.update()
-    if do_sorting:
-        stopButton.update()
-    else:
-        playButton.update()
+    if do_sorting: stopButton.update()
+    else         : playButton.update()
 
 
 def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwargs):
-    '''Draw the bars and control their colors'''
+    # Draw the bars and control their colors
     if numBars != 0:
         bar_width  = 900 / numBars
         ceil_width = ceil(bar_width)
@@ -240,20 +239,17 @@ def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwar
     for num in range(numBars):
         if   num in (redBar1, redBar2)  : color = red
         elif num in (blueBar1, blueBar2): color = blue
-        elif num in greenRows           : color = green        
+        elif num in greenRows           : color = green
         else                            : color = grey
         pygame.draw.rect(screen, color, (num * bar_width, 400 - array[num], ceil_width, array[num]))
 
 
-def drawBottomMenu():
-    '''Draw the menu below the bars'''
+def drawBottomMenu(): # Draw the menu below the bars
     sizeBox.draw()
     delayBox.draw()
     algorithmBox.draw()
-    if do_sorting:
-        stopButton.draw()
-    else:
-        playButton.draw()
+    if do_sorting: stopButton.draw()
+    else         : playButton.draw()
 
 
 def draw_rect_alpha(surface, color, rect):
@@ -271,18 +267,17 @@ def draw_polygon_alpha(surface, color, points):
     surface.blit(shape_surf, target_rect)
 
 
-def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
-    '''Draw all the interface'''
+def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs): # Draw all the interface
     screen.fill(white)
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
     
-    if paused and (time()-timer_space_bar)<0.5:
-        draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+10, 150+10, 10, 50])
-        draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+40, 150+10, 10, 50])
+    if paused and (time()-timer_space_bar) < 0.5:
+        draw_rect_alpha(screen, (255, 255, 0, 127), [435, 160, 10, 50])
+        draw_rect_alpha(screen, (255, 255, 0, 127), [465, 160, 10, 50])
         
-    elif not paused and (time()-timer_space_bar)<0.5:
-        x,y = (850/2),150
-        draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+50+10),(x+50,y+25+10)))
+    elif not paused and (time()-timer_space_bar) < 0.5:
+        x, y = 425, 150
+        draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+60),(x+50,y+35)))
         
     drawBottomMenu()
     pygame.display.update()
