@@ -12,13 +12,14 @@ pygame.display.set_caption('Sorting Algorithms Visualizer')
 
 # Font
 baseFont = pygame.font.SysFont('Arial', 24)
+
 # Used Colors
-grey = (100, 100, 100)
-green = (125, 240, 125)
-white = (250, 250, 250)
-red = (255, 50, 50)
-black = (0, 0, 0)
-blue = (50, 50, 255)
+grey  = ( 100, 100, 100 )
+green = ( 125, 240, 125 )
+white = ( 250, 250, 250 )
+red   = ( 255,  50,  50 )
+black = (   0,   0,   0 )
+blue  = (  50,  50, 255 )
 
 
 class Box:
@@ -29,7 +30,7 @@ class Box:
     def update(self):
         self.mousePos = pygame.mouse.get_pos()
         self.clicked  = pygame.mouse.get_pressed() != (0, 0, 0)
-        self.isActive = True if self.rect.collidepoint(self.mousePos) else False
+        self.isActive = self.rect.collidepoint(self.mousePos)
 
 
 class InputBox(Box):
@@ -128,7 +129,7 @@ class ButtonBox(Box):
 
     def update(self):
        super().update()
-       if self.isActive: self.isActive = True if self.clicked else False
+       self.isActive = self.clicked and self.isActive
 
 
 class DropdownBox(InputBox):
@@ -217,22 +218,20 @@ timer_space_bar   = 0
 sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
 delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
 algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
-playButton  = ButtonBox('res/playButton.png', (390, 440, 50, 50))
-stopButton = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
+playButton   = ButtonBox('res/playButton.png', (390, 440, 50, 50))
+stopButton   = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
 
 
 def updateWidgets(event):
     sizeBox.update(event)
     delayBox.update(event)
     algorithmBox.update()
-    if do_sorting:
-        stopButton.update()
-    else:
-        playButton.update()
+    if do_sorting: stopButton.update()
+    else         : playButton.update()
 
 
 def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwargs):
-    '''Draw the bars and control their colors'''
+    # Draw the bars and control their colors
     if numBars != 0:
         bar_width  = 900 / numBars
         ceil_width = ceil(bar_width)
@@ -240,20 +239,17 @@ def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwar
     for num in range(numBars):
         if   num in (redBar1, redBar2)  : color = red
         elif num in (blueBar1, blueBar2): color = blue
-        elif num in greenRows           : color = green        
+        elif num in greenRows           : color = green
         else                            : color = grey
         pygame.draw.rect(screen, color, (num * bar_width, 400 - array[num], ceil_width, array[num]))
 
 
-def drawBottomMenu():
-    '''Draw the menu below the bars'''
+def drawBottomMenu(): # Draw the menu below the bars
     sizeBox.draw()
     delayBox.draw()
     algorithmBox.draw()
-    if do_sorting:
-        stopButton.draw()
-    else:
-        playButton.draw()
+    if do_sorting: stopButton.draw()
+    else         : playButton.draw()
 
 
 def draw_rect_alpha(surface, color, rect):
@@ -271,18 +267,17 @@ def draw_polygon_alpha(surface, color, points):
     surface.blit(shape_surf, target_rect)
 
 
-def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
-    '''Draw all the interface'''
+def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs): # Draw all the interface
     screen.fill(white)
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
     
-    if paused and (time()-timer_space_bar)<0.5:
-        draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+10, 150+10, 10, 50])
-        draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+40, 150+10, 10, 50])
+    if paused and (time()-timer_space_bar) < 0.5:
+        draw_rect_alpha(screen, (255, 255, 0, 127), [435, 160, 10, 50])
+        draw_rect_alpha(screen, (255, 255, 0, 127), [465, 160, 10, 50])
         
-    elif not paused and (time()-timer_space_bar)<0.5:
-        x,y = (850/2),150
-        draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+50+10),(x+50,y+25+10)))
+    elif not paused and (time()-timer_space_bar) < 0.5:
+        x, y = 425, 150
+        draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+60),(x+50,y+35)))
         
     drawBottomMenu()
     pygame.display.update()
