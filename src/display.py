@@ -133,7 +133,7 @@ class ButtonBox(Box):
 
 
 class DropdownBox(InputBox):
-    DEFAUTL_OPTION = 0
+    DEFAULT_OPTION = 0
 
     def __init__(self, name, rect, font, color=grey):
         super().__init__(name, color, rect)
@@ -148,18 +148,18 @@ class DropdownBox(InputBox):
         self.dropdown_rect = pygame.Rect((self.rect.x, 0, dropdown_width, self.rect.y))
 
     def get_active_option(self):
-        return self.options[self.DEFAUTL_OPTION]
+        return self.options[self.DEFAULT_OPTION]
 
     def draw(self):
         super().draw()
-        option_text = self.font.render(self.options[self.DEFAUTL_OPTION], 1, grey)
+        option_text = self.font.render(self.options[self.DEFAULT_OPTION], 1, grey)
         screen.blit(option_text, option_text.get_rect(center=self.rect.center))
 
         if self.isActive:
             column = 0
             index = 0
             rect_start = self.rect.y - self.rect.height
-            for i in range(self.DEFAUTL_OPTION+1, len(self.options)):
+            for i in range(self.DEFAULT_OPTION+1, len(self.options)):
                 rect = self.rect.copy()
                 rect.y -= (index + 1) * self.rect.height
                 if rect.y <= self.dropdown_rect.y:
@@ -196,8 +196,8 @@ class DropdownBox(InputBox):
         
         if pygame.mouse.get_pressed() != (0, 0, 0):
             if self.isActive and self.dropdown_rect.collidepoint(mouse_position):
-                self.options[self.DEFAUTL_OPTION], self.options[self.active_option+1] =\
-                     self.options[self.active_option+1], self.options[self.DEFAUTL_OPTION]
+                self.options[self.DEFAULT_OPTION], self.options[self.active_option+1] =\
+                     self.options[self.active_option+1], self.options[self.DEFAULT_OPTION]
                 self.active_option = -1
             self.isActive = self.rect.collidepoint(mouse_position)
         if not self.isActive:
