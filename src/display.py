@@ -6,12 +6,12 @@ from time import time
 pygame.init()
 
 # Display settings
-windowSize = (900, 500)
+windowSize = (930, 500)
 screen = pygame.display.set_mode(windowSize)
 pygame.display.set_caption('Sorting Algorithms Visualizer')
 
 # Font
-baseFont = pygame.font.SysFont('Arial', 24)
+baseFont = pygame.font.SysFont('Arial', 20)
 # Used Colors
 grey = (100, 100, 100)
 green = (125, 240, 125)
@@ -25,6 +25,7 @@ class Box:
     def __init__(self, rect):
         self.isActive = False
         self.rect     = pygame.Rect(rect)
+        self.value    = 0
     
     def update(self):
         self.mousePos = pygame.mouse.get_pos()
@@ -40,15 +41,17 @@ class InputBox(Box):
         
     def draw(self):
         label = baseFont.render(self.name, True, self.color)
-        screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 32))
+        screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 28))
         pygame.draw.rect(screen, self.color, self.rect, 3)
 
 
 class TextBox(InputBox):
     def __init__(self, name, color, rect, text='100'):
         super().__init__(name, color, rect)
-        self.text = text
-        self.draw() # establish the correct width for initial rendering
+        self.text = text # Store the text
+        self.value = int(text)  # Store the numeric value
+        self.draw() # Establish the correct width for initial rendering
+
     
     def draw(self):
         super().draw()
@@ -66,8 +69,8 @@ class TextBox(InputBox):
 class SlideBox(InputBox):
     def __init__(self, name, color, rect):
         super().__init__(name, color, rect)
-        self.start = self.rect.x + 6
-        self.end   = self.rect.x + self.rect.w - 6
+        self.start = self.rect.x
+        self.end   = self.rect.x + self.rect.w
         self.value = self.start
 
     def draw(self):
@@ -77,8 +80,8 @@ class SlideBox(InputBox):
 
     def update(self, event):
         super().update()
+
         previousStart = self.start
-        self.rect.x = sizeBox.rect.x + sizeBox.rect.w + 20
         self.start  = self.rect.x + 6
         self.end    = self.rect.x + self.rect.w - 6
         self.value += self.start - previousStart
@@ -90,6 +93,7 @@ class SlideBox(InputBox):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if   event.button == 4: self.value = min(self.value + 10, self.end)
                 elif event.button == 5: self.value = max(self.value - 10, self.start)
+
 
 class VerticalSliderBox(InputBox):
     def __init__(self, name, color, rect):
@@ -123,7 +127,6 @@ class ButtonBox(Box):
         self.img = pygame.image.load(img_path)
     
     def draw(self):
-        self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
         screen.blit(self.img, (self.rect.x, self.rect.y))
 
     def update(self):
@@ -132,7 +135,7 @@ class ButtonBox(Box):
 
 
 class DropdownBox(InputBox):
-    DEFAUTL_OPTION = 0
+    DEFAULT_OPTION = 0
 
     def __init__(self, name, rect, font, color=grey):
         super().__init__(name, color, rect)
@@ -147,18 +150,18 @@ class DropdownBox(InputBox):
         self.dropdown_rect = pygame.Rect((self.rect.x, 0, dropdown_width, self.rect.y))
 
     def get_active_option(self):
-        return self.options[self.DEFAUTL_OPTION]
+        return self.options[self.DEFAULT_OPTION]
 
     def draw(self):
         super().draw()
-        option_text = self.font.render(self.options[self.DEFAUTL_OPTION], 1, grey)
+        option_text = self.font.render(self.options[self.DEFAULT_OPTION], 1, grey)
         screen.blit(option_text, option_text.get_rect(center=self.rect.center))
 
         if self.isActive:
             column = 0
             index = 0
             rect_start = self.rect.y - self.rect.height
-            for i in range(self.DEFAUTL_OPTION+1, len(self.options)):
+            for i in range(self.DEFAULT_OPTION+1, len(self.options)):
                 rect = self.rect.copy()
                 rect.y -= (index + 1) * self.rect.height
                 if rect.y <= self.dropdown_rect.y:
@@ -195,8 +198,8 @@ class DropdownBox(InputBox):
         
         if pygame.mouse.get_pressed() != (0, 0, 0):
             if self.isActive and self.dropdown_rect.collidepoint(mouse_position):
-                self.options[self.DEFAUTL_OPTION], self.options[self.active_option+1] =\
-                     self.options[self.active_option+1], self.options[self.DEFAUTL_OPTION]
+                self.options[self.DEFAULT_OPTION], self.options[self.active_option+1] =\
+                     self.options[self.active_option+1], self.options[self.DEFAULT_OPTION]
                 self.active_option = -1
             self.isActive = self.rect.collidepoint(mouse_position)
         if not self.isActive:
@@ -214,15 +217,17 @@ timer_space_bar   = 0
 
 
 # Input Boxes
-sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
-delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
-algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
-playButton  = ButtonBox('res/playButton.png', (390, 440, 50, 50))
-stopButton = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
+sizeBox      = TextBox('Size', grey, (255, 435, 50, 50), '50')
+delayBox     = SlideBox('Delay', grey, (330, 435, 112, 50))
+algorithmBox = DropdownBox('Algorithm', (467, 435, 140, 50), baseFont)
+playButton  = ButtonBox('res/playButton.png', (632, 430, 50, 50))
+stopButton = ButtonBox('res/stopButton.png', (632, 430, 50, 50))
 
 
 def updateWidgets(event):
+    '''Update the widgets'''
     sizeBox.update(event)
+    # spaceBox.update(event)
     delayBox.update(event)
     algorithmBox.update()
     if do_sorting:
@@ -234,7 +239,7 @@ def updateWidgets(event):
 def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwargs):
     '''Draw the bars and control their colors'''
     if numBars != 0:
-        bar_width  = 900 / numBars
+        bar_width  = 880 / numBars
         ceil_width = ceil(bar_width)
 
     for num in range(numBars):
@@ -242,7 +247,30 @@ def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwar
         elif num in (blueBar1, blueBar2): color = blue
         elif num in greenRows           : color = green        
         else                            : color = grey
-        pygame.draw.rect(screen, color, (num * bar_width, 400 - array[num], ceil_width, array[num]))
+        # pygame.draw.rect(screen, color, (num * bar_width, 400 - array[num], ceil_width, array[num]))
+        bar_rect = pygame.Rect((num * bar_width)+20, 400 - array[num], ceil_width, array[num])
+
+
+        # # Check if the mouse is over the bar and that we have less than 75 bars
+        if numBars <= 75 and bar_rect.collidepoint(pygame.mouse.get_pos()):
+            hover_color = (200, 200, 200)
+            pygame.draw.rect(screen, hover_color, bar_rect) #Change the color of the bar we are hovering over
+            if numBars >= 25: 
+                barFont = pygame.font.SysFont('Arial', 14) # Use a smaller font for numBars >= 25
+                value_text = barFont.render(str(array[num]), True, black)
+            else:
+                value_text = baseFont.render(str(array[num]), True, black)
+            if len(str(array[num])) > 2: # Adjust centering based on the number of digits
+                text_rect = value_text.get_rect(center=(bar_rect.x + 0.68 * bar_rect.width, bar_rect.centery))
+            else:
+                text_rect = value_text.get_rect(center=(bar_rect.x + 0.55 * bar_rect.width, bar_rect.centery))
+
+            rotated_text = pygame.transform.rotate(value_text, 90) # Rotate the text 90 degrees to fit into bar
+            screen.blit(rotated_text, text_rect.topleft)
+
+        else:
+            # Draw the bar with its original color
+            pygame.draw.rect(screen, color, bar_rect)
 
 
 def drawBottomMenu():
@@ -271,9 +299,25 @@ def draw_polygon_alpha(surface, color, points):
     surface.blit(shape_surf, target_rect)
 
 
+# Add a function to draw grid lines based on a pre-specified spacing.
+# I hard coded for 20px spacing but if you can extend this to work for other spacings that would be great
+def drawGridLines(spacing):
+    '''Draw grid lines on the screen'''
+    pygame.draw.line(screen, grey, (900, 20), (900, 400), 1)
+    try:
+        for num in range(20, 400+int(spacing), int(spacing)):
+            pygame.draw.line(screen, grey, (20, num), (900, num), 1)
+            font = pygame.font.SysFont('Arial', 9)
+            text_surface = font.render(str(400-num), True, grey)
+            screen.blit(text_surface, (900 + 5, num - int(spacing)/4))
+    except ValueError:
+        pass
+
+
 def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     '''Draw all the interface'''
     screen.fill(white)
+    drawGridLines(20)
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
     
     if paused and (time()-timer_space_bar)<0.5:
