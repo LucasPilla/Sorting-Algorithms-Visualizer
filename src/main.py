@@ -14,7 +14,6 @@ def main():
     running = True
     display.algorithmBox.add_options(list(algorithmsDict.keys()))
 
-    current_alg = None
     alg_iterator = None
 
     timer_delay = time()
@@ -63,6 +62,7 @@ def main():
         else: # no animation
             a_set = set(range(display.numBars))
             display.drawInterface(numbers, -1, -1, -1, -1, greenRows=a_set)
+
 
 if __name__ == '__main__':
     main()
