@@ -35,6 +35,7 @@ def main():
         if display.playButton.isActive: # play button clicked
             display.playButton.isActive = False
             display.do_sorting = True
+            display.start_time = time()
             current_alg = display.algorithmBox.get_active_option()
             display.numBars = int(display.sizeBox.text)
             numbers = [randint(10, 400) for i in range(display.numBars)] # random list to be sorted
@@ -56,8 +57,13 @@ def main():
                     numbers, redBar1, redBar2, blueBar1, blueBar2 = next(alg_iterator)
                     display.drawInterface(numbers, redBar1, redBar2, blueBar1, blueBar2)
                     timer_delay = time()
+                    if not display.paused:
+                        display.time_taken = time() - display.start_time
+                        display.timeBox.update()
             except StopIteration:
                 display.do_sorting = False
+                display.time_taken = time() - display.start_time
+                display.timeBox.update()
         elif display.do_sorting and display.paused: # animation paused
             display.drawInterface(numbers, -1, -1, -1, -1)
         else: # no animation
