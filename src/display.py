@@ -2,6 +2,9 @@ import pygame
 from math import ceil
 from time import time
 
+# Import global definitions from globals.py
+from globals import numBars, delay, do_sorting, paused, timer_space_bar, start_time, time_taken
+
 # Initialize pygame modules
 pygame.init()
 
@@ -218,17 +221,6 @@ class DropdownBox(InputBox):
             self.active_option = -1
 
 # END OF MODULE #
-
-
-# Global Variables
-numBars = 0
-delay   = 0
-do_sorting = False
-paused = False
-timer_space_bar   = 0
-start_time = 0
-time_taken = 0
-
 
 # Input Boxes
 sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
