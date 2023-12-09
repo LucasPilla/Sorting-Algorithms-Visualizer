@@ -49,19 +49,40 @@ class TextBox(InputBox):
         super().__init__(name, color, rect)
         self.text = text
         self.draw() # establish the correct width for initial rendering
+        self.cursor_visible = False
+        self.cursor_timer = 0  # Initialize cursor timer
     
     def draw(self):
         super().draw()
         surface = baseFont.render(self.text, True, self.color)
         screen.blit(surface, (self.rect.x + 10, self.rect.y + 10))
         self.rect.w = max(surface.get_width() + 20, 50)
+        if self.isActive:
+            if pygame.time.get_ticks() - self.cursor_timer > 500:
+                self.cursor_visible = not self.cursor_visible
+                self.cursor_timer = pygame.time.get_ticks()
+            if self.cursor_visible:
+                cursor_x = self.rect.x + 10 + surface.get_width() + 2
+                pygame.draw.line(screen, self.color, (cursor_x, self.rect.y + 15), (cursor_x, self.rect.y + 35), 2)
 
     def update(self, event):
         super().update()
         if self.isActive and event.type == pygame.KEYDOWN:
-            if   event.key == pygame.K_BACKSPACE: self.text = self.text[:-1]
-            elif event.unicode.isdigit()        : self.text += event.unicode
-        
+            if event.key == pygame.K_BACKSPACE and len(self.text) > 1: # Never let the user input 0 or no numbers into box
+                self.text = self.text[:-1]
+            elif event.unicode.isdigit():
+                if not event.unicode or (int(self.text + event.unicode) < 1 or int(self.text + event.unicode) > 1000):
+                    # Show popup error message if input is out of range
+                    pygame.display.set_caption('Error: Out of Range')
+                    error_font = pygame.font.SysFont('Times New Roman', 28)
+                    error_text = error_font.render('Input must be between 1 and 1000', True, red)
+                    error_rect = error_text.get_rect(center=screen.get_rect().center)
+                    screen.blit(error_text, error_rect)
+                    pygame.display.update()
+                    pygame.time.delay(2000)  # Display error message for 2 seconds
+                    pygame.display.set_caption('Sorting Algorithms Visualizer')  # Reset caption
+                else:
+                    self.text += event.unicode
 
 class SlideBox(InputBox):
     def __init__(self, name, color, rect):
@@ -276,13 +297,13 @@ def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     screen.fill(white)
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
     
-    if time()-timer_space_bar < 0.5:
-        if paused:
-            draw_rect_alpha(screen, (255, 255, 0, 127), [(850 / 2) + 10, 150 + 10, 10, 50])
-            draw_rect_alpha(screen, (255, 255, 0, 127), [(850 / 2) + 40, 150 + 10, 10, 50])
-        else:
-            x, y = (850 / 2), 150
-            draw_polygon_alpha(screen, (150, 255, 150, 127), ((x + 10, y + 10), (x + 10, y + 50 + 10), (x + 50, y + 25 + 10)))
-
+    if paused and (time()-timer_space_bar)<0.5:
+        draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+10, 150+10, 10, 50])
+        draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+40, 150+10, 10, 50])
+        
+    elif not paused and (time()-timer_space_bar)<0.5:
+        x,y = (850/2),150
+        draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+50+10),(x+50,y+25+10)))
+        
     drawBottomMenu()
     pygame.display.update()
