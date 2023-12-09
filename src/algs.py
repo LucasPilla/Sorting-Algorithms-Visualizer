@@ -1,29 +1,32 @@
 from algorithms import *
+#Sorted by best case complexity 
+# (fastest to slowest),then alphabetically
 
 
-algorithmsDict = {'insertion'       : insertionSort,
+algorithmsDict = {'bogo'            : bogoSort, #O(n)
                   'bubble'          : bubbleSort,
-                  'selection'       : selectionSort,
+                  'cocktail'        : cocktailSort,
+                  'gnome'           : gnomeSort,
+                  'insertion'       : insertionSort,
+                  'odd-even'        : oddevenSort,
+                  'pancake'         : pancakeSort,
+                  'tim'             : timSort,
+                  'bucket'          : bucketSort, #O(n+k)
+                  'counting'        : countingSort,
+                  'pigeonhole'      : pigeonholeSort,
+                  'binary insertion': binaryinsertionSort, #O(nlog n)
+                  'comb'            : combSort,
+                  'heap'            : heapSort,
                   'merge'           : mergeSort,
                   'quick'           : quickSort,
-                  'counting'        : countingSort,
-                  'cocktail'        : cocktailSort,
-                  'cycle'           : cycleSort,
-                  'bogo'            : bogoSort,
-                  'heap'            : heapSort,
-                  'radix'           : radixSort,
                   'shell'           : shellSort,
-                  'gnome'           : gnomeSort,
-                  'comb'            : combSort,
-                  'bitonic'         : bitonicSort,
-                  'pancake'         : pancakeSort,
-                  'binary insertion': binaryinsertionSort,
-                  'bucket'          : bucketSort,
-                  'tim'             : timSort,
-                  'stooge'          : stoogeSort,
                   'strand'          : strandSort,
-                  'odd-even'        : oddevenSort,
-                  'pigeonhole'      : pigeonholeSort,
+                  'tree'            : treeSort,
+                  'bitonic'         : bitonicSort, #O(n log^2n)
+                  'radix'           : radixSort, #O(nk)
+                  'cycle'           : cycleSort, #O(n^2)
                   'exchange'        : exchangeSort,
-                  'tree'            : treeSort}
+                  'selection'       : selectionSort,
+                  'stooge'          : stoogeSort #O(n^2.71)
+                 }
 
