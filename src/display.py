@@ -1,6 +1,7 @@
 import pygame
 from math import ceil
 from time import time
+from tkinter import *
 
 # Initialize pygame modules
 pygame.init()
@@ -12,6 +13,8 @@ pygame.display.set_caption('Sorting Algorithms Visualizer')
 
 # Font
 baseFont = pygame.font.SysFont('Arial', 24)
+dropdownFont = pygame.font.SysFont('Arial', 10)
+
 # Used Colors
 grey = (100, 100, 100)
 green = (125, 240, 125)
@@ -132,76 +135,74 @@ class ButtonBox(Box):
 
 
 class DropdownBox(InputBox):
-    DEFAUTL_OPTION = 0
+    DEFAULT_OPTION = 0
 
     def __init__(self, name, rect, font, color=grey):
+        rect = pygame.Rect(rect)
+        rect.width = rect.width // 1.2  # Adjust width to half
+        rect.height = rect.height // 2.5
+        rect.y += (rect.height * 1.5)
         super().__init__(name, color, rect)
-        self.isActive      = False
-        self.font          = font
+        self.isActive = False
+        self.font = font
         self.options_color = white
         self.active_option = -1
-        
+        self.is_dragging = False
+
     def add_options(self, options):
         self.options = options
-        dropdown_width = ceil((len(self.options)-1) * self.rect.height / self.rect.y) * self.rect.width
-        self.dropdown_rect = pygame.Rect((self.rect.x, 0, dropdown_width, self.rect.y))
 
     def get_active_option(self):
-        return self.options[self.DEFAUTL_OPTION]
+        return self.options[self.DEFAULT_OPTION]
 
     def draw(self):
         super().draw()
-        option_text = self.font.render(self.options[self.DEFAUTL_OPTION], 1, grey)
+
+        option_text = self.font.render(self.options[self.DEFAULT_OPTION], 1, grey)
         screen.blit(option_text, option_text.get_rect(center=self.rect.center))
 
         if self.isActive:
-            column = 0
-            index = 0
             rect_start = self.rect.y - self.rect.height
-            for i in range(self.DEFAUTL_OPTION+1, len(self.options)):
+            for i, option in enumerate(self.options[self.DEFAULT_OPTION + 1:]):
                 rect = self.rect.copy()
-                rect.y -= (index + 1) * self.rect.height
-                if rect.y <= self.dropdown_rect.y:
-                    column += 1
-                    index = 0
-                    rect.y = rect_start
-                index += 1
-                rect.x = self.rect.x + column * self.rect.width
-                
-                options_color = black if i - 1 == self.active_option else grey
-                pygame.draw.rect(screen, self.options_color, rect, 0)
-                pygame.draw.rect(screen, self.color, rect, 3) # draw border
-                option_text = self.font.render(self.options[i][:12], 1, options_color)
-                screen.blit(option_text, option_text.get_rect(center=rect.center))
+                rect.y -= (i + 1) * (self.rect.height * .9)
+                rect.x = self.rect.x
 
-    def update(self):
+                options_color = black if i == self.active_option else grey
+                pygame.draw.rect(screen, self.options_color, rect, 0)
+                pygame.draw.rect(screen, self.color, rect, 3)
+                option_text = self.font.render(option[:12], 1, options_color)
+                
+                # Move text down to fit in the boxes
+                text_rect = option_text.get_rect(center=(rect.x + rect.width // 2, rect.y + rect.height // 1.5))
+                screen.blit(option_text, text_rect)
+
+    def update(self, event):
         self.rect.x = delayBox.rect.w + delayBox.rect.x + 20
         mouse_position = pygame.mouse.get_pos()
-        column = 0
-        index = 0
-        rect_start = self.rect.y - self.rect.height
-        for i in range(len(self.options)-1):
+
+        # Check if the box is clicked
+        if self.rect.collidepoint(mouse_position):
+            if pygame.mouse.get_pressed() == (1, 0, 0):  # Left mouse button
+                self.isActive = not self.isActive
+                self.show_name = not self.isActive
+
+        for i, option in enumerate(self.options[self.DEFAULT_OPTION + 1:]):
             rect = self.rect.copy()
-            rect.y -= (index + 1) * self.rect.height
-            if rect.y <= self.dropdown_rect.y:
-                column += 1
-                index = 0
-                rect.y = rect_start
-            index += 1
-            rect.x = self.rect.x + column * self.rect.width
+            rect.y -= (i + 1) * (self.rect.height // 2)
+            rect.x = self.rect.x
 
             if rect.collidepoint(mouse_position):
                 self.active_option = i
-        
+
         if pygame.mouse.get_pressed() != (0, 0, 0):
-            if self.isActive and self.dropdown_rect.collidepoint(mouse_position):
-                self.options[self.DEFAUTL_OPTION], self.options[self.active_option+1] =\
-                     self.options[self.active_option+1], self.options[self.DEFAUTL_OPTION]
+            if self.isActive:
+                self.options[self.DEFAULT_OPTION], self.options[self.active_option + 1] = \
+                    self.options[self.active_option + 1], self.options[self.DEFAULT_OPTION]
                 self.active_option = -1
             self.isActive = self.rect.collidepoint(mouse_position)
         if not self.isActive:
             self.active_option = -1
-
 # END OF MODULE #
 
 
@@ -216,7 +217,7 @@ timer_space_bar   = 0
 # Input Boxes
 sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
 delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
-algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
+algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), dropdownFont)
 playButton  = ButtonBox('res/playButton.png', (390, 440, 50, 50))
 stopButton = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
 
@@ -224,7 +225,7 @@ stopButton = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
 def updateWidgets(event):
     sizeBox.update(event)
     delayBox.update(event)
-    algorithmBox.update()
+    algorithmBox.update(event)
     if do_sorting:
         stopButton.update()
     else:
