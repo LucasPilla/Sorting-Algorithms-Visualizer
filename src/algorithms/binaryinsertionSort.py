@@ -17,12 +17,12 @@ def binaryinsertionSort(array, *args):
     """
     for i in range(1, len(array)):
         val = array[i]
-        j = binary_search(array, val, 0, i - 1, i)
+        j = binary_search(array, val, 0, i - 1)
         yield array, 0, i-1, j, i
-        array[0:len(array)] = array[:j] + [val] + array[j:i] + array[i + 1:]
+        array[:] = array[:j] + [val] + array[j:i] + array[i + 1:]
 
 
-def binary_search(arr, val, start, end, current):
+def binary_search(arr, val, start, end):
     """
     Binary search is an efficient search algorithm 
     for finding a target value in a sorted list or array 
@@ -31,7 +31,7 @@ def binary_search(arr, val, start, end, current):
 
     Example:
         >>> arr = [1, 2, 4, 5, 6]
-        >>> binary_search(arr, 3, 0, 4, 4)
+        >>> binary_search(arr, 3, 0, 4)
         2
     """
     if start == end:
@@ -45,8 +45,8 @@ def binary_search(arr, val, start, end, current):
 
     mid = round((start + end) / 2)
     if arr[mid] < val:
-        return binary_search(arr, val, mid + 1, end, current)
+        return binary_search(arr, val, mid + 1, end)
     elif arr[mid] > val:
-        return binary_search(arr, val, start, mid - 1, current)
+        return binary_search(arr, val, start, mid - 1)
     else:
         return mid

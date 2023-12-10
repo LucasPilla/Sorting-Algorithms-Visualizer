@@ -296,13 +296,13 @@ def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     screen.fill(white)
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
     
-    if paused and (time()-timer_space_bar)<0.5:
-        draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+10, 150+10, 10, 50])
-        draw_rect_alpha(screen,(255, 255, 0, 127),[(850/2)+40, 150+10, 10, 50])
-        
-    elif not paused and (time()-timer_space_bar)<0.5:
-        x,y = (850/2),150
-        draw_polygon_alpha(screen, (150, 255, 150, 127), ((x+10,y+10),(x+10,y+50+10),(x+50,y+25+10)))
-        
+    if time()-timer_space_bar < 0.5:
+        if paused:
+            draw_rect_alpha(screen, (255, 255, 0, 127), [(850 / 2) + 10, 150 + 10, 10, 50])
+            draw_rect_alpha(screen, (255, 255, 0, 127), [(850 / 2) + 40, 150 + 10, 10, 50])
+        else:
+            x, y = (850 / 2), 150
+            draw_polygon_alpha(screen, (150, 255, 150, 127), ((x + 10, y + 10), (x + 10, y + 50 + 10), (x + 50, y + 25 + 10)))
+
     drawBottomMenu()
     pygame.display.update()

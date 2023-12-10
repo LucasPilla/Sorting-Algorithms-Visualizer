@@ -2,6 +2,7 @@ from algorithms.bubbleSort import bubbleSort
 from algorithms.bogoSort import bogoSort
 from algorithms.bitonicSort import bitonicSort
 from algorithms.binaryinsertionSort import binaryinsertionSort
+from algorithms.exchangeSort import exchangeSort
 from algorithms.heapSort import heapSort
 from algorithms.gnomeSort import gnomeSort
 from algorithms.cycleSort import cycleSort
