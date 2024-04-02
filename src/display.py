@@ -25,7 +25,7 @@ class Box:
     def __init__(self, rect):
         self.isActive = False
         self.rect     = pygame.Rect(rect)
-    
+
     def update(self):
         self.mousePos = pygame.mouse.get_pos()
         self.clicked  = pygame.mouse.get_pressed() != (0, 0, 0)
@@ -37,7 +37,7 @@ class InputBox(Box):
         super().__init__(rect)
         self.name  = name
         self.color = color
-        
+
     def draw(self):
         label = baseFont.render(self.name, True, self.color)
         screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 32))
@@ -49,7 +49,7 @@ class TextBox(InputBox):
         super().__init__(name, color, rect)
         self.text = text
         self.draw() # establish the correct width for initial rendering
-    
+
     def draw(self):
         super().draw()
         surface = baseFont.render(self.text, True, self.color)
@@ -61,7 +61,7 @@ class TextBox(InputBox):
         if self.isActive and event.type == pygame.KEYDOWN:
             if   event.key == pygame.K_BACKSPACE: self.text = self.text[:-1]
             elif event.unicode.isdigit()        : self.text += event.unicode
-        
+
 
 class SlideBox(InputBox):
     def __init__(self, name, color, rect):
@@ -82,11 +82,11 @@ class SlideBox(InputBox):
         self.start  = self.rect.x + 6
         self.end    = self.rect.x + self.rect.w - 6
         self.value += self.start - previousStart
-        
+
         if self.isActive:
             if self.clicked:
                 if self.start <= self.mousePos[0] <= self.end: self.value = self.mousePos[0]
-        
+
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if   event.button == 4: self.value = min(self.value + 10, self.end)
                 elif event.button == 5: self.value = max(self.value - 10, self.start)
@@ -121,7 +121,7 @@ class ButtonBox(Box):
     def __init__(self, img_path, rect):
         super().__init__(rect)
         self.img = pygame.image.load(img_path)
-    
+
     def draw(self):
         self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
         screen.blit(self.img, (self.rect.x, self.rect.y))
@@ -140,7 +140,7 @@ class DropdownBox(InputBox):
         self.font          = font
         self.options_color = white
         self.active_option = -1
-        
+
     def add_options(self, options):
         self.options = options
         dropdown_width = ceil((len(self.options)-1) * self.rect.height / self.rect.y) * self.rect.width
@@ -167,7 +167,7 @@ class DropdownBox(InputBox):
                     rect.y = rect_start
                 index += 1
                 rect.x = self.rect.x + column * self.rect.width
-                
+
                 options_color = black if i - 1 == self.active_option else grey
                 pygame.draw.rect(screen, self.options_color, rect, 0)
                 pygame.draw.rect(screen, self.color, rect, 3) # draw border
@@ -192,7 +192,7 @@ class DropdownBox(InputBox):
 
             if rect.collidepoint(mouse_position):
                 self.active_option = i
-        
+
         if pygame.mouse.get_pressed() != (0, 0, 0):
             if self.isActive and self.dropdown_rect.collidepoint(mouse_position):
                 self.options[self.DEFAUTL_OPTION], self.options[self.active_option+1] =\
@@ -216,7 +216,7 @@ timer_space_bar   = 0
 # Input Boxes
 sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
 delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
-algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
+algorithmBox = DropdownBox('Algorithm', (242, 440, 200, 50), baseFont)
 playButton  = ButtonBox('res/playButton.png', (390, 440, 50, 50))
 stopButton = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
 
@@ -240,7 +240,7 @@ def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwar
     for num in range(numBars):
         if   num in (redBar1, redBar2)  : color = red
         elif num in (blueBar1, blueBar2): color = blue
-        elif num in greenRows           : color = green        
+        elif num in greenRows           : color = green
         else                            : color = grey
         pygame.draw.rect(screen, color, (num * bar_width, 400 - array[num], ceil_width, array[num]))
 
@@ -275,7 +275,7 @@ def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
     '''Draw all the interface'''
     screen.fill(white)
     drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
-    
+
     if time()-timer_space_bar < 0.5:
         if paused:
             draw_rect_alpha(screen, (255, 255, 0, 127), [(850 / 2) + 10, 150 + 10, 10, 50])
