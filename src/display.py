@@ -222,9 +222,9 @@ stopButton = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
 
 
 def updateWidgets(event):
+    delayBox.update(event)
+    sizeBox.update(event)
     if event.type == pygame.MOUSEBUTTONDOWN:
-        sizeBox.update(event)
-        delayBox.update(event)
         algorithmBox.update()
         if do_sorting:
             stopButton.update()
