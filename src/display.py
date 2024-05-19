@@ -222,13 +222,14 @@ stopButton = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
 
 
 def updateWidgets(event):
-    sizeBox.update(event)
     delayBox.update(event)
-    algorithmBox.update()
-    if do_sorting:
-        stopButton.update()
-    else:
-        playButton.update()
+    sizeBox.update(event)
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        algorithmBox.update()
+        if do_sorting:
+            stopButton.update()
+        else:
+            playButton.update()
 
 
 def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwargs):
