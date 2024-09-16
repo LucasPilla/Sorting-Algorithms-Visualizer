@@ -3,10 +3,6 @@
 Program made with Python and Pygame module for visualizing sorting algorithms \
 Support this project by leaving a :star:
 
-## Program
-
-!["Program Preview"](res/preview.gif)
-
 | | | |
 |:-------------------------:|:-------------------------:|:-------------------------:|
 |![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/res/bubble_sort.gif?raw=true)  Bubble sort |  ![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/res/bucket_sort.gif?raw=true) Bucket sort |![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/res/cocktail_sort.gif?raw=true) Cocktail sort |
