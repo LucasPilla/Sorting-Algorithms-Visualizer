@@ -1,289 +1,232 @@
 import pygame
 from math import ceil
 from time import time
+from abc import ABC, abstractmethod
 
-# Initialize pygame modules
-pygame.init()
+class Window:
+    def __init__(self, screen):
+        self.screen = screen
+        self.widgets = {}
 
-# Display settings
-windowSize = (900, 500)
-screen = pygame.display.set_mode(windowSize)
-pygame.display.set_caption('Sorting Algorithms Visualizer')
+    def add_widget(self, widget_id, widget):
+        self.widgets[widget_id] = widget
 
-# Font
-baseFont = pygame.font.SysFont('Arial', 24)
-# Used Colors
-grey = (100, 100, 100)
-green = (125, 240, 125)
-white = (250, 250, 250)
-red = (255, 50, 50)
-black = (0, 0, 0)
-blue = (50, 50, 255)
+    def get_widget_value(self, widget_id):
+        return self.widgets[widget_id].get_value()
 
+    def set_widget_value(self, widget_id, value):
+        return self.widgets[widget_id].set_value(value)
+        
+    def render(self):
+        for widget in self.widgets.values():
+            widget.render(self.screen)
+
+    def update(self, event):
+        for widget in self.widgets.values():
+            widget.update(event)
+        
 
 class Box:
     def __init__(self, rect):
         self.isActive = False
         self.rect     = pygame.Rect(rect)
     
-    def update(self):
+    def update(self, event):
         self.mousePos = pygame.mouse.get_pos()
-        self.clicked  = pygame.mouse.get_pressed() != (0, 0, 0)
-        self.isActive = True if self.rect.collidepoint(self.mousePos) else False
+        self.clicked  = event.type == pygame.MOUSEBUTTONDOWN and self.rect.collidepoint(self.mousePos)
+        self.hovered = self.rect.collidepoint(self.mousePos)
 
 
-class InputBox(Box):
-    def __init__(self, name, color, rect):
+class InputBox(ABC, Box):
+    def __init__(self, rect, label, color, font):
         super().__init__(rect)
-        self.name  = name
+        self.label  = label
         self.color = color
+        self.font = font
         
-    def draw(self):
-        label = baseFont.render(self.name, True, self.color)
+    def render(self, screen):
+        label = self.font.render(self.label, True, self.color)
         screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 32))
-        pygame.draw.rect(screen, self.color, self.rect, 3)
+        pygame.draw.rect(screen, self.color, self.rect, 2)
+
+    @abstractmethod
+    def get_value(self):
+        pass
+
+    @abstractmethod
+    def set_value(self, value):
+        pass
 
 
 class TextBox(InputBox):
-    def __init__(self, name, color, rect, text='100'):
-        super().__init__(name, color, rect)
+    def __init__(self, rect, label, color, font, text):
+        super().__init__(rect, label, color, font)
         self.text = text
-        self.draw() # establish the correct width for initial rendering
     
-    def draw(self):
-        super().draw()
-        surface = baseFont.render(self.text, True, self.color)
-        screen.blit(surface, (self.rect.x + 10, self.rect.y + 10))
-        self.rect.w = max(surface.get_width() + 20, 50)
+    def render(self, screen):
+        super().render(screen)
+        surface = self.font.render(self.text, True, self.color)
+        screen.blit(surface, surface.get_rect(center=self.rect.center))
 
     def update(self, event):
-        super().update()
-        if self.isActive and event.type == pygame.KEYDOWN:
-            if   event.key == pygame.K_BACKSPACE: self.text = self.text[:-1]
-            elif event.unicode.isdigit()        : self.text += event.unicode
+        super().update(event)
+        if self.hovered and event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_BACKSPACE: 
+                self.text = self.text[:-1]
+            elif event.unicode.isdigit(): 
+                self.text += event.unicode
         
+    def get_value(self):
+        return self.text
+
+    def set_value(self, value):
+        self.text = value
+
 
 class SlideBox(InputBox):
-    def __init__(self, name, color, rect):
-        super().__init__(name, color, rect)
+    def __init__(self, rect, label, color, font):
+        super().__init__(rect, label, color, font)
         self.start = self.rect.x + 6
         self.end   = self.rect.x + self.rect.w - 6
         self.value = self.start
 
-    def draw(self):
-        super().draw()
+    def render(self, screen):
+        super().render(screen)
         pygame.draw.line(screen, self.color, (self.start, self.rect.y + 25), (self.end, self.rect.y + 25), 2)
         pygame.draw.line(screen, self.color, (self.value, self.rect.y + 5), (self.value, self.rect.y + 45), 12)
 
     def update(self, event):
-        super().update()
+        super().update(event)
         previousStart = self.start
-        self.rect.x = sizeBox.rect.x + sizeBox.rect.w + 20
         self.start  = self.rect.x + 6
         self.end    = self.rect.x + self.rect.w - 6
         self.value += self.start - previousStart
         
-        if self.isActive:
-            if self.clicked:
-                if self.start <= self.mousePos[0] <= self.end: self.value = self.mousePos[0]
-        
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if   event.button == 4: self.value = min(self.value + 10, self.end)
-                elif event.button == 5: self.value = max(self.value - 10, self.start)
+        if self.clicked:
+            if self.start <= self.mousePos[0] <= self.end: self.value = self.mousePos[0]
 
-class VerticalSliderBox(InputBox):
-    def __init__(self, name, color, rect):
-        super().__init__(name, color, rect)
-        self.start = self.rect.y+6
-        self.end   = self.rect.y+self.rect.h
-        self.value = self.start
-        self.isActive=True
+    def get_value(self):
+        return self.value
 
-    def draw(self):
-        x=self.rect.x
-        pygame.draw.line(screen, grey,  (x,  self.start-6),  (x,self.end), 25)
-        pygame.draw.line(screen, white, (x+5,  self.value),  (x+5,self.value+20), 8)
-
-    def update(self,event):
-        super().update()
-        previousStart = self.start
-        self.start = self.rect.y+6
-        self.end   = self.rect.y + self.rect.h
-        self.value += self.start - previousStart
-        if self.isActive:
-            if self.clicked:
-                if self.start <= self.mousePos[1] <= self.end: self.value = self.mousePos[1]
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if   event.button == 4: self.value = min(self.end  ,self.value + 10)
-                elif event.button == 5: self.value = max(self.start,self.value - 10)
+    def set_value(self, value):
+        self.value = value
 
 class ButtonBox(Box):
-    def __init__(self, img_path, rect):
+    def __init__(self, rect, inactive_img_path, active_img_path):
         super().__init__(rect)
-        self.img = pygame.image.load(img_path)
+        self.inactive_img = pygame.image.load(inactive_img_path)
+        self.active_img = pygame.image.load(active_img_path)
+        self.active = False
     
-    def draw(self):
-        self.rect.x = algorithmBox.rect.x + algorithmBox.rect.w + 20
-        screen.blit(self.img, (self.rect.x, self.rect.y))
+    def render(self, screen):
+        img = self.active_img if self.active else self.inactive_img
+        screen.blit(img, (self.rect.x, self.rect.y))
 
-    def update(self):
-       super().update()
-       if self.isActive: self.isActive = True if self.clicked else False
+    def update(self, event):
+        super().update(event)
+        if self.clicked:
+            self.active = not self.active
+
+    def get_value(self):
+        return self.active
+
+    def set_value(self, value):
+        self.active = value
 
 
 class DropdownBox(InputBox):
-    DEFAUTL_OPTION = 0
 
-    def __init__(self, name, rect, font, color=grey):
-        super().__init__(name, color, rect)
-        self.isActive      = False
-        self.font          = font
-        self.options_color = white
-        self.active_option = -1
-        
-    def add_options(self, options):
+    VISIBLE_OPTIONS = 8
+
+    def __init__(self, rect, label, color, font, options, options_background_color):
+        super().__init__(rect, label, color, font)
+        self.openDropdown = False
         self.options = options
-        dropdown_width = ceil((len(self.options)-1) * self.rect.height / self.rect.y) * self.rect.width
-        self.dropdown_rect = pygame.Rect((self.rect.x, 0, dropdown_width, self.rect.y))
+        self.options_background_color = options_background_color
 
-    def get_active_option(self):
-        return self.options[self.DEFAUTL_OPTION]
+        self.dropdown_rect = pygame.Rect(
+            self.rect.x, 
+            self.rect.y - self.rect.height * self.VISIBLE_OPTIONS,
+            self.rect.width, 
+            self.rect.height * self.VISIBLE_OPTIONS
+        )
+        self.scroll_offset = 0  # Current scroll position
+        self.scrollbar_width = 5  # Width of the scrollbar
+        self.selected_option = 0  # Index of the selected option
 
-    def draw(self):
-        super().draw()
-        option_text = self.font.render(self.options[self.DEFAUTL_OPTION], 1, grey)
+    def render(self, screen):
+        super().render(screen)
+
+        # Render the selected option in the input box
+        option_text = self.font.render(self.options[self.selected_option], 1, self.color)
         screen.blit(option_text, option_text.get_rect(center=self.rect.center))
 
-        if self.isActive:
-            column = 0
-            index = 0
-            rect_start = self.rect.y - self.rect.height
-            for i in range(self.DEFAUTL_OPTION+1, len(self.options)):
+        if self.openDropdown:
+            # Render the dropdown background
+            pygame.draw.rect(screen, self.options_background_color, self.dropdown_rect)
+            pygame.draw.rect(screen, self.color, self.dropdown_rect, 2)
+
+            # Render visible options with scrolling
+            start_index = self.scroll_offset
+            end_index = min(start_index + self.VISIBLE_OPTIONS, len(self.options))
+
+            for index in range(start_index, end_index):
                 rect = self.rect.copy()
-                rect.y -= (index + 1) * self.rect.height
-                if rect.y <= self.dropdown_rect.y:
-                    column += 1
-                    index = 0
-                    rect.y = rect_start
-                index += 1
-                rect.x = self.rect.x + column * self.rect.width
-                
-                options_color = black if i - 1 == self.active_option else grey
-                pygame.draw.rect(screen, self.options_color, rect, 0)
-                pygame.draw.rect(screen, self.color, rect, 3) # draw border
-                option_text = self.font.render(self.options[i][:12], 1, options_color)
+                rect.y = self.rect.y - (index - start_index + 1) * self.rect.height
+
+                pygame.draw.rect(screen, self.options_background_color, rect)
+                pygame.draw.rect(screen, self.color, rect, 1)
+                option_text = self.font.render(self.options[index], 1, self.color)
                 screen.blit(option_text, option_text.get_rect(center=rect.center))
 
-    def update(self):
-        self.rect.x = delayBox.rect.w + delayBox.rect.x + 20
-        mouse_position = pygame.mouse.get_pos()
-        column = 0
-        index = 0
-        rect_start = self.rect.y - self.rect.height
-        for i in range(len(self.options)-1):
+            # Render the scrollbar
+            self.render_scrollbar(screen)
+
+    def render_scrollbar(self, screen):
+        total_options = len(self.options)
+        if total_options > self.VISIBLE_OPTIONS:
+            proportion_visible = self.VISIBLE_OPTIONS / total_options
+            scrollbar_height = int(self.dropdown_rect.height * proportion_visible)
+
+            max_scroll = total_options - self.VISIBLE_OPTIONS
+            proportion_scrolled = self.scroll_offset / max_scroll if max_scroll > 0 else 0
+            scrollbar_rect = pygame.Rect(self.dropdown_rect.right - self.scrollbar_width,
+                                         self.dropdown_rect.y + proportion_scrolled * (self.dropdown_rect.height - scrollbar_height),
+                                         self.scrollbar_width, scrollbar_height)
+
+            # Draw the scrollbar (visual only)
+            pygame.draw.rect(screen, self.color, scrollbar_rect)
+
+    def update(self, event):
+        super().update(event)
+
+        # Toggle the dropdown when the input box is clicked
+        if self.clicked:
+            self.openDropdown = not self.openDropdown
+
+        if self.openDropdown:
+            # Handle mouse wheel scrolling
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 4:  # Scroll up
+                    self.scroll_offset = max(self.scroll_offset - 1, 0)
+                elif event.button == 5:  # Scroll down
+                    self.scroll_offset = min(self.scroll_offset + 1, len(self.options) - self.VISIBLE_OPTIONS)
+
+            # Handle option selection
+            self.handle_option_selection(event)
+
+    def handle_option_selection(self, event):
+        start_index = self.scroll_offset
+        for index in range(start_index, start_index + self.VISIBLE_OPTIONS):
             rect = self.rect.copy()
-            rect.y -= (index + 1) * self.rect.height
-            if rect.y <= self.dropdown_rect.y:
-                column += 1
-                index = 0
-                rect.y = rect_start
-            index += 1
-            rect.x = self.rect.x + column * self.rect.width
+            rect.y = self.rect.y - (index - start_index + 1) * self.rect.height
 
-            if rect.collidepoint(mouse_position):
-                self.active_option = i
-        
-        if pygame.mouse.get_pressed() != (0, 0, 0):
-            if self.isActive and self.dropdown_rect.collidepoint(mouse_position):
-                self.options[self.DEFAUTL_OPTION], self.options[self.active_option+1] =\
-                     self.options[self.active_option+1], self.options[self.DEFAUTL_OPTION]
-                self.active_option = -1
-            self.isActive = self.rect.collidepoint(mouse_position)
-        if not self.isActive:
-            self.active_option = -1
+            if rect.collidepoint(pygame.mouse.get_pos()) and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                self.selected_option = index
+                self.openDropdown = False  # Close dropdown after selecting
 
-# END OF MODULE #
+    def get_value(self):
+        return self.options[self.selected_option]
 
-
-# Global Variables
-numBars = 0
-delay   = 0
-do_sorting = False
-paused = False
-timer_space_bar   = 0
-
-
-# Input Boxes
-sizeBox      = TextBox('Size', grey, (30, 440, 50, 50), '100')
-delayBox     = SlideBox('Delay', grey, (105, 440, 112, 50))
-algorithmBox = DropdownBox('Algorithm', (242, 440, 140, 50), baseFont)
-playButton  = ButtonBox('res/playButton.png', (390, 440, 50, 50))
-stopButton = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
-
-
-def updateWidgets(event):
-    delayBox.update(event)
-    sizeBox.update(event)
-    if event.type == pygame.MOUSEBUTTONDOWN:
-        algorithmBox.update()
-        if do_sorting:
-            stopButton.update()
-        else:
-            playButton.update()
-
-
-def drawBars(array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}, **kwargs):
-    '''Draw the bars and control their colors'''
-    if numBars != 0:
-        bar_width  = 900 / numBars
-        ceil_width = ceil(bar_width)
-
-    for num in range(numBars):
-        if   num in (redBar1, redBar2)  : color = red
-        elif num in (blueBar1, blueBar2): color = blue
-        elif num in greenRows           : color = green        
-        else                            : color = grey
-        pygame.draw.rect(screen, color, (num * bar_width, 400 - array[num], ceil_width, array[num]))
-
-
-def drawBottomMenu():
-    '''Draw the menu below the bars'''
-    sizeBox.draw()
-    delayBox.draw()
-    algorithmBox.draw()
-    if do_sorting:
-        stopButton.draw()
-    else:
-        playButton.draw()
-
-
-def draw_rect_alpha(surface, color, rect):
-    shape_surf = pygame.Surface(pygame.Rect(rect).size, pygame.SRCALPHA)
-    pygame.draw.rect(shape_surf, color, shape_surf.get_rect())
-    surface.blit(shape_surf, rect)
-
-
-def draw_polygon_alpha(surface, color, points):
-    lx, ly = zip(*points)
-    min_x, min_y, max_x, max_y = min(lx), min(ly), max(lx), max(ly)
-    target_rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)
-    shape_surf = pygame.Surface(target_rect.size, pygame.SRCALPHA)
-    pygame.draw.polygon(shape_surf, color, [(x - min_x, y - min_y) for x, y in points])
-    surface.blit(shape_surf, target_rect)
-
-
-def drawInterface(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs):
-    '''Draw all the interface'''
-    screen.fill(white)
-    drawBars(array, redBar1, redBar2, blueBar1, blueBar2, **kwargs)
-    
-    if time()-timer_space_bar < 0.5:
-        if paused:
-            draw_rect_alpha(screen, (255, 255, 0, 127), [(850 / 2) + 10, 150 + 10, 10, 50])
-            draw_rect_alpha(screen, (255, 255, 0, 127), [(850 / 2) + 40, 150 + 10, 10, 50])
-        else:
-            x, y = (850 / 2), 150
-            draw_polygon_alpha(screen, (150, 255, 150, 127), ((x + 10, y + 10), (x + 10, y + 50 + 10), (x + 50, y + 25 + 10)))
-
-    drawBottomMenu()
-    pygame.display.update()
+    def set_value(self, value):
+        self.selected_option = value

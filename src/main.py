@@ -1,67 +1,96 @@
 import pygame
-from random import randint
-from time import time
+from display import Window, TextBox, SlideBox, DropdownBox, ButtonBox
 from algs import algorithmsDict
-import display as display
+from random import randint
+import time
+import math
 
-# Declared in display.py
-# 1. global variables : numBars, delay, do_sorting, paused, timer_space_bar
-# 2. widgets : sizeBox, delayBox, algorithmBox, playButton, stopButton
+# Initialize pygame modules
+pygame.init()
 
+# Font
+baseFont = pygame.font.SysFont('Arial', 24)
+
+# Colors
+grey = (100, 100, 100)
+green = (125, 240, 125)
+white = (250, 250, 250)
+red = (255, 50, 50)
+black = (0, 0, 0)
+blue = (50, 50, 255)
+
+pygame.display.set_caption('Sorting Algorithms Visualizer')
+screen = pygame.display.set_mode((900, 500))
+window = Window(screen)
+
+window.add_widget(
+    widget_id = 'size_input',
+    widget = TextBox((30, 440, 100, 50), 'Size', grey, baseFont, '100')
+)
+window.add_widget(
+    widget_id = 'algorithm_input',
+    widget = DropdownBox((140, 440, 200, 50), 'Algorithm', grey, baseFont, list(algorithmsDict.keys()), white)
+)
+window.add_widget(
+    widget_id = 'play_button',
+    widget = ButtonBox((350, 440, 40, 40), 'res/playButton.png', 'res/stopButton.png')
+)
+
+def drawBars(screen, array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}):
+    '''Draw the bars and control their colors'''
+    numBars = len(array)
+    if numBars != 0:
+        bar_width  = 900 / numBars
+        ceil_width = math.ceil(bar_width)
+
+    for num in range(numBars):
+        if   num in (redBar1, redBar2)  : color = red
+        elif num in (blueBar1, blueBar2): color = blue
+        elif num in greenRows           : color = green        
+        else                            : color = grey
+        pygame.draw.rect(screen, color, (num * bar_width, 400 - array[num], ceil_width, array[num]))
 
 def main():
     numbers = []
     running = True
-    display.algorithmBox.add_options(list(algorithmsDict.keys()))
-
-    alg_iterator = None
-
-    timer_delay = time()
+    isPlaying = False
+    isSorting = False
+    sortingIterator = None
     
     while running:
+        screen.fill(white)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and display.do_sorting:
-                display.paused = not display.paused
-                display.timer_space_bar = time()
+            window.update(event)
 
-            display.updateWidgets(event)
+        isPlaying = window.get_widget_value('play_button')
+        if isPlaying and not isSorting:    
+            # random list to be sorted
+            numBars = int(window.get_widget_value('size_input'))
+            numbers = [randint(10, 400) for i in range(numBars)] 
 
-        display.delay = (display.delayBox.value-display.delayBox.rect.x-6)/1000 # delay is in ms
+            # initialize sorting iterator
+            sortingAlgorithm = window.get_widget_value('algorithm_input')
+            sortingIterator = algorithmsDict[sortingAlgorithm](numbers, 0, numBars-1)
+            isSorting = True
 
-        if display.playButton.isActive: # play button clicked
-            display.playButton.isActive = False
-            display.do_sorting = True
-            current_alg = display.algorithmBox.get_active_option()
-            display.numBars = int(display.sizeBox.text)
-            numbers = [randint(10, 400) for i in range(display.numBars)] # random list to be sorted
-            alg_iterator = algorithmsDict[current_alg](numbers, 0, display.numBars-1) # initialize iterator
+        if not isPlaying:
+            isSorting = False
 
-        if display.stopButton.isActive: # stop button clicked
-            display.stopButton.isActive = False
-            display.do_sorting = False
-            display.paused = False
-            try: # deplete generator to display sorted numbers
-                while True:
-                    numbers, redBar1, redBar2, blueBar1, blueBar2 = next(alg_iterator)
-            except StopIteration:
-                pass
-
-        if display.do_sorting and not display.paused: # sorting animation
+        if isSorting:
             try:
-                if time()-timer_delay >= display.delay:
-                    numbers, redBar1, redBar2, blueBar1, blueBar2 = next(alg_iterator)
-                    display.drawInterface(numbers, redBar1, redBar2, blueBar1, blueBar2)
-                    timer_delay = time()
+                numbers, redBar1, redBar2, blueBar1, blueBar2 = next(sortingIterator)
+                drawBars(screen, numbers, redBar1, redBar2, blueBar1, blueBar2)
             except StopIteration:
-                display.do_sorting = False
-        elif display.do_sorting and display.paused: # animation paused
-            display.drawInterface(numbers, -1, -1, -1, -1)
-        else: # no animation
-            a_set = set(range(display.numBars))
-            display.drawInterface(numbers, -1, -1, -1, -1, greenRows=a_set)
+                isSorting = False
+                window.set_widget_value('play_button', False)
+        else:
+            drawBars(screen, numbers, -1, -1, -1, -1, greenRows=set(range(len(numbers))))
+
+        window.render()
+        pygame.display.update()
 
 
 if __name__ == '__main__':
