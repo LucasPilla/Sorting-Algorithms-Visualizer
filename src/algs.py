@@ -1,6 +1,6 @@
 from algorithms import *
 
-
+# Map sorting algorithm names to their respective implementations
 algorithmsDict = {
     'insertionSort'       : insertionSort,
     'bubbleSort'          : bubbleSort,
