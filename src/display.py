@@ -72,6 +72,7 @@ class SlideBox(InputBox):
 
     def draw(self):
         super().draw()
+        
         pygame.draw.line(screen, self.color, (self.start, self.rect.y + 25), (self.end, self.rect.y + 25), 2)
         pygame.draw.line(screen, self.color, (self.value, self.rect.y + 5), (self.value, self.rect.y + 45), 12)
 
@@ -132,7 +133,7 @@ class ButtonBox(Box):
 
 
 class DropdownBox(InputBox):
-    DEFAUTL_OPTION = 0
+    DEFAULT_OPTION = 0
 
     def __init__(self, name, rect, font, color=grey):
         super().__init__(name, color, rect)
@@ -147,18 +148,19 @@ class DropdownBox(InputBox):
         self.dropdown_rect = pygame.Rect((self.rect.x, 0, dropdown_width, self.rect.y))
 
     def get_active_option(self):
-        return self.options[self.DEFAUTL_OPTION]
+        return self.options[self.DEFAULT_OPTION]
 
     def draw(self):
         super().draw()
-        option_text = self.font.render(self.options[self.DEFAUTL_OPTION], 1, grey)
+        option_text = self.font.render(self.options[self.DEFAULT_OPTION], True, grey)
         screen.blit(option_text, option_text.get_rect(center=self.rect.center))
 
         if self.isActive:
             column = 0
             index = 0
             rect_start = self.rect.y - self.rect.height
-            for i in range(self.DEFAUTL_OPTION+1, len(self.options)):
+            option_index = 0
+            for i in range(self.DEFAULT_OPTION+1, len(self.options)):
                 rect = self.rect.copy()
                 rect.y -= (index + 1) * self.rect.height
                 if rect.y <= self.dropdown_rect.y:
@@ -168,39 +170,75 @@ class DropdownBox(InputBox):
                 index += 1
                 rect.x = self.rect.x + column * self.rect.width
                 
-                options_color = black if i - 1 == self.active_option else grey
+                options_color = black if option_index == self.active_option else grey
                 pygame.draw.rect(screen, self.options_color, rect, 0)
-                pygame.draw.rect(screen, self.color, rect, 3) # draw border
-                option_text = self.font.render(self.options[i][:12], 1, options_color)
+                pygame.draw.rect(screen, self.color, rect, 3)  # Draw border
+                option_text = self.font.render(self.options[i][:12], True, options_color)
                 screen.blit(option_text, option_text.get_rect(center=rect.center))
+                option_index += 1
 
-    def update(self):
+    def update(self, event):
         self.rect.x = delayBox.rect.w + delayBox.rect.x + 20
         mouse_position = pygame.mouse.get_pos()
-        column = 0
-        index = 0
-        rect_start = self.rect.y - self.rect.height
-        for i in range(len(self.options)-1):
-            rect = self.rect.copy()
-            rect.y -= (index + 1) * self.rect.height
-            if rect.y <= self.dropdown_rect.y:
-                column += 1
-                index = 0
-                rect.y = rect_start
-            index += 1
-            rect.x = self.rect.x + column * self.rect.width
 
-            if rect.collidepoint(mouse_position):
-                self.active_option = i
-        
-        if pygame.mouse.get_pressed() != (0, 0, 0):
-            if self.isActive and self.dropdown_rect.collidepoint(mouse_position):
-                self.options[self.DEFAUTL_OPTION], self.options[self.active_option+1] =\
-                     self.options[self.active_option+1], self.options[self.DEFAUTL_OPTION]
-                self.active_option = -1
-            self.isActive = self.rect.collidepoint(mouse_position)
-        if not self.isActive:
-            self.active_option = -1
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(mouse_position):
+                # clicked on the main box
+                self.isActive = not self.isActive
+            elif self.isActive:
+                # Check if clicked on any of the dropdown options
+                clicked_on_option = False
+                column = 0
+                index = 0
+                rect_start = self.rect.y - self.rect.height
+                option_index = 0
+                for i in range(self.DEFAULT_OPTION+1, len(self.options)):
+                    rect = self.rect.copy()
+                    rect.y -= (index + 1) * self.rect.height
+                    if rect.y <= self.dropdown_rect.y:
+                        column += 1
+                        index = 0
+                        rect.y = rect_start
+                    index += 1
+                    rect.x = self.rect.x + column * self.rect.width
+
+                    if rect.collidepoint(mouse_position):
+                        # Swap the selected option with the default option
+                        selected_option_index = self.DEFAULT_OPTION + 1 + option_index
+                        self.options[self.DEFAULT_OPTION], self.options[selected_option_index] = (
+                            self.options[selected_option_index], self.options[self.DEFAULT_OPTION]
+                        )
+                        self.isActive = False
+                        clicked_on_option = True
+                        break  # Exit the loop after selection
+                    option_index += 1
+                if not clicked_on_option:
+                    # Clicked outside the dropdown options; deactivate the dropdown
+                    self.isActive = False
+            else:
+                # Clicked outside the dropdown; deactivate it
+                self.isActive = False
+        elif self.isActive:
+            # Update hover state
+            column = 0
+            index = 0
+            rect_start = self.rect.y - self.rect.height
+            option_index = 0
+            self.active_option = -1  # Reset active_option
+            for i in range(self.DEFAULT_OPTION+1, len(self.options)):
+                rect = self.rect.copy()
+                rect.y -= (index + 1) * self.rect.height
+                if rect.y <= self.dropdown_rect.y:
+                    column += 1
+                    index = 0
+                    rect.y = rect_start
+                index += 1
+                rect.x = self.rect.x + column * self.rect.width
+
+                if rect.collidepoint(mouse_position):
+                    self.active_option = option_index
+                    break
+                option_index += 1
 
 # END OF MODULE #
 
@@ -224,8 +262,8 @@ stopButton = ButtonBox('res/stopButton.png', (390, 440, 50, 50))
 def updateWidgets(event):
     delayBox.update(event)
     sizeBox.update(event)
+    algorithmBox.update(event)
     if event.type == pygame.MOUSEBUTTONDOWN:
-        algorithmBox.update()
         if do_sorting:
             stopButton.update()
         else:

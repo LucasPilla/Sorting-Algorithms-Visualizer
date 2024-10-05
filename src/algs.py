@@ -25,5 +25,6 @@ algorithmsDict = {'insertion'       : insertionSort,
                   'odd-even'        : oddevenSort,
                   'pigeonhole'      : pigeonholeSort,
                   'exchange'        : exchangeSort,
-                  'tree'            : treeSort}
+                  'tree'            : treeSort,
+                  'sleep'           : sleepSort}
 

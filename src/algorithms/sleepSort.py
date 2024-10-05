@@ -1,7 +1,5 @@
 def sleepSort(array, left, right):
-   '''
-   time complexity: O(maxNum * n)
-   '''
+   
     place = [0]
     maxNum = max(array)
     
@@ -20,5 +18,4 @@ def sleepSort(array, left, right):
 
     # Yield the final sorted array
     yield array, -1, -1, -1, -1
-    print("Final array")
-    print(array)
+    
