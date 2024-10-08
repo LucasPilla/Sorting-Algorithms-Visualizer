@@ -1,4 +1,5 @@
 from algorithms import *
+from algorithms import sleepSort
 
 # Map sorting algorithm names to their respective implementations
 algorithmsDict = {
@@ -26,6 +27,7 @@ algorithmsDict = {
     'oddEvenSort'        : oddevenSort,
     'pigeonholeSort'      : pigeonholeSort,
     'exchangeSort'        : exchangeSort,
-    'treeSort'            : treeSort
+    'treeSort'            : treeSort,
+    'sleepSort'           : sleepSort,
 }
 
