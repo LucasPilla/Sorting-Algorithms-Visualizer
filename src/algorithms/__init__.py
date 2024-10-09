@@ -23,6 +23,7 @@ from algorithms.mergeSort import mergeSort
 from algorithms.insertionSort import insertionSort
 from algorithms.radixSort import radixSort
 from algorithms.treeSort import treeSort
+from algorithms.sleepSort import sleepSort
 
 
 __all__ = [
@@ -51,4 +52,5 @@ __all__ = [
     "radixSort",
     "treeSort",
     "exchangeSort",
+    "sleepSort",
 ]
