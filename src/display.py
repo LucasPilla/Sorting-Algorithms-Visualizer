@@ -137,6 +137,10 @@ class ButtonBox(Box):
 class DropdownBox(InputBox):
 
     VISIBLE_OPTIONS = 8
+    SCROLL_SPEED = 20
+    HOVER_COLOR = (200, 200, 200)
+    NORMAL_COLOR = (255, 255, 255)
+
 
     def __init__(self, rect, label, color, font, options, options_background_color):
         super().__init__(rect, label, color, font)
@@ -151,6 +155,7 @@ class DropdownBox(InputBox):
             self.rect.height * self.VISIBLE_OPTIONS
         )
         self.scroll_offset = 0  # Current scroll position
+        self.scroll_target = 0  # Target scroll position for smooth scrolling
         self.scrollbar_width = 5  # Width of the scrollbar
         self.selected_option = 0  # Index of the selected option
 
@@ -166,15 +171,25 @@ class DropdownBox(InputBox):
             pygame.draw.rect(screen, self.options_background_color, self.dropdown_rect)
             pygame.draw.rect(screen, self.color, self.dropdown_rect, 2)
 
+            # Smooth scrolling interpolation
+            if self.scroll_offset != self.scroll_target:
+                self.scroll_offset += (self.scroll_target - self.scroll_offset) * 0.1
+
             # Render visible options with scrolling
-            start_index = self.scroll_offset
+            start_index = int(self.scroll_offset)
             end_index = min(start_index + self.VISIBLE_OPTIONS, len(self.options))
 
             for index in range(start_index, end_index):
                 rect = self.rect.copy()
                 rect.y = self.rect.y - (index - start_index + 1) * self.rect.height
 
-                pygame.draw.rect(screen, self.options_background_color, rect)
+                # Change color if hovered
+                if rect.collidepoint(pygame.mouse.get_pos()):
+                    option_color = self.HOVER_COLOR
+                else:
+                    option_color = self.NORMAL_COLOR
+
+                pygame.draw.rect(screen, option_color, rect)
                 pygame.draw.rect(screen, self.color, rect, 1)
                 option_text = self.font.render(self.options[index], 1, self.color)
                 screen.blit(option_text, option_text.get_rect(center=rect.center))
@@ -189,10 +204,19 @@ class DropdownBox(InputBox):
             scrollbar_height = int(self.dropdown_rect.height * proportion_visible)
 
             max_scroll = total_options - self.VISIBLE_OPTIONS
-            proportion_scrolled = self.scroll_offset / max_scroll if max_scroll > 0 else 0
-            scrollbar_rect = pygame.Rect(self.dropdown_rect.right - self.scrollbar_width,
-                                         self.dropdown_rect.y + proportion_scrolled * (self.dropdown_rect.height - scrollbar_height),
-                                         self.scrollbar_width, scrollbar_height)
+            proportion_scrolled = (
+                self.scroll_offset / max_scroll if max_scroll > 0 else 0
+            )
+
+            # Subtract proportion_scrolled from 1 to make the scrollbar move in the correct direction.
+            scrollbar_rect = pygame.Rect(
+                self.dropdown_rect.right - self.scrollbar_width,
+                self.dropdown_rect.y
+                + (1 - proportion_scrolled)
+                * (self.dropdown_rect.height - scrollbar_height),
+                self.scrollbar_width,
+                scrollbar_height,
+            )
 
             # Draw the scrollbar (visual only)
             pygame.draw.rect(screen, self.color, scrollbar_rect)
@@ -205,18 +229,20 @@ class DropdownBox(InputBox):
             self.openDropdown = not self.openDropdown
 
         if self.openDropdown:
-            # Handle mouse wheel scrolling
+            # Handle mouse wheel scrolling with smooth animation
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 4:  # Scroll up
-                    self.scroll_offset = max(self.scroll_offset - 1, 0)
+                    self.scroll_target = max(self.scroll_target - 1, 0)
                 elif event.button == 5:  # Scroll down
-                    self.scroll_offset = min(self.scroll_offset + 1, len(self.options) - self.VISIBLE_OPTIONS)
+                    self.scroll_target = min(
+                        self.scroll_target + 1, len(self.options) - self.VISIBLE_OPTIONS
+                    )
 
-            # Handle option selection
+            # Handle option selection and hover
             self.handle_option_selection(event)
 
     def handle_option_selection(self, event):
-        start_index = self.scroll_offset
+        start_index = int(self.scroll_offset)
         for index in range(start_index, start_index + self.VISIBLE_OPTIONS):
             rect = self.rect.copy()
             rect.y = self.rect.y - (index - start_index + 1) * self.rect.height
