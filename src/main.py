@@ -28,12 +28,16 @@ window.add_widget(
     widget = TextBox((30, 440, 100, 50), 'Size', grey, baseFont, '100')
 )
 window.add_widget(
+    widget_id='speed_slider',
+    widget=SlideBox((140, 440, 200, 50), 'Speed', grey, baseFont)
+)
+window.add_widget(
     widget_id = 'algorithm_input',
-    widget = DropdownBox((140, 440, 200, 50), 'Algorithm', grey, baseFont, list(algorithmsDict.keys()), white)
+    widget = DropdownBox((350, 440, 200, 50), 'Algorithm', grey, baseFont, list(algorithmsDict.keys()), white)
 )
 window.add_widget(
     widget_id = 'play_button',
-    widget = ButtonBox((350, 440, 40, 40), 'res/playButton.png', 'res/stopButton.png')
+    widget = ButtonBox((560, 440, 40, 40), 'res/playButton.png', 'res/stopButton.png')
 )
 
 def drawBars(screen, array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}):
@@ -65,6 +69,10 @@ def main():
 
             window.update(event)
 
+        # Get the slider value and calculate speed (1 to 100)
+        slider_value = window.get_widget_value('speed_slider')  # Normalized value between 0 and 1
+        speed = 1 + slider_value * 99  # Map slider to speed range 1-100
+
         isPlaying = window.get_widget_value('play_button')
         if isPlaying and not isSorting:    
             # random list to be sorted
@@ -83,6 +91,10 @@ def main():
             try:
                 numbers, redBar1, redBar2, blueBar1, blueBar2 = next(sortingIterator)
                 drawBars(screen, numbers, redBar1, redBar2, blueBar1, blueBar2)
+                window.render()
+                pygame.display.update()
+                pygame.time.wait(int(1000 / speed))  # Apply delay based on speed
+
             except StopIteration:
                 isSorting = False
                 window.set_widget_value('play_button', False)
