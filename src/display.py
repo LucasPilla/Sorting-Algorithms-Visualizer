@@ -89,33 +89,49 @@ class SlideBox(InputBox):
         self.start = self.rect.x + 6
         self.end   = self.rect.x + self.rect.w - 6
         self.value = self.start
+        self.dragging = False  # Track if the user is dragging the slider
 
     def render(self, screen):
         super().render(screen)
+        pygame.draw.rect(screen, self.color, self.rect, 2)
         pygame.draw.line(screen, self.color, (self.start, self.rect.y + 25), (self.end, self.rect.y + 25), 2)
         pygame.draw.line(screen, self.color, (self.value, self.rect.y + 5), (self.value, self.rect.y + 45), 12)
 
     def update(self, event):
         super().update(event)
-        previousStart = self.start
         self.start  = self.rect.x + 6
         self.end    = self.rect.x + self.rect.w - 6
-        self.value += self.start - previousStart
         
-        if self.clicked:
-            if self.start <= self.mousePos[0] <= self.end: self.value = self.mousePos[0]
+        # Check if the mouse is clicking on the slider knob
+        if event.type == pygame.MOUSEBUTTONDOWN and self.rect.collidepoint(self.mousePos):
+            if self.start <= self.mousePos[0] <= self.end:
+                self.dragging = True
+
+        # Stop dragging when the mouse button is released
+        if event.type == pygame.MOUSEBUTTONUP:
+            self.dragging = False
+
+        # If dragging, move the slider with the mouse
+        if self.dragging:
+            self.value = min(max(self.mousePos[0], self.start), self.end)  # Restrict the slider's movement within bounds
+        
 
     def get_value(self):
-        return self.value
+        # Normalize the value to a range between 0 and 1
+        normalized_value = (self.value - self.start) / (self.end - self.start)
+        return normalized_value
 
     def set_value(self, value):
-        self.value = value
+        # Set the value within the range [start, end] based on a normalized input
+        self.value = self.start + value * (self.end - self.start)
 
 class ButtonBox(Box):
     def __init__(self, rect, inactive_img_path, active_img_path):
         super().__init__(rect)
         self.inactive_img = pygame.image.load(inactive_img_path)
+        self.inactive_img = pygame.transform.scale(self.inactive_img, (rect[2], rect[3]))
         self.active_img = pygame.image.load(active_img_path)
+        self.active_img = pygame.transform.scale(self.active_img, (rect[2], rect[3]))
         self.active = False
     
     def render(self, screen):
