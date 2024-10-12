@@ -60,13 +60,7 @@ def main():
     isPlaying = False
     isSorting = False
     sortingIterator = None
-
-    # Variables to store previous states (those will be drawn if the delay is not over)
-    prev_numbers = []
-    prev_redBar1, prev_redBar2 = -1, -1
-    prev_blueBar1, prev_blueBar2 = -1, -1
-
-    last_update_time = pygame.time.get_ticks()  # To manage delay
+    last_iteration = 0
 
     while running:
         screen.fill(white)
@@ -76,9 +70,8 @@ def main():
 
             window.update(event)
 
-        # Get the slider value and calculate delay (0 to 100 ms)
-        slider_value = window.get_widget_value('delay_slider')  # Normalized value between 0 and 1
-        delay = int(slider_value * 100)  # Map slider to delay range 0-100 ms
+        # Get delay in seconds
+        delay = window.get_widget_value('delay_slider') / 10
 
         isPlaying = window.get_widget_value('play_button')
         if isPlaying and not isSorting:
@@ -95,28 +88,19 @@ def main():
             isSorting = False
 
         if isSorting:
-            current_time = pygame.time.get_ticks()
-            if current_time - last_update_time >= delay:
                 try:
                     # Get the next state from the sorting iterator
-                    numbers, redBar1, redBar2, blueBar1, blueBar2 = next(sortingIterator)
-                    last_update_time = current_time  # Update the time of the last update
-
-                    # Store the previous state
-                    prev_numbers = numbers[:]
-                    prev_redBar1, prev_redBar2 = redBar1, redBar2
-                    prev_blueBar1, prev_blueBar2 = blueBar1, blueBar2
-
+                    if time.time() - last_iteration >= delay:  
+                        numbers, redBar1, redBar2, blueBar1, blueBar2 = next(sortingIterator)
+                        last_iteration = time.time()
+                    
                     drawBars(screen, numbers, redBar1, redBar2, blueBar1, blueBar2)
                     window.render()
                     pygame.display.update()
+                        
                 except StopIteration:
                     isSorting = False
                     window.set_widget_value('play_button', False)
-            else:
-                # Draw the previous state if not enough time has passed
-                drawBars(screen, prev_numbers, prev_redBar1, prev_redBar2, prev_blueBar1, prev_blueBar2)
-
         else:
             drawBars(screen, numbers, -1, -1, -1, -1, greenRows=set(range(len(numbers))))
 
