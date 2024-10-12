@@ -29,15 +29,15 @@ window.add_widget(
 )
 window.add_widget(
     widget_id='delay_slider',
-    widget=SlideBox((140, 440, 200, 50), 'Delay', grey, baseFont)
+    widget=SlideBox((140, 440, 150, 50), 'Delay', grey, baseFont)
 )
 window.add_widget(
     widget_id = 'algorithm_input',
-    widget = DropdownBox((350, 440, 200, 50), 'Algorithm', grey, baseFont, list(algorithmsDict.keys()), white)
+    widget = DropdownBox((300, 440, 200, 50), 'Algorithm', grey, baseFont, list(algorithmsDict.keys()), white)
 )
 window.add_widget(
     widget_id = 'play_button',
-    widget = ButtonBox((560, 440, 40, 40), 'res/playButton.png', 'res/stopButton.png')
+    widget = ButtonBox((510, 445, 40, 40), 'res/playButton.png', 'res/stopButton.png')
 )
 
 def drawBars(screen, array, redBar1, redBar2, blueBar1, blueBar2, greenRows = {}):

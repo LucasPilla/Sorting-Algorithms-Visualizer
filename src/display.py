@@ -92,14 +92,8 @@ class SlideBox(InputBox):
         self.dragging = False  # Track if the user is dragging the slider
 
     def render(self, screen):
+        super().render(screen)
         pygame.draw.rect(screen, self.color, self.rect, 2)
-        # Dynamically update the label with the current delay
-        current_delay = int(self.get_value() * 100) 
-        dynamic_label = f"{self.label}: {current_delay} ms"
-        # Render the updated label
-        label = self.font.render(dynamic_label, True, self.color)
-        screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 32))
-
         pygame.draw.line(screen, self.color, (self.start, self.rect.y + 25), (self.end, self.rect.y + 25), 2)
         pygame.draw.line(screen, self.color, (self.value, self.rect.y + 5), (self.value, self.rect.y + 45), 12)
 
@@ -135,7 +129,9 @@ class ButtonBox(Box):
     def __init__(self, rect, inactive_img_path, active_img_path):
         super().__init__(rect)
         self.inactive_img = pygame.image.load(inactive_img_path)
+        self.inactive_img = pygame.transform.scale(self.inactive_img, (rect[2], rect[3]))
         self.active_img = pygame.image.load(active_img_path)
+        self.active_img = pygame.transform.scale(self.active_img, (rect[2], rect[3]))
         self.active = False
     
     def render(self, screen):
