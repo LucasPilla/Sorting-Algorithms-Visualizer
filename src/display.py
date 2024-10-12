@@ -93,9 +93,9 @@ class SlideBox(InputBox):
 
     def render(self, screen):
         pygame.draw.rect(screen, self.color, self.rect, 2)
-        # Dynamically update the label with the current speed
-        current_speed = 1 + int(self.get_value() * 99) 
-        dynamic_label = f"{self.label}: {current_speed}"
+        # Dynamically update the label with the current delay
+        current_delay = int(self.get_value() * 100) 
+        dynamic_label = f"{self.label}: {current_delay} ms"
         # Render the updated label
         label = self.font.render(dynamic_label, True, self.color)
         screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 32))
