@@ -7,6 +7,7 @@ algorithmsDict = {
     'selectionSort'       : selectionSort,
     'mergeSort'           : mergeSort,
     'quickSort'           : quickSort,
+    'quickSortLR'         : quickSort_LR,
     'countingSort'        : countingSort,
     'cocktailSort'        : cocktailSort,
     'cycleSort'           : cycleSort,
