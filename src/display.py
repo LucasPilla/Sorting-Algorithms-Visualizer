@@ -35,7 +35,7 @@ class Box:
         self.hovered = self.rect.collidepoint(self.mousePos)
 
 
-class InputBox(ABC, Box):
+class InputBox(Box, ABC):
     def __init__(self, rect, label, color, font):
         super().__init__(rect)
         self.label  = label
@@ -60,7 +60,8 @@ class TextBox(InputBox):
     def __init__(self, rect, label, color, font, text):
         super().__init__(rect, label, color, font)
         self.text = text
-    
+        self.focused = False
+
     def render(self, screen):
         super().render(screen)
         surface = self.font.render(self.text, True, self.color)
@@ -68,10 +69,12 @@ class TextBox(InputBox):
 
     def update(self, event):
         super().update(event)
-        if self.hovered and event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_BACKSPACE: 
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.focused = self.rect.collidepoint(self.mousePos)
+        if self.focused and event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_BACKSPACE:
                 self.text = self.text[:-1]
-            elif event.unicode.isdigit(): 
+            elif event.unicode.isdigit():
                 self.text += event.unicode
         
     def get_value(self):
@@ -91,7 +94,6 @@ class SlideBox(InputBox):
 
     def render(self, screen):
         super().render(screen)
-        pygame.draw.rect(screen, self.color, self.rect, 2)
         pygame.draw.line(screen, self.color, (self.start, self.rect.y + 25), (self.end, self.rect.y + 25), 2)
         pygame.draw.line(screen, self.color, (self.value, self.rect.y + 5), (self.value, self.rect.y + 45), 12)
 
@@ -115,13 +117,17 @@ class SlideBox(InputBox):
         
 
     def get_value(self):
-        # Normalize the value to a range between 0 and 1
-        normalized_value = (self.value - self.start) / (self.end - self.start)
-        return normalized_value
+        span = self.end - self.start
+        if span == 0:
+            return 0.0
+        return (self.value - self.start) / span
 
     def set_value(self, value):
-        # Set the value within the range [start, end] based on a normalized input
-        self.value = self.start + value * (self.end - self.start)
+        span = self.end - self.start
+        if span == 0:
+            self.value = self.start
+        else:
+            self.value = self.start + value * span
 
 class ButtonBox(Box):
     def __init__(self, rect, inactive_img_path, active_img_path):
@@ -224,7 +230,8 @@ class DropdownBox(InputBox):
                 if event.button == 4:  # Scroll up
                     self.scroll_offset = max(self.scroll_offset - 1, 0)
                 elif event.button == 5:  # Scroll down
-                    self.scroll_offset = min(self.scroll_offset + 1, len(self.options) - self.VISIBLE_OPTIONS)
+                    max_scroll = max(0, len(self.options) - self.VISIBLE_OPTIONS)
+                    self.scroll_offset = min(self.scroll_offset + 1, max_scroll)
 
             # Handle option selection
             self.handle_option_selection(event)
@@ -243,4 +250,7 @@ class DropdownBox(InputBox):
         return self.options[self.selected_option]
 
     def set_value(self, value):
-        self.selected_option = value
+        if isinstance(value, str):
+            self.selected_option = self.options.index(value)
+        else:
+            self.selected_option = max(0, min(int(value), len(self.options) - 1))
