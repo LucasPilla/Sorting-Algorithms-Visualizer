@@ -1,7 +1,7 @@
 from algorithms.bubbleSort import bubbleSort
 from algorithms.bogoSort import bogoSort
 from algorithms.bitonicSort import bitonicSort
-from algorithms.binaryinsertionSort import binaryinsertionSort
+from algorithms.binaryInsertionSort import binaryInsertionSort
 from algorithms.exchangeSort import exchangeSort
 from algorithms.heapSort import heapSort
 from algorithms.gnomeSort import gnomeSort
@@ -29,7 +29,7 @@ from algorithms.slowSort import slowSort
 __all__ = [
     "bogoSort",
     "bitonicSort",
-    "binaryinsertionSort",
+    "binaryInsertionSort",
     "bubbleSort",
     "heapSort",
     "gnomeSort",

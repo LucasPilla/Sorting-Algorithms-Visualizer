@@ -1,12 +1,10 @@
 def quickSort_LR(array, low, high):
     """
-    quickSort_LR() function sorts an array in ascending order using the QuickSort Algorithm. 
-    The algorithm recursively partitions the array into subarrays around a pivot element and sorts 
-    each subarray independently. The partition() function is used to partition the array into two 
-    subarrays, such that all elements to the left of the pivot are less than or equal to the pivot, 
-    and all elements to the right are greater than or equal to the pivot.
+    Quicksort (Hoare / LR partition).
 
-    Time complexity: O(nlog²n).
+    Uses Hoare partition around ``array[low]``; recurses on ``[low..p]`` and ``[p+1..high]``.
+
+    Time complexity: O(n log n) expected; O(n²) worst case (n is the subarray length).
     """
 
     if low < high:
@@ -16,12 +14,7 @@ def quickSort_LR(array, low, high):
         yield from quickSort_LR(array, p + 1, high)
 
 def partition(array, low, high):
-    """
-    Partitions the array into two subarrays around a pivot element and returns the pivot index.
-
-    Returns:
-        An integer index of the pivot element after partitioning the array.
-    """
+    """Hoare partition; returns index *j* such that elements on each side can be sorted recursively."""
 
     pivot = array[low]
     i = low - 1

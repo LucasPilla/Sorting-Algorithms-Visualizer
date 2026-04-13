@@ -1,14 +1,11 @@
 def countingSort(array, *args):
     """
-    Counting Sort is an efficient, non-comparison-based sorting algorithm that works by counting
-    the number of occurrences of each value in the input array and using this information to place
-    each element in the right position in the output array. This implementation uses a separate
-    array to keep track of the count of each integer value and then modifies this count array to
-    determine the position of each element in the sorted output array.
+    Counting sort.
 
-    Time complexity: O(n + k), where n is the number of elements in the list 
-    and k is the maximum value in the list
+    Counts occurrences of each key, turns counts into positions, then places each element
+    in sorted order. Assumes non-negative integer keys; uses a bucket of size max(A) + 1.
 
+    Time complexity: O(n + k), where n is len(array) and k is max(A) + 1 for this implementation.
     """
     size = len(array)
     A = array.copy()

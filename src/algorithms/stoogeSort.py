@@ -2,12 +2,12 @@ from math import floor
 
 def stoogeSort(arr, l, h):
     """
-    Stooge Sort Algorithm is a recursive sorting algorithm that sorts 
-    an array by recursively sorting the first two-thirds of the array, 
-    then the last two-thirds of the array, and finally the first two-thirds 
-    of the array again. 
-    
-    Time complexity: O(n^(log 3/log 1.5)) time, which is approximately O(n^2.7095).
+    Stooge sort.
+
+    Recursively sorts the first two-thirds, then the last two-thirds, then the first
+    two-thirds again (deliberately inefficient).
+
+    Time complexity: O(n^(log_{3/2} 3)) ≈ O(n^2.71) (n is the subarray length).
     """
 
     if l >= h:

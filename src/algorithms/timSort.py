@@ -1,17 +1,8 @@
-from algorithms.binaryinsertionSort import binary_search
+from algorithms.binaryInsertionSort import binary_search
 
 
 def calculate_min_run(n):
-    """
-    Calculate the minimum run length for TimSort algorithm.
-
-    The minimum run length is calculated as follows:
-        1. For any given n, a minimum run length is set to 32.
-        2. A bitwise OR operation is performed on the last bit of the current n and last_bit.
-        3. The current n is right-shifted by 1 bit to prepare for the next iteration.
-        4. Steps 2 and 3 are repeated until n is less than the minimum run length.
-        5. The last bit of the final n is added to the minimum run length to get the actual minimum run length.
-    """
+    """Minimum run size for this Timsort-style merge (Python-style heuristic, min run ≈ 32)."""
     last_bit = 0
     RUN_LEN  = 32
     
@@ -22,14 +13,8 @@ def calculate_min_run(n):
     return n + last_bit
 
 
-def binaryinsertionSort(arr, start, end):
-    """
-    Perform binary insertion sort on a portion of the array.
-
-    This function takes a slice of the array starting from index start and ending at index end, 
-    and performs a binary insertion sort on that slice. It uses the binary_search function from the 
-    binaryinsertionSort module to find the insertion point for each element in the slice.
-    """
+def _binary_insertion_sort_run(arr, start, end):
+    """Binary-insertion-sort the inclusive range ``arr[start:end+1]`` (yields intermediate states)."""
     for i in range(start, end + 1):
         val = arr[i]
         j   = binary_search(arr, val, start, i - 1)
@@ -38,9 +23,7 @@ def binaryinsertionSort(arr, start, end):
 
 
 def merge(arr, left, mid, right):
-    """
-    This function merges two sorted portions of an array.
-    """
+    """Merge sorted ``arr[left:mid+1]`` and ``arr[mid+1:right+1]`` into place."""
 
     left_arr_size  = mid - left + 1
     right_arr_size = right - mid
@@ -69,22 +52,19 @@ def merge(arr, left, mid, right):
 
 def timSort(arr, beginning, ending):
     """
-    Timsort first divides the input list into small 
-    sub-lists called "runs" and sorts each run using Insertion Sort.
-    It then merges adjacent runs into larger runs until a complete sort is achieved.
-    The algorithm uses a combination of the best-case time complexity of Insertion Sort
-    and the worst-case time complexity of Merge Sort to achieve good performance on both
-    small and large lists.
+    Timsort (simplified).
 
-    Time complexity: O(nlog²n).
+    Forms short runs with binary insertion sort, then repeatedly merges runs by doubling
+    width (similar spirit to Python's list.sort, but not identical).
 
+    Time complexity: O(n log n) worst case for merge-based phases (n is len(arr)); *beginning* and *ending* are accepted for API consistency but unused.
     """
     arr_len = len(arr)
     min_run = calculate_min_run(arr_len)
 
     for start in range(0, arr_len, min_run):
         end = min(start + min_run - 1, arr_len - 1)
-        yield from binaryinsertionSort(arr, start, end)
+        yield from _binary_insertion_sort_run(arr, start, end)
 
     size = min_run
     while size < arr_len:

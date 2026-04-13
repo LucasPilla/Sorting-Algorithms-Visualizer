@@ -1,6 +1,4 @@
 import pygame
-from math import ceil
-from time import time
 from abc import ABC, abstractmethod
 
 class Window:

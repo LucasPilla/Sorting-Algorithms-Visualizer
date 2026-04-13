@@ -1,13 +1,11 @@
 def mergeSort(array, left, right):
     """
-    Sorts a given array using the Merge Sort algorithm.
+    Merge sort.
 
-    Merge Sort algorithm is a divide and conquer algorithm 
-    that recursively divides the input list in half and sorts 
-    each half before merging them back together. This process 
-    is repeated until the entire list is sorted. 
-    
-    Time complexity: O(nlog²n).
+    Divide-and-conquer: split the range in half, sort each half recursively, then
+    merge the two sorted halves.
+
+    Time complexity: O(n log n) time and O(n) auxiliary space for the merge (n is the range length).
     """
     if left < right:
         mid = int((left+right)/2)
@@ -17,9 +15,7 @@ def mergeSort(array, left, right):
 
 
 def merge(array, left, mid, right):
-    """
-    Merges two sorted arrays into a single sorted array.
-    """
+    """Merge two sorted contiguous ranges [left..mid] and [mid+1..right] in place."""
     L = array[left:mid+1]
     R = array[mid+1:right+1]
     i = 0

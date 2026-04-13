@@ -1,10 +1,11 @@
 def bubbleSort(array, *args):
     """
-    Bubble Sort is a simple comparison-based sorting algorithm that 
-    repeatedly compares adjacent elements in a list and swaps them 
-    if they are in the wrong order until the list is sorted.
-    
-    Time complexity: O(n^2), where n is the number of elements in the list.
+    Bubble sort.
+
+    Repeatedly steps through the list, compares adjacent elements, and swaps them
+    if they are in the wrong order, until no swaps occur on a full pass.
+
+    Time complexity: O(n²) average and worst case; O(n) best case when the list is already sorted (early exit).
     """
     size = len(array)
     for i in range(size):

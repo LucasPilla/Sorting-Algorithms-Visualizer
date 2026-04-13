@@ -1,13 +1,11 @@
 def exchangeSort(array, *args):
     """
-    Exchange Sort is a simple sorting algorithm that repeatedly swaps adjacent elements 
-    in the array if they are in the wrong order. The algorithm iterates through 
-    the array multiple times, comparing adjacent elements and swapping them if
-    they are in the wrong order. Each iteration moves the smallest unsorted element 
-    to its correct position in the sorted portion of the array.
+    Exchange sort.
 
-    Time complexity: O(n^2), where n is the number of elements in the list
+    For each i, compares index i with every j > i and swaps if out of order (similar
+    spirit to selection sort, using explicit swaps).
 
+    Time complexity: O(n²) (n is the number of elements).
     """
     size = len(array)
     for i in range(size - 1):

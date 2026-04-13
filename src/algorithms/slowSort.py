@@ -1,12 +1,11 @@
 def slowSort(array, *args):
     """
-    The slow sort is an example of Multiply And Surrender a tongue-in-cheek joke of divide and conquer.
-    Slow sort stores the maximum element of the array at the last position by recursively divides the array by half and compares each of them. 
-    Then it recursively calls the array without the previous maximum element and stores the new maximum element at the new last position.
-    The best case is worse than the bubble sort
+    Slowsort (“multiply and surrender”).
 
-    Time complexity: O(N ^ ( (log N) / (2+e) ) ) where e is a small positive number
+    Recursively forces the maximum toward the end with a deliberately wasteful structure;
+    intended as a humorous inverse of divide-and-conquer.
 
+    Time complexity: extremely large by design—far worse than any practical O(n²) sort (n is the length).
     """
 
     def recursiveSlowSort(array, start, end):

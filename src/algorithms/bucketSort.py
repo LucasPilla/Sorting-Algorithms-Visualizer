@@ -1,14 +1,11 @@
 def bucketSort(array, *args):
     """
-    Bucket Sort is a sorting algorithm that works by partitioning 
-    an array into smaller buckets, sorting each bucket either by 
-    recursively applying the Bucket Sort algorithm or using another 
-    sorting algorithm, and then concatenating the sorted buckets 
-    to form the final sorted array. 
-    
-    Time complexity: O(n+k), where n is the number of elements to be sorted 
-    and k is the number of buckets used, but can be as bad as O(n^2) if the elements 
-    are not uniformly distributed among the buckets.
+    Bucket sort.
+
+    Distributes values into buckets, sorts each bucket (here with Python's ``sorted``),
+    then concatenates. Performance depends on how evenly keys spread across buckets.
+
+    Time complexity: O(n + k) average when keys are uniformly spread across k buckets; can degrade to O(n²) with bad distributions (n is the number of elements).
     """
     # Create buckets
     bucket = []

@@ -1,10 +1,11 @@
 def gnomeSort(a, *args):
     """
-    Gnome Sort is a simple sorting algorithm that works by repeatedly swapping adjacent elements that are 
-    in the wrong order until the entire list is sorted. It gets its name from the idea that it is similar to how a garden 
-    gnome sorts his flower pots.
+    Gnome sort.
 
-    Time complexity: O(n ^ 2), where n is the number of elements in the list 
+    Walks forward while order holds; on a violation swaps backward like insertion sort
+    but one step at a time.
+
+    Time complexity: O(n²) average and worst case; O(n) best case when the input is sorted.
     """
     i, size = 0, len(a)
     while i < size:

@@ -3,10 +3,11 @@ from random import randint
 
 def bogoSort(array, *args):
     """
-    Bogo Sort sorts an array by randomly shuffling it and checking if the elements 
-    are in sorted order. It repeatedly shuffles the array until it is sorted.
+    Bogosort.
 
-    Time complexity: O(n*n!), where n is the number of elements in the list.
+    Randomly permutes the array until it happens to be sorted (not practical; for demonstration).
+
+    Time complexity: expected Θ(n · n!); unbounded worst case. This build stops after many iterations for safety.
     """
     is_sorted = False
     arrayLen = len(array)

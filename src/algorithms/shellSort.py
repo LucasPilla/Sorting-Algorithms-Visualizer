@@ -72,16 +72,12 @@ GAPS = {
 
 def shellSort(array, *args, gapType="ciura"):
     """
-    Sort an array using Shell sort.
+    Shell sort.
 
-    The algorithm works by performing multiple passes over the array with a
-    decreasing gap size. At each pass, the array is divided into subarrays of
-    size equal to the gap. The subarrays are sorted using insertion sort. The
-    gap size is reduced at each pass until it reaches 1, at which point the
-    algorithm degenerates to a simple insertion sort.
+    Generalizes insertion sort by sorting elements spaced by a gap sequence that
+    shrinks to 1; the final pass is ordinary insertion sort.
 
-    Time complexity: O(n^2). It depends on the increment sequence used.
-
+    Time complexity: depends on the gap sequence; between about O(n log n) and O(n²) in worst-case analyses (n is the number of elements).
     """
 
     gaps = GAPS.get(gapType, "ciura")(len(array))

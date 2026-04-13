@@ -3,13 +3,11 @@ from random import randint
 
 def quickSort(array, left, right):
     """
-    QuickSort works by selecting a pivot element from the array and partitioning the other 
-    elements into two sub-arrays, according to whether they are less than or greater 
-    than the pivot. The process is then repeated on the two sub-arrays until the sub-arrays 
-    contain only one element or are empty. The sub-arrays are then combined to form the final 
-    sorted array. 
+    Quicksort (Lomuto-style partition with a randomly chosen pivot).
 
-    Time complexity: O(nlog²n).
+    Partitions elements around a pivot, then recursively sorts the left and right parts.
+
+    Time complexity: O(n log n) expected time; O(n²) worst case (e.g. adversarial input or poor pivots). n is the subarray length.
     """
     if left >= right:
         return

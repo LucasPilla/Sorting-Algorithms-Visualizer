@@ -1,17 +1,11 @@
 def heapSort(array, *args):
     """
-    Sorts an array using the Heap Sort Algorithm.
+    Heapsort.
 
-    Heap Sort is a comparison-based sorting algorithm that works by first 
-    constructing a heap (a type of tree-based data structure) from the given 
-    elements, and then repeatedly extracting the maximum element from the heap 
-    and placing it at the end of the sorted array. The process of extracting 
-    the maximum element involves swapping it with the last element in the heap, 
-    then fixing the heap to maintain the heap property. This process is repeated 
-    until all elements have been extracted and placed in their correct position 
-    in the sorted array. 
-    
-    Time complexity: O(nlog²n).
+    Builds a max-heap, then repeatedly swaps the root with the last heap position and
+    sifts down to restore the heap property.
+
+    Time complexity: O(n log n) time and O(1) extra space (in-place; n is the number of elements).
     """
     yield from heapify(array, len(array))
     end = len(array) - 1
@@ -23,9 +17,7 @@ def heapSort(array, *args):
 
 
 def heapify(array, count):
-    """
-    Creates a max heap from an array.
-    """
+    """Turn *array[:count]* into a max-heap by sifting down from the last parent."""
     start = (count-1) // 2
     while start >= 0:
         yield from siftDown(array, start, count - 1)
@@ -33,10 +25,7 @@ def heapify(array, count):
 
 
 def siftDown(array, start, end):
-    """
-    Moves the element at the specified index down the tree 
-    until it is in the correct position in the heap.
-    """
+    """Sift the element at *start* down in the max-heap bounded by *end*."""
     root = start
     while 2 * root + 1 <= end:
         child = 2 * root + 1

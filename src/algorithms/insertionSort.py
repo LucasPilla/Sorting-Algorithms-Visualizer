@@ -1,15 +1,11 @@
 def insertionSort(array, *args):
     """
-    
-    Insertion Sort works by building up a sorted list one element at a time. 
-    Starting from the second element of the input list, the algorithm iterates 
-    over the remaining unsorted elements, comparing each element with the previous 
-    ones and shifting elements to the right until the correct position is found 
-    for the current element. The process repeats until all elements have been inserted 
-    into the sorted portion of the list.
+    Insertion sort.
 
-    Time complexity: O(n^2), where n is the number of elements in the list
-    
+    Builds a sorted prefix by taking each next element and shifting larger elements
+    right until the correct position is found.
+
+    Time complexity: O(n²) average and worst case; O(n) best case when the input is already sorted.
     """
     mySortedRows = []
     size = len(array)

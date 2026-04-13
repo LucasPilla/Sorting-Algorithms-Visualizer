@@ -1,16 +1,12 @@
 class Node:
     def __init__(self, val, pos):
-        """
-        Initialize a new instance of the Node class.
-        """
+        """BST node storing *val* and *pos*."""
         self.l, self.r = None, None
         self.pos = pos
         self.val = val
 
     def display(self, res):
-        """
-        Traverse the binary search tree in-order and append the values to the given list.
-        """
+        """In-order traversal; append values to *res* (destructively clears left links)."""
         if self.l:
             self.l.display(res)
             self.l = None
@@ -21,14 +17,11 @@ class Node:
 
 def treeSort(array, *args):
     """
-    Tree Sort is a sorting algorithm that builds a binary search tree from 
-    the elements of the array to be sorted. For each element in the input array, 
-    the algorithm inserts the element into the tree. Once all the elements are 
-    inserted, the algorithm performs an in-order traversal of the tree, 
-    which yields the sorted array.
-    
-    Time complexity: ranges from O(n) to O(n^2) depeding on the shape of
-    the binary tree 
+    Tree sort (BST sort).
+
+    Inserts each element into a binary search tree, then reads values with an in-order walk.
+
+    Time complexity: O(n log n) when the tree stays balanced; O(n²) if insertions skew the tree (e.g. sorted input).
     """
     root = None
     for i in range(len(array)):

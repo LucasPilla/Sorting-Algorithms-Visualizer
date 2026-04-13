@@ -1,10 +1,5 @@
 def merge(array, left, mid, right):
-    """
-    Merge two sorted subarrays of array:
-    The left subarray is array[left..mid]
-    The right subarray is array[mid+1..right]
-    This function is used in Merge Sort algorithm.
-    """
+    """Merge sorted ranges ``[left..mid]`` and ``[mid+1..right]`` (strand-sort helper)."""
 
     L = array[left:mid+1]
     R = array[mid+1:right+1]
@@ -32,9 +27,7 @@ def merge(array, left, mid, right):
 
              
 def helper(arr,n,start):
-    """
-    A helper function used in Strand Sort algorithm for sorting a list in-place.
-    """
+    """Extract increasing strands and merge (recursive strand-sort worker)."""
 
     if start==n:
         return
@@ -57,15 +50,11 @@ def helper(arr,n,start):
 
 def strandSort(arr,*args):
     """
-    Strand sort is a sorting algorithm that sorts a list by repeatedly 
-    pulling sorted sublists out of the original list and merging them together. 
-    The algorithm works by repeatedly taking a sublist of elements from the original 
-    list that are in increasing order, and removing these elements from the original list. 
-    These sublists are then merged together in order to form a new, sorted list. 
-    The process is repeated until the entire original list has been sorted.
+    Strand sort.
 
-    Time complexity: O(n^2).
-    
+    Repeatedly pulls out non-decreasing strands from the list and merges them.
+
+    Time complexity: O(n²) in the worst case (n is the number of elements).
     """
 
     size = len(arr)

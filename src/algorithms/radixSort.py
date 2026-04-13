@@ -1,9 +1,9 @@
 def counting_Sort(array, exp1):
     """
-    Perform counting sort on the given array based on a given exponent value.
+    Stable counting sort on one base-10 digit (used as a radix-sort pass).
 
     Returns:
-        int: Returns 0 if the input array and the sorted array are the same, otherwise None.
+        0 if a pass made no change, else None after copying back into *array*.
     """
     n = len(array)
     output = []
@@ -34,17 +34,12 @@ def counting_Sort(array, exp1):
 
 def radixSort(array, *args):
     """
-    Sort the input list of integers using Radix Sort Algorithm.
+    Radix sort (LSD, base 10).
 
-    Radix Sort Algorithm sorts a list of integers by grouping them 
-    by individual digits that share the same place value and position. 
-    It starts by sorting the list based on the least significant digit, 
-    then gradually moves to the most significant digit until the entire 
-    list is sorted.
-    
-    Time complexity: O(d * (n + k)), where d is the number of digits in the 
-    maximum element, n is the number of elements in the list, 
-    and k is the range of values that the digits can take.
+    Runs stable counting sorts from the least significant digit to the most significant
+    digit until all digits of the maximum value are processed.
+
+    Time complexity: O(d · n) for these passes, with d = O(log₁₀(max)) digit rounds (n is the number of elements).
     """
     max1 = max(array)
     g = 1

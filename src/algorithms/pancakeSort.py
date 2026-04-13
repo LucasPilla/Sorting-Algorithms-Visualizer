@@ -1,12 +1,11 @@
 def pancakeSort(array, *args):
     """
-    Sorts an array using the Pancake Sort Algorithm and yields the state of the array after each flip.
+    Pancake sort.
 
-    Pancake Sort Algorithm is a sorting algorithm that works by repeatedly flipping the largest unsorted 
-    element to the front of the unsorted portion of the list, and then flipping the entire unsorted portion 
-    of the list to move the largest element to its correct position. This process is repeated until the entire list is sorted.
+    Only operation is reversing a prefix (a flip): bring the next largest to the front,
+    then flip it into place.
 
-    Time complexity: O(n^2), where n is the number of elements in the list.
+    Time complexity: O(n) flips, each O(n) time → O(n²) total (n is the number of elements).
     """
     for i in range(len(array)):
         max_index = array.index(max(array[:len(array) - i]))
@@ -18,9 +17,7 @@ def pancakeSort(array, *args):
 
 
 def flip(array, n):
-    """
-    Flips the first n elements of an array.
-    """
+    """Reverse *array[0 : n+1]* (inclusive upper index *n* in this implementation)."""
     for i in range(n):
         if i >= n - i:
             break

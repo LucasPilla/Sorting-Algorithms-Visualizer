@@ -1,4 +1,31 @@
-from algorithms import *
+from algorithms import (
+    binaryInsertionSort,
+    bitonicSort,
+    bogoSort,
+    bubbleSort,
+    bucketSort,
+    cocktailSort,
+    combSort,
+    countingSort,
+    cycleSort,
+    exchangeSort,
+    gnomeSort,
+    heapSort,
+    insertionSort,
+    mergeSort,
+    oddevenSort,
+    pancakeSort,
+    pigeonholeSort,
+    quickSort,
+    radixSort,
+    selectionSort,
+    shellSort,
+    slowSort,
+    stoogeSort,
+    strandSort,
+    timSort,
+    treeSort,
+)
 
 # Map sorting algorithm names to their respective implementations
 algorithmsDict = {
@@ -18,7 +45,7 @@ algorithmsDict = {
     'combSort'            : combSort,
     'bitonicSort'         : bitonicSort,
     'pancakeSort'         : pancakeSort,
-    'binaryInsertionSort': binaryinsertionSort,
+    'binaryInsertionSort': binaryInsertionSort,
     'bucketSort'          : bucketSort,
     'timSort'             : timSort,
     'stoogeSort'          : stoogeSort,
@@ -29,4 +56,3 @@ algorithmsDict = {
     'treeSort'            : treeSort,
     'slowSort'            : slowSort,
 }
-

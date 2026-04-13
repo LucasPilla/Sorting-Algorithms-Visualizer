@@ -1,13 +1,15 @@
-def binaryinsertionSort(array, *args):
+def binaryInsertionSort(array, *args):
     """
-    Binary insertion sort is an optimized version of insertion sort that uses binary search 
-    to find the position to insert the current element in the sorted sublist.
+    Binary insertion sort.
 
-    Time complexity: O(n log n)
+    Like insertion sort but finds the insertion index with binary search; still shifts
+    elements in a contiguous array, so moves dominate.
+
+    Time complexity: O(n log n) comparisons; O(n²) time for typical array/list implementations due to shifting (n is the number of elements).
 
     Example:
         >>> array = [5, 2, 4, 6, 1, 3]
-        >>> list(binaryinsertionSort(array))
+        >>> list(binaryInsertionSort(array))
         ([5, 2, 4, 6, 1, 3], 0, 0, 0, 0)
         ([2, 5, 4, 6, 1, 3], 1, 1, 0, 1)
         ([2, 4, 5, 6, 1, 3], 1, 2, 1, 2)
@@ -24,10 +26,9 @@ def binaryinsertionSort(array, *args):
 
 def binary_search(arr, val, start, end):
     """
-    Binary search is an efficient search algorithm 
-    for finding a target value in a sorted list or array 
-    by repeatedly dividing the search interval in half, 
-    resulting in a time complexity of O(log n) in the worst case.
+    Find the insertion index for *val* in sorted *arr[start : end+1]*.
+
+    Time complexity: O(log n) comparisons for a range of length n.
 
     Example:
         >>> arr = [1, 2, 4, 5, 6]

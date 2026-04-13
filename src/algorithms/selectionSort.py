@@ -1,12 +1,11 @@
 def selectionSort(array, *args):
     """
-    Sorts an array using the Selection Sort Algorithm.
+    Selection sort.
 
-    Selection Sort Algorithm works by finding the smallest element in the unsorted
-    part of the array and moving it to the beginning of the unsorted part. This is
-    repeated until the entire array is sorted.
+    Repeatedly finds the minimum in the unsorted suffix and swaps it into place at
+    the front of that suffix.
 
-    Time complexity: O(n^2), where n is the number of elements in the list. 
+    Time complexity: O(n²) in all cases (n is the number of elements).
     """
     size = len(array)
     for i in range(size-1):

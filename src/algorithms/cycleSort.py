@@ -1,13 +1,10 @@
 def cycleSort(array, *args):
     """
-    Cycle Sort is an in-place sorting algorithm that is most useful 
-    for situations where memory writes are more expensive than reads. 
-    It minimizes the number of memory writes to sort an array. It works 
-    by dividing the array into cycles, where each cycle contains one value 
-    that is in its correct position. The algorithm then moves through the cycles, 
-    swapping values until the entire array is sorted.
+    Cycle sort.
 
-    Time complexity: O(n^2), where n is the number of elements in the list
+    In-place; minimizes writes by rotating each value along a cycle to its correct rank.
+
+    Time complexity: O(n²) comparisons; write count is optimal for in-place permutation (n is the number of elements).
     """
     for cycle_start in range(0, len(array) - 1):
         item = array[cycle_start]

@@ -1,9 +1,5 @@
 def get_gap(prev_gap) -> int:
-    """
-    Computes the gap between elements in the array based on the previous gap.
-    The gap is computed by dividing the previous gap by 1.3 and rounding down.
-    The gap is always at least 1.
-    """
+    """Next comb-sort gap: ⌊previous / 1.3⌋, floored at 1."""
 
     gap = int(prev_gap/1.3)
     if gap < 1:
@@ -13,13 +9,11 @@ def get_gap(prev_gap) -> int:
 
 def combSort(array, *args):
     """
-    Comb Sort Algorithm is a variation of the Bubble Sort Algorithm.
-    It works by comparing and swapping elements that are far apart in the array
-    and gradually reducing the gap between elements until the gap is 1.
-    The gap between elements is computed by dividing the previous gap by 1.3 and 
-    rounding down, with a minimum gap of 1.
+    Comb sort.
 
-    Time complexity: O(n^2), where n is the number of elements in the list
+    Like bubble sort but compares elements *gap* apart; gap shrinks each pass until 1.
+
+    Time complexity: O(n²) worst case; typically faster than bubble sort in practice (n is the number of elements).
     """
     size = len(array)
     gap = size

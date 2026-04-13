@@ -1,7 +1,5 @@
 def swap(array, i, j):
-    """
-    Swaps the elements of the array at the given indices.
-    """
+    """Swap ``array[i]`` and ``array[j]``."""
 
     temp = array[i]
     array[i] = array[j]
@@ -9,13 +7,11 @@ def swap(array, i, j):
 
 def oddevenSort(array, *args):
     """
-    Odd-Even Sort Algorithm is a variation of Bubble Sort that sorts
-    pairs of adjacent elements with odd or even indices in alternating
-    passes. On each pass, it compares the elements in the pair and swaps
-    them if they are not in the correct order. The process repeats until
-    no more swaps are needed, indicating that the array is sorted.
+    Odd-even sort (Brick sort).
 
-    Time complexity: O(n^2), where n is the number of elements in the list.
+    Alternates odd-index and even-index adjacent comparisons, like parallel bubble passes.
+
+    Time complexity: O(n²) sequential work; O(n) parallel rounds in the PRAM model (n is the number of elements).
     """
     sorted = False
     while not sorted:
