@@ -1,5 +1,9 @@
 # Sorting-Algorithms-Visualizer
 
+An app that visualizes how different sorting algorithms work. Pick an algorithm, set the array size and animation delay, then watch the bars move step by step.
+
+If you find this project useful, consider starring the repository on GitHub.
+
 ## Run
 
 - Clone GitHub repository
