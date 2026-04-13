@@ -199,7 +199,7 @@ class DropdownBox(InputBox):
             self.rect.height * self.VISIBLE_OPTIONS
         )
         self.scroll_offset = 0  # Current scroll position
-        self.scrollbar_width = 5  # Width of the scrollbar
+        self.scrollbar_width = 7  # Width of the scrollbar thumb
         self.selected_option = 0  # Index of the selected option
 
     def render(self, screen):
@@ -238,12 +238,16 @@ class DropdownBox(InputBox):
 
             max_scroll = total_options - self.VISIBLE_OPTIONS
             proportion_scrolled = self.scroll_offset / max_scroll if max_scroll > 0 else 0
-            scrollbar_rect = pygame.Rect(self.dropdown_rect.right - self.scrollbar_width,
-                                         self.dropdown_rect.y + proportion_scrolled * (self.dropdown_rect.height - scrollbar_height),
-                                         self.scrollbar_width, scrollbar_height)
-
-            # Draw the scrollbar (visual only)
-            pygame.draw.rect(screen, self.color, scrollbar_rect)
+            pad = 2  # inset from dropdown right edge
+            thumb_w = self.scrollbar_width
+            scrollbar_rect = pygame.Rect(
+                self.dropdown_rect.right - thumb_w - pad,
+                self.dropdown_rect.y + proportion_scrolled * (self.dropdown_rect.height - scrollbar_height),
+                thumb_w,
+                scrollbar_height,
+            )
+            r = min(5, thumb_w // 2, max(1, scrollbar_height // 2))
+            pygame.draw.rect(screen, self.color, scrollbar_rect, border_radius=r)
 
     def update(self, event):
         super().update(event)
