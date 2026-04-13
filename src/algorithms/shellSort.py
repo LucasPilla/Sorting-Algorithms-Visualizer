@@ -85,8 +85,8 @@ def shellSort(array, *args, gapType="ciura"):
         for i in range(gap, len(array)):
             temp, j = array[i], i
             while j >= gap and array[j - gap] > temp:
-                yield array, j, j - gap, -1, -1
+                yield array, (j, j - gap), ()
                 array[j] = array[j - gap]
                 j -= gap
-            yield array, -1, -1, i, j
+            yield array, (), (i, j)
             array[j] = temp

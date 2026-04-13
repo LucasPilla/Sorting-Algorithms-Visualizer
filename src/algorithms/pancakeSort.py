@@ -9,11 +9,11 @@ def pancakeSort(array, *args):
     """
     for i in range(len(array)):
         max_index = array.index(max(array[:len(array) - i]))
-        yield array, max_index, -1, -1, -1
+        yield array, (max_index,), ()
         flip(array, max_index)
-        yield array, 0, -1, -1, -1
+        yield array, (0,), ()
         flip(array, len(array) - 1 - i)
-        yield array, -1 , -1, len(array) - 1 - i, -1
+        yield array, (), (len(array) - 1 - i,)
 
 
 def flip(array, n):

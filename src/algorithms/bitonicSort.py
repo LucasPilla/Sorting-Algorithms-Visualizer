@@ -25,7 +25,7 @@ def compAndSwap(array, i, j, dir):
     """Swap *array[i]* and *array[j]* if their order disagrees with *dir*."""
     if (dir and array[i] > array[j]) or (not dir and array[i] <= array[j]):
         array[i], array[j] = array[j], array[i]
-        yield array, i, -1, j, -1
+        yield array, (i,), (j,)
 
 
 def bitonicMerge(array, low, cnt, dire):

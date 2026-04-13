@@ -23,7 +23,7 @@ def merge(array, left, mid, right):
     k = left
     while i < len(L) and j < len(R):
          # The two lines below are not part of the algorithm
-        yield array, left+i, mid+j, left, right
+        yield array, (left + i, mid + j), (left, right)
         if L[i] < R[j]:
             array[k] = L[i]
             i += 1

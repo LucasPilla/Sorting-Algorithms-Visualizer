@@ -15,6 +15,6 @@ def countingSort(array, *args):
     for i in range(1, len(C)):
         C[i] += C[i-1]
     for i in range(0, size):
-        yield array, C[A[size-i-1]]-1, -1, size-i-1, -1
+        yield array, (C[A[size - i - 1]] - 1,), (size - i - 1,)
         array[C[A[size-i-1]]-1] = A[size-i-1]
         C[A[size-i-1]] -= 1

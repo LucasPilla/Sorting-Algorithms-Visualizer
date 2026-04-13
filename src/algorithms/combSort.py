@@ -24,7 +24,7 @@ def combSort(array, *args):
         swapped = False
 
         for idx in range(0, size - gap):
-            yield array, idx, idx+gap, -1, -1
+            yield array, (idx, idx + gap), ()
             if array[idx] > array[idx + gap]:
                 array[idx], array[idx + gap] = array[idx + gap], array[idx]
                 swapped = True

@@ -16,7 +16,7 @@ def quickSort(array, left, right):
     array[right], array[random_index] = array[random_index], array[right]
     
     for j in range(left, right):
-        yield array, j, right, index, -1
+        yield array, (j, right), (index,)
         if array[j] < array[right]:
             array[j], array[index] = array[index], array[j]
             index += 1

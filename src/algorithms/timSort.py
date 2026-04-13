@@ -18,7 +18,7 @@ def _binary_insertion_sort_run(arr, start, end):
     for i in range(start, end + 1):
         val = arr[i]
         j   = binary_search(arr, val, start, i - 1)
-        yield arr, start, i-1, j, i
+        yield arr, (start, i - 1), (j, i)
         arr[:] = arr[:j] + [val] + arr[j:i] + arr[i + 1:]
 
 
@@ -32,7 +32,7 @@ def merge(arr, left, mid, right):
 
     k, i, j = left, 0, 0
     while i < left_arr_size and j < right_arr_size:
-        yield arr, left + i, mid + j, left, right
+        yield arr, (left + i, mid + j), (left, right)
 
         if left_arr[i] <= right_arr[j]:
             arr[k] = left_arr[i]

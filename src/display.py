@@ -1,8 +1,9 @@
 import pygame
+import os
 from abc import ABC, abstractmethod
 
 class Window:
-    def __init__(self, screen):
+    def __init__(self, screen, font_path=None, font_size=18):
         self.screen = screen
         self.widgets = {}
 
@@ -44,8 +45,13 @@ class InputBox(Box, ABC):
         
     def render(self, screen):
         label = self.font.render(self.label, True, self.color)
-        screen.blit(label, (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - 32))
-        pygame.draw.rect(screen, self.color, self.rect, 2)
+        label_gap = max(6, self.font.get_height() // 3)
+        screen.blit(
+            label,
+            (self.rect.x + (self.rect.w - label.get_width()) / 2, self.rect.y - self.font.get_height() - label_gap),
+        )
+        radius = min(8, min(self.rect.w, self.rect.h) // 2)
+        pygame.draw.rect(screen, self.color, self.rect, 2, border_radius=radius)
 
     @abstractmethod
     def get_value(self):
@@ -94,8 +100,12 @@ class SlideBox(InputBox):
 
     def render(self, screen):
         super().render(screen)
-        pygame.draw.line(screen, self.color, (self.start, self.rect.y + 25), (self.end, self.rect.y + 25), 2)
-        pygame.draw.line(screen, self.color, (self.value, self.rect.y + 5), (self.value, self.rect.y + 45), 12)
+        mid = self.rect.centery
+        pygame.draw.line(screen, self.color, (self.start, mid), (self.end, mid), 1)
+        # Radius matches horizontal inset from border to track; clamp so the circle fits vertically
+        margin = self.start - self.rect.x
+        r = max(1, min(margin, self.rect.h // 2 - 1))
+        pygame.draw.circle(screen, self.color, (int(self.value), mid), r)
 
     def update(self, event):
         super().update(event)
@@ -129,18 +139,36 @@ class SlideBox(InputBox):
         else:
             self.value = self.start + value * span
 
-class ButtonBox(Box):
-    def __init__(self, rect, inactive_img_path, active_img_path):
+class PlayStopButton(Box):
+    """Toggle control: play (triangle) when idle, stop (square) while active."""
+
+    def __init__(self, rect, color, bg=(250, 250, 250)):
         super().__init__(rect)
-        self.inactive_img = pygame.image.load(inactive_img_path)
-        self.inactive_img = pygame.transform.scale(self.inactive_img, (rect[2], rect[3]))
-        self.active_img = pygame.image.load(active_img_path)
-        self.active_img = pygame.transform.scale(self.active_img, (rect[2], rect[3]))
+        self.color = color
+        self.bg = bg
         self.active = False
-    
+
     def render(self, screen):
-        img = self.active_img if self.active else self.inactive_img
-        screen.blit(img, (self.rect.x, self.rect.y))
+        radius = min(8, min(self.rect.w, self.rect.h) // 2)
+        pygame.draw.rect(screen, self.bg, self.rect)
+        pygame.draw.rect(screen, self.color, self.rect, 2, border_radius=radius)
+
+        cx, cy = self.rect.centerx, self.rect.centery
+        u = min(self.rect.w, self.rect.h)
+        if self.active:
+            # Stop button
+            side = max(8, int(u * 0.32))
+            r = pygame.Rect(0, 0, side, side)
+            r.center = (cx, cy)
+            pygame.draw.rect(screen, self.color, r)
+        else:
+            # Play button
+            s = u * 0.36
+            left = cx - int(s * 0.45)
+            right = cx + int(s * 0.65)
+            top = cy - int(s * 0.75)
+            bot = cy + int(s * 0.75)
+            pygame.draw.polygon(screen, self.color, [(left, top), (left, bot), (right, cy)])
 
     def update(self, event):
         super().update(event)
@@ -156,7 +184,7 @@ class ButtonBox(Box):
 
 class DropdownBox(InputBox):
 
-    VISIBLE_OPTIONS = 8
+    VISIBLE_OPTIONS = 10
 
     def __init__(self, rect, label, color, font, options, options_background_color):
         super().__init__(rect, label, color, font)
@@ -219,6 +247,11 @@ class DropdownBox(InputBox):
 
     def update(self, event):
         super().update(event)
+
+        if self.openDropdown and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            panel = self.rect.union(self.dropdown_rect)
+            if not panel.collidepoint(event.pos):
+                self.openDropdown = False
 
         # Toggle the dropdown when the input box is clicked
         if self.clicked:

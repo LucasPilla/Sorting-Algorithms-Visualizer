@@ -27,7 +27,7 @@ def treeSort(array, *args):
     for i in range(len(array)):
         if root is None:
             root = Node(array[i], i)
-            yield array, i, -1, -1, -1
+            yield array, (i,), ()
             continue
         current = root
         while True:
@@ -36,14 +36,14 @@ def treeSort(array, *args):
                     current = current.l
                     continue
                 current.l = Node(array[i], i)
-                yield array, i, current.pos, -1, -1
+                yield array, (i, current.pos), ()
                 break
             if current.r:
                 current = current.r
                 continue
             current.r = Node(array[i], i)
-            yield array, i, current.pos, -1, -1
+            yield array, (i, current.pos), ()
             break
     res = []
     root.display(res)
-    yield res, -1, -1, -1, -1
+    yield res, (), ()

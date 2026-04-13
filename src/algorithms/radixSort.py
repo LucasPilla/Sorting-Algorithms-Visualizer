@@ -18,7 +18,7 @@ def counting_Sort(array, exp1):
     i = n - 1
     while i >= 0:
         index = (array[i] / exp1)
-        yield output, count[int(index % 10)]-1, -1, int(index % 10), -1
+        yield output, (count[int(index % 10)] - 1,), (int(index % 10),)
         output[count[int(index % 10)] - 1] = array[i]
         count[int(index % 10)] -= 1
         i -= 1

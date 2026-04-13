@@ -15,7 +15,7 @@ def stoogeSort(arr, l, h):
 
     if arr[l] > arr[h]:
         middle = floor((h + l) / 2)
-        yield arr, l, h, middle, -1
+        yield arr, (l, h), (middle,)
         t = arr[l]
         arr[l] = arr[h]
         arr[h] = t

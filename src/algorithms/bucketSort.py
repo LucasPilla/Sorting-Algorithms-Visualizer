@@ -17,7 +17,7 @@ def bucketSort(array, *args):
     for j in array:
         index_b = int(j/n)
         bucket[index_b].append(j)
-        yield array, j, -1, index_b, -1
+        yield array, (j,), (index_b,)
 
     # Sort each bucket
     for i in range(len(array)):
@@ -27,6 +27,6 @@ def bucketSort(array, *args):
     k = 0
     for i in range(len(array)):
         for j in range(len(bucket[i])):
-            yield array, k, -1, i, -1
+            yield array, (k,), (i,)
             array[k] = bucket[i][j]
             k += 1

@@ -9,7 +9,7 @@ def quickSort_LR(array, low, high):
 
     if low < high:
         p = partition(array, low, high)
-        yield array, p, high, low, -1
+        yield array, (p, high), (low,)
         yield from quickSort_LR(array, low, p)
         yield from quickSort_LR(array, p + 1, high)
 

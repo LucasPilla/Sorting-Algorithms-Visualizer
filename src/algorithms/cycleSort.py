@@ -19,7 +19,7 @@ def cycleSort(array, *args):
 
         while array[pos] == item:
             pos += 1
-        yield array, cycle_start, pos, -1, -1
+        yield array, (cycle_start, pos), ()
         array[pos], item = item, array[pos]
 
         while pos != cycle_start:
@@ -30,5 +30,5 @@ def cycleSort(array, *args):
 
             while array[pos] == item:
                 pos += 1
-            yield array, cycle_start, pos, -1, -1
+            yield array, (cycle_start, pos), ()
             array[pos], item = item, array[pos]

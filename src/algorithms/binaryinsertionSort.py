@@ -20,7 +20,7 @@ def binaryInsertionSort(array, *args):
     for i in range(1, len(array)):
         val = array[i]
         j = binary_search(array, val, 0, i - 1)
-        yield array, 0, i-1, j, i
+        yield array, (0, i - 1), (j, i)
         array[:] = array[:j] + [val] + array[j:i] + array[i + 1:]
 
 

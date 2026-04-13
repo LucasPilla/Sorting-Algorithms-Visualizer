@@ -10,7 +10,7 @@ def heapSort(array, *args):
     yield from heapify(array, len(array))
     end = len(array) - 1
     while end > 0:
-        yield array, -1, -1, 0, end
+        yield array, (), (0, end)
         array[end], array[0] = array[0], array[end]
         end -= 1
         yield from siftDown(array, 0, end)
@@ -37,6 +37,6 @@ def siftDown(array, start, end):
         if swap == root:
             return
         else:
-            yield array, root, swap, -1, -1
+            yield array, (root, swap), ()
             array[root], array[swap] = array[swap], array[root]
             root = swap

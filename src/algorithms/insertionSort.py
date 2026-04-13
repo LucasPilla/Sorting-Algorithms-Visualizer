@@ -14,7 +14,7 @@ def insertionSort(array, *args):
         key = array[i]
         mySortedRows.append(i)
         while j >= 0 and array[j] > key:
-            yield array, j, -1, i, -1
+            yield array, (j,), (i,)
             array[j+1] = array[j]
             j -= 1
         array[j+1] = key

@@ -20,7 +20,7 @@ def slowSort(array, *args):
 
         if array[end] < array[middle_idx]:
             array[end], array[middle_idx] = array[middle_idx], array[end]
-            yield array, start, middle_idx, end, -1
+            yield array, (start, middle_idx), (end,)
 
         yield from recursiveSlowSort(array, start, end - 1)
 
