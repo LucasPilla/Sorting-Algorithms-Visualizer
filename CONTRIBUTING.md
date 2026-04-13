@@ -1,38 +1,40 @@
 # Contributing Guide
 
-## Notes
+Thank you for your interest in contributing to this project! 🎉
 
-:smile: This is an open source project, feel free to contribute! :clap:
-\
-If you have any idea to improve we appreciate.
-Some ways to contribute in this project:
+We welcome improvements, bug fixes, and new features.
 
-- Implement new Algorithms
-- Report bugs and give feedbacks
+## How You Can Contribute
 
-## **Making Contribution**
+* Implement new sorting algorithms
+* Report bugs or suggest improvements
+* Improve documentation or code quality
 
-### **Fork and Clone Repository**
+## Getting Started
 
-- Visit the repository on Github Website: "https://github.com/LucasPilla/Sorting-Algorithms-Visualizer.git"
-- Fork the repository
-- Clone the forked repository to your local computer
+### 1. Fork & Clone the Repository
 
-### **Install requirements**
+* Fork the repository on GitHub
+* Clone your fork locally:
 
-> cd into project directory
+```bash
+git clone https://github.com/<your-username>/Sorting-Algorithms-Visualizer.git
+cd Sorting-Algorithms-Visualizer
+```
+
+### 2. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### **Create an issue**
+### 3. Create an Issue
 
- - Open an issue with your ideas 
- - Wait for the task to be assigned to you
- - Then start coding :computer:
+* Open an issue describing your idea or bug fix
+* Wait for it to be assigned before starting work
 
-### **Before pushing your contributions**
+## Submitting Changes
 
-- Provide meaningful names for your commits
-- Make sure there are no conflict with the project master branch
+* Use clear and descriptive commit messages
+* Ensure your branch is up to date with the main branch
+* Avoid merge conflicts before submitting a pull request
