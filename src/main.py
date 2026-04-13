@@ -9,8 +9,9 @@ import math
 # Initialize pygame modules
 pygame.init()
 
-# Font
-baseFont = pygame.font.Font("res/Ubuntu-Regular.ttf", 19)
+# Font (project root /fonts)
+_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+baseFont = pygame.font.Font(os.path.join(_root, "fonts", "Ubuntu-Regular.ttf"), 19)
 
 # Colors
 grey = (100, 100, 100)
