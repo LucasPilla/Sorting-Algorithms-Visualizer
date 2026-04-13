@@ -6,16 +6,6 @@ def binaryInsertionSort(array, *args):
     elements in a contiguous array, so moves dominate.
 
     Time complexity: O(n log n) comparisons; O(n²) time for typical array/list implementations due to shifting (n is the number of elements).
-
-    Example:
-        >>> array = [5, 2, 4, 6, 1, 3]
-        >>> list(binaryInsertionSort(array))
-        ([5, 2, 4, 6, 1, 3], 0, 0, 0, 0)
-        ([2, 5, 4, 6, 1, 3], 1, 1, 0, 1)
-        ([2, 4, 5, 6, 1, 3], 1, 2, 1, 2)
-        ([2, 4, 5, 6, 1, 3], 2, 2, 1, 3)
-        ([1, 2, 4, 5, 6, 3], 0, 3, 1, 4)
-        ([1, 2, 3, 4, 5, 6], 0, 4, 2, 5)
     """
     for i in range(1, len(array)):
         val = array[i]
