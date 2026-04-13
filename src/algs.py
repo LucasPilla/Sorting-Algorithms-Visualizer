@@ -17,6 +17,7 @@ from algorithms import (
     pancakeSort,
     pigeonholeSort,
     quickSort,
+    quickSort_LR,
     radixSort,
     selectionSort,
     shellSort,
