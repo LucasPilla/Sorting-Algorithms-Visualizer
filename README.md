@@ -1,8 +1,16 @@
 # Sorting-Algorithms-Visualizer
 
-An app that visualizes how different sorting algorithms work. Pick an algorithm, set the array size and animation delay, then watch the bars move step by step.
+An app that visualizes how different **sorting algorithms** work. 
 
-If you find this project useful, consider starring the repository on GitHub.
+Pick an algorithm, set the array size and animation delay, then watch the bars move step by step.
+
+If you find this project useful, consider starring the repository on GitHub ⭐.
+
+| | | |
+|:-------------------------:|:-------------------------:|:-------------------------:|
+|![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/bubble_sort.gif?raw=true)  Bubble sort |  ![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/bucket_sort.gif?raw=true) Bucket sort |![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/cocktail_sort.gif?raw=true) Cocktail sort |
+|![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/counting_sort.gif?raw=true) Counting sort | ![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/heap_sort.gif?raw=true) Heap sort |![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/insertion_sort.gif?raw=true) Insertion sort |
+|![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/merge_sort.gif?raw=true) Merge sort | ![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/quick_sort.gif?raw=true) Quick sort |![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/selection_sort.gif?raw=true) Selection sort |
 
 ## Run
 
@@ -19,11 +27,8 @@ pip install -r requirements.txt
 python3 src/main.py
 ```
 
-## Preview
-| | | |
-|:-------------------------:|:-------------------------:|:-------------------------:|
-|![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/bubble_sort.gif?raw=true)  Bubble sort |  ![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/bucket_sort.gif?raw=true) Bucket sort |![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/cocktail_sort.gif?raw=true) Cocktail sort |
-|![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/counting_sort.gif?raw=true) Counting sort | ![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/heap_sort.gif?raw=true) Heap sort |![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/insertion_sort.gif?raw=true) Insertion sort |
-|![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/merge_sort.gif?raw=true) Merge sort | ![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/quick_sort.gif?raw=true) Quick sort |![](https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/blob/master/gifs/selection_sort.gif?raw=true) Selection sort |
+## Contributors
 
-
+<a href="https://github.com/LucasPilla/Sorting-Algorithms-Visualizer/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=LucasPilla/Sorting-Algorithms-Visualizer" />
+</a>
